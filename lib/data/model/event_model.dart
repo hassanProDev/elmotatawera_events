@@ -6,6 +6,8 @@ class EventModel {
   final DateTime dateTime;
   final String uid;
   final String docId;
+  final bool isPaid;
+  final double price;
 
   const EventModel(
       {required this.uid,
@@ -14,7 +16,9 @@ class EventModel {
       required this.location,
       required this.dateTime,
       required this.peopleCount,
-      required this.description});
+      required this.description,
+      required this.price,
+      required this.isPaid});
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
         uid: json["uid"],
@@ -23,7 +27,9 @@ class EventModel {
         dateTime: json["dateTime"],
         peopleCount: json["peopleCount"],
         docId:json["docId"],
-        description:json["description"]
+        description:json["description"],
+        price:json["price"],
+        isPaid:json["isPaid"]
     );
   }
 
@@ -35,7 +41,9 @@ class EventModel {
       "dateTime": dateTime,
       "peopleCount": peopleCount,
       "docId":docId,
-      "description":description
+      "description":description,
+      "isPaid":isPaid,
+      "price":price
     };
   }
 
