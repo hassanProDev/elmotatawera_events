@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-class FirebaseManager{
+class UserService{
 
   CollectionReference<UsersModel> getUserColection(){
     var user=FirebaseFirestore.instance.collection('users').withConverter<UsersModel>(
@@ -20,15 +19,5 @@ class FirebaseManager{
     var colection=await getUserColection();
     return colection.where('uid',isEqualTo: uid).snapshots();
   }
-
-  userSignUp(String email,String password)async{
-    UserCredential credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      return credential;
-
-  }
-
 
 }

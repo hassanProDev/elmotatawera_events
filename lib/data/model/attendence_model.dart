@@ -5,14 +5,14 @@ class AttendenceModel {
   final String uid;
   final String docId;
   final String title;
-
+  final String attendedWithId;
   const AttendenceModel(
       {required this.title,
       required this.firstName,
       required this.lastName,
       required this.dateTime,
       required this.uid,
-      required this.docId});
+      required this.docId,required this.attendedWithId});
   factory AttendenceModel.fromJson(Map<String, dynamic> json) {
     return AttendenceModel(
         uid: json["uid"],
@@ -20,7 +20,8 @@ class AttendenceModel {
         lastName: json["lastName"],
         title: json["title"],
         dateTime: json["dateTime"],
-        docId:json["docId"]
+        docId:json["docId"],
+        attendedWithId:json["attendedWithId"]
     );
   }
 
@@ -31,7 +32,8 @@ class AttendenceModel {
       "lastName": lastName,
       "title": title,
       "dateTime": dateTime,
-      "docId":docId
+      "docId":docId,
+      "attendedWithId":attendedWithId
     };
   }
 

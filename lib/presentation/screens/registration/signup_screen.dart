@@ -1,6 +1,7 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
-import 'package:elmotatawera_events/data/remote/firebase_manager.dart';
+import 'package:elmotatawera_events/data/remote/registration_service.dart';
+import 'package:elmotatawera_events/data/remote/user_service.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/widget/custom_textformfield.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_rich_text.dart';
@@ -98,8 +99,8 @@ class SignUpScreen extends StatelessWidget {
                       onTap: () async {
                         try {
                           credential =
-                          await FirebaseManager().userSignUp(email!, password!);
-                          await FirebaseManager().addUser(UsersModel(
+                          await RegistrationService().userSignUp(email!, password!);
+                          await UserService().addUser(UsersModel(
                               uid: credential!.user!.uid,
                               firstName: firstName!,
                               lastName: lastName!,
