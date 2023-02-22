@@ -1,4 +1,15 @@
 class GuestModel {
+
+  static String keyFirstName="firstName";
+  static String keyLastName="lastName";
+  static String keyUid="uid";
+  static String keyDocId="docId";
+  static String keyPhone="phone";
+  static String keyPeopleCount="peopleCount";
+  static String keyIsConfirmed="isConfirmed";
+  static String keyRegistrationDate="registrationDate";
+
+
   final String firstName;
   final String lastName;
   final String uid;
@@ -21,27 +32,27 @@ class GuestModel {
 
   factory GuestModel.fromJson(Map<String, dynamic> json) {
     return GuestModel(
-      uid: json["uid"],
-      firstName: json["firstName"],
-      lastName: json["lastName"],
-      phone: json["phone"],
-      peopleCount: json["peopleCount"],
-      docId: json["docId"],
-      isConfirmed: json["isConfirmed"],
-      registrationDate: json["registrationDate"],
+      uid: json[keyUid],
+      firstName: json[keyFirstName],
+      lastName: json[keyLastName],
+      phone: json[keyPhone],
+      peopleCount: json[keyPeopleCount],
+      docId: json[keyDocId],
+      isConfirmed: json[keyIsConfirmed],
+      registrationDate: json[keyRegistrationDate],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "uid": uid,
-      "firstName": firstName,
-      "lastName": lastName,
-      "phone": phone,
-      "peopleCount": peopleCount,
-      "docId": docId,
-      "isConfirmed": isConfirmed,
-      "registrationDate": registrationDate
+      keyUid: uid,
+      keyFirstName: firstName,
+      keyLastName: lastName,
+      keyPhone: phone,
+      keyPeopleCount: peopleCount,
+      keyDocId: docId,
+      keyIsConfirmed: isConfirmed,
+      keyRegistrationDate: registrationDate
     };
   }
 }

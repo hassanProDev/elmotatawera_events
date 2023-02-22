@@ -1,8 +1,9 @@
-import 'dart:math';
-
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
-import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/activity_item.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_animate.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_bg.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,68 +21,28 @@ class HomeAdminScreen extends StatelessWidget {
           child: Scaffold(
             body: Stack(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [ColorManager.skyColor, ColorManager.deepBlue],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                DrawerBg(),
+                GlobalDrawer(),
+                DrawerAnimate(
+                  drawerSwitch: 0,
+                  child: Scaffold(
+                    body: SafeArea(
+                      child: ListView(
+                        children: [
+                          ActivityItem(
+                            img: "assets/images/activity_img.jpg",
+                          ),
+                        ],
+                      ),
+                    ),
+                    floatingActionButton: FloatingActionButton(
+                      onPressed: (){
+
+                      },
+                      child: Icon(Icons.event),
                     ),
                   ),
                 ),
-                SafeArea(
-                  child: Container(
-                    width: 200,
-                    child: Column(
-                      children: [
-                        // DrawerHeader(child: child)
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              ListTile(
-                                title: Text("data"),
-                              ),
-                              ListTile(
-                                title: Text("data"),
-                              ),
-                              ListTile(
-                                title: Text("data"),
-                              ),
-                              ListTile(
-                                title: Text("data"),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                TweenAnimationBuilder(
-                    tween: Tween<double>(begin: 0, end: 1),
-                    duration: Duration(milliseconds: 500),
-                    builder: (_, val, widget) {
-                      return (Transform(
-                        alignment: Alignment.center,
-                        transform: Matrix4.identity()
-                          ..setEntry(3, 2, 0.001)
-                          ..setEntry(0, 3, 200 * val)
-                          ..rotateY((pi / 6) * val),
-                        child: Scaffold(
-                          appBar: AppBar(
-                            leading: InkWell(
-                              onTap: () {
-                                // BlocProvider.of<AppCubit>(context).myTruth();
-                              },
-                              child: Icon(Icons.menu),
-                            ),
-                            backgroundColor: ColorManager.terkwazColor,
-                            centerTitle: true,
-                            title: Text("asdsadasd"),
-                          ),
-                        ),
-                      ));
-                    }),
               ],
             ),
           ),

@@ -1,4 +1,10 @@
 class MessageModel {
+
+  static String keyMessage="message";
+  static String keyDateTime="dateTime";
+  static String keyUid="uid";
+  static String keyDocId="docId";
+
   final String message;
   final DateTime dateTime;
   final String uid;
@@ -12,18 +18,18 @@ class MessageModel {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-        dateTime: json["dateTime"],
-        docId: json["docId"],
-        uid: json["uid"],
-        message: json["message"]);
+        dateTime: json[keyDateTime],
+        docId: json[keyDocId],
+        uid: json[keyUid],
+        message: json[keyMessage]);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "message": message,
-      "dateTime": dateTime,
-      "uid": uid,
-      "docId": docId
+      keyMessage: message,
+      keyDateTime: dateTime,
+      keyDateTime: uid,
+      keyDocId: docId
     };
   }
 }

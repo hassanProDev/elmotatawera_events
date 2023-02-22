@@ -1,4 +1,11 @@
 class UsersModel {
+  
+  static String keyFirstName="firstName";
+  static String keyLastName="lastName";
+  static String keyUid="uid";
+  static String keyPhone="phone";
+  static String keyUserType="userType";
+  
   final String firstName;
   final String lastName;
   final String uid;
@@ -14,20 +21,20 @@ class UsersModel {
 
   factory UsersModel.fromJson(Map<String, dynamic> json) {
     return UsersModel(
-        uid: json["uid"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        phone: json["phone"],
-        userType: json["userType"]);
+        uid: json[keyUid],
+        firstName: json[keyFirstName],
+        lastName: json[keyLastName],
+        phone: json[keyPhone],
+        userType: json[keyUserType]);
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "uid": uid,
-      "firstName": firstName,
-      "lastName": lastName,
-      "phone": phone,
-      "userType": userType
+      keyUid: uid,
+      keyFirstName: firstName,
+      keyLastName: lastName,
+      keyPhone: phone,
+      keyUserType: userType
     };
   }
 }

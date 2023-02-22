@@ -1,7 +1,19 @@
 class EventModel {
+  static String keyTitle="title";
+  static String keyUid="uid";
+  static String keyDescription="description";
+  static String keyLocation="location";
+  static String keyLocationUrl="locationUrl";
+  static String keyPeopleCount="peopleCount";
+  static String keyDateTime="dateTime";
+  static String keyDocId="docId";
+  static String keyIsPaid="isPaid";
+  static String keyPrice="price";
+
   final String title;
   final String description;
   final String location;
+  final String locationUrl;
   final int peopleCount;
   final DateTime dateTime;
   final String uid;
@@ -18,32 +30,35 @@ class EventModel {
       required this.peopleCount,
       required this.description,
       required this.price,
-      required this.isPaid});
+      required this.isPaid,
+      required this.locationUrl});
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
-        uid: json["uid"],
-        title: json["title"],
-        location: json["location"],
-        dateTime: json["dateTime"],
-        peopleCount: json["peopleCount"],
-        docId:json["docId"],
-        description:json["description"],
-        price:json["price"],
-        isPaid:json["isPaid"]
+        uid: json[keyUid],
+        title: json[keyTitle],
+        location: json[keyLocation],
+        dateTime: json[keyDateTime],
+        peopleCount: json[keyPeopleCount],
+        docId:json[keyDocId],
+        description:json[keyDescription],
+        price:json[keyPrice],
+        isPaid:json[keyIsPaid],
+        locationUrl:json[keyLocationUrl]
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      "uid": uid,
-      "title": title,
-      "location": location,
-      "dateTime": dateTime,
-      "peopleCount": peopleCount,
-      "docId":docId,
-      "description":description,
-      "isPaid":isPaid,
-      "price":price
+      keyUid: uid,
+      keyTitle: title,
+      keyLocation: location,
+      keyDateTime: dateTime,
+      keyPeopleCount: peopleCount,
+      keyDocId:docId,
+      keyDescription:description,
+      keyIsPaid:isPaid,
+      keyPrice:price,
+      keyLocationUrl:locationUrl
     };
   }
 

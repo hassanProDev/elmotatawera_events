@@ -44,6 +44,7 @@ dependencies:
   pretty_qr_code: ^2.0.3
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
+  google_fonts: ^4.0.3
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +72,9 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
-
+  assets:
+    - assets/images/
+    - assets/icons/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
