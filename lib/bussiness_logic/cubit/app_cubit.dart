@@ -8,17 +8,17 @@ class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
 
 ///TODO: Don't forget your truth
-  // double value=0;
-  // bool dontTrickMe=true;
-  // openDrawer(){
-  //   value==0?value=1:value=0;
-  //   emit(AppInitial());
-  // }
-  //
-  // myTruth(){
-  //   dontTrickMe?dontTrickMe=false:dontTrickMe=true;
-  //   emit(AppInitial());
-  // }
+  double value=0;
+  bool dontTrickMe=true;
+  openDrawer(){
+    value==0?value=1:value=0;
+    emit(AppInitial());
+  }
+
+  myTruth(){
+    dontTrickMe?dontTrickMe=false:dontTrickMe=true;
+    emit(AppInitial());
+  }
 
 
   IconData loginPasswordIcon=Icons.visibility;

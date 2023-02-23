@@ -1,13 +1,13 @@
 class AttendenceModel {
-  static String keyUid="uid";
-  static String keyDateTime="dateTime";
-  static String keyFirstName="firstName";
-  static String keyLastName="lastName";
-  static String keyTitle="title";
-  static String keyDocId="docId";
-  static String keyAttendedWithId="attendedWithId";
+  static const String keyUid = "uid";
+  static const String keyDateTime = "dateTime";
+  static const String keyFirstName = "firstName";
+  static const String keyLastName = "lastName";
+  static const String keyTitle = "title";
+  static const String keyDocId = "docId";
+  static const String keyAttendedWithId = "attendedWithId";
 
-  final DateTime dateTime;
+  final DateTime? dateTime;
   final String firstName;
   final String lastName;
   final String uid;
@@ -19,9 +19,11 @@ class AttendenceModel {
       {required this.title,
       required this.firstName,
       required this.lastName,
-      required this.dateTime,
+      this.dateTime,
       required this.uid,
-      required this.docId,required this.attendedWithId});
+      required this.docId,
+      required this.attendedWithId});
+
   factory AttendenceModel.fromJson(Map<String, dynamic> json) {
     return AttendenceModel(
         uid: json[keyUid],
@@ -29,10 +31,10 @@ class AttendenceModel {
         lastName: json[keyLastName],
         title: json[keyTitle],
         dateTime: json[keyDateTime],
-        docId:json[keyDocId],
-        attendedWithId:json[keyAttendedWithId]
-    );
+        docId: json[keyDocId],
+        attendedWithId: json[keyAttendedWithId]);
   }
+
 
   Map<String, dynamic> toJson() {
     return {
@@ -40,10 +42,9 @@ class AttendenceModel {
       keyFirstName: firstName,
       keyLastName: lastName,
       keyTitle: title,
-      keyDateTime: dateTime,
-      keyDocId:docId,
-      keyAttendedWithId:attendedWithId
+      keyDateTime: DateTime.now(),
+      keyDocId: docId,
+      keyAttendedWithId: attendedWithId
     };
   }
-
 }

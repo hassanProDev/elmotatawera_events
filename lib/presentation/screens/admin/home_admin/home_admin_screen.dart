@@ -17,7 +17,8 @@ class HomeAdminScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        return CustomContainer(
+        AppCubit myCubit=BlocProvider.of(context);
+        return CContainer(
           child: Scaffold(
             body: Stack(
               children: [
@@ -37,7 +38,7 @@ class HomeAdminScreen extends StatelessWidget {
                     ),
                     floatingActionButton: FloatingActionButton(
                       onPressed: (){
-
+                        myCubit.myTruth();
                       },
                       child: Icon(Icons.event),
                     ),

@@ -1,14 +1,17 @@
 class EventModel {
-  static String keyTitle="title";
-  static String keyUid="uid";
-  static String keyDescription="description";
-  static String keyLocation="location";
-  static String keyLocationUrl="locationUrl";
-  static String keyPeopleCount="peopleCount";
-  static String keyDateTime="dateTime";
-  static String keyDocId="docId";
-  static String keyIsPaid="isPaid";
-  static String keyPrice="price";
+  static const String keyTitle = "title";
+  static const String keyUid = "uid";
+  static const String keyDescription = "description";
+  static const String keyLocation = "location";
+  static const String keyLocationUrl = "locationUrl";
+  static const String keyPeopleCount = "peopleCount";
+  static const String keyDateTime = "dateTime";
+  static const String keyDocId = "docId";
+  static const String keyIsPaid = "isPaid";
+  static const String keyPrice = "price";
+  static const String keyImg = "image";
+  static const String keyPublishDate = "publishDate";
+  static const String keyisEventDone = "isEventDone";
 
   final String title;
   final String description;
@@ -20,6 +23,8 @@ class EventModel {
   final String docId;
   final bool isPaid;
   final double price;
+  final String? img;
+  final bool isEventDone;
 
   const EventModel(
       {required this.uid,
@@ -31,7 +36,10 @@ class EventModel {
       required this.description,
       required this.price,
       required this.isPaid,
-      required this.locationUrl});
+      required this.locationUrl,
+      this.img,
+      required this.isEventDone});
+
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
         uid: json[keyUid],
@@ -39,12 +47,13 @@ class EventModel {
         location: json[keyLocation],
         dateTime: json[keyDateTime],
         peopleCount: json[keyPeopleCount],
-        docId:json[keyDocId],
-        description:json[keyDescription],
-        price:json[keyPrice],
-        isPaid:json[keyIsPaid],
-        locationUrl:json[keyLocationUrl]
-    );
+        docId: json[keyDocId],
+        description: json[keyDescription],
+        price: json[keyPrice],
+        isPaid: json[keyIsPaid],
+        locationUrl: json[keyLocationUrl],
+        img: json[keyImg],
+        isEventDone: json[keyisEventDone]);
   }
 
   Map<String, dynamic> toJson() {
@@ -54,12 +63,14 @@ class EventModel {
       keyLocation: location,
       keyDateTime: dateTime,
       keyPeopleCount: peopleCount,
-      keyDocId:docId,
-      keyDescription:description,
-      keyIsPaid:isPaid,
-      keyPrice:price,
-      keyLocationUrl:locationUrl
+      keyDocId: docId,
+      keyDescription: description,
+      keyIsPaid: isPaid,
+      keyPrice: price,
+      keyLocationUrl: locationUrl,
+      keyImg: img,
+      keyPublishDate: DateTime.now(),
+      keyisEventDone: isEventDone
     };
   }
-
 }

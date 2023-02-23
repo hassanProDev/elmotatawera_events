@@ -2,10 +2,10 @@ import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CustomContainer extends StatelessWidget {
+class CContainer extends StatelessWidget {
   final Widget? child;
 
-  const CustomContainer({
+  const CContainer({
     Key? key,
     this.child,
   }) : super(key: key);
@@ -19,7 +19,7 @@ class CustomContainer extends StatelessWidget {
       builder: (context, state) {
         return Visibility(
           child: child!,
-          visible: true// BlocProvider.of<AppCubit>(context).dontTrickMe,
+          visible: BlocProvider.of<AppCubit>(context).dontTrickMe,
         );
       },
     );

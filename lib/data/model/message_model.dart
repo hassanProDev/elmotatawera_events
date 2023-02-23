@@ -1,20 +1,20 @@
 class MessageModel {
-
-  static String keyMessage="message";
-  static String keyDateTime="dateTime";
-  static String keyUid="uid";
-  static String keyDocId="docId";
+  static const String keyMessage = "message";
+  static const String keyDateTime = "dateTime";
+  static const String keyUid = "uid";
+  static const String keyDocId = "docId";
 
   final String message;
-  final DateTime dateTime;
+  final DateTime? dateTime;
   final String uid;
   final String docId;
 
-  const MessageModel(
-      {required this.dateTime,
-      required this.docId,
-      required this.uid,
-      required this.message});
+  const MessageModel({
+    this.dateTime,
+    required this.docId,
+    required this.uid,
+    required this.message,
+  });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
@@ -27,8 +27,8 @@ class MessageModel {
   Map<String, dynamic> toJson() {
     return {
       keyMessage: message,
-      keyDateTime: dateTime,
-      keyDateTime: uid,
+      keyDateTime: DateTime.now(),
+      keyUid: uid,
       keyDocId: docId
     };
   }

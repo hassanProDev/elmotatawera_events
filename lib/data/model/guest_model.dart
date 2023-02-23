@@ -1,25 +1,26 @@
 class GuestModel {
-
-  static String keyFirstName="firstName";
-  static String keyLastName="lastName";
-  static String keyUid="uid";
-  static String keyDocId="docId";
-  static String keyPhone="phone";
-  static String keyPeopleCount="peopleCount";
-  static String keyIsConfirmed="isConfirmed";
-  static String keyRegistrationDate="registrationDate";
-
+  static const String keyFirstName = "firstName";
+  static const String keyLastName = "lastName";
+  static const String keyGid = "gid";
+  static const String keyUid = "uid";
+  static const String keyDocId = "docId";
+  static const String keyPhone = "phone";
+  static const String keyPeopleCount = "peopleCount";
+  static const String keyIsConfirmed = "isConfirmed";
+  static const String keyRegistrationDate = "registrationDate";
 
   final String firstName;
   final String lastName;
+  final String? gid;
   final String uid;
   final String docId;
   final String phone;
   final int peopleCount;
   final bool isConfirmed;
-  final DateTime registrationDate;
+  final DateTime? registrationDate;
 
   const GuestModel({
+    this.gid,
     required this.uid,
     required this.firstName,
     required this.lastName,
@@ -27,11 +28,12 @@ class GuestModel {
     required this.peopleCount,
     required this.docId,
     required this.isConfirmed,
-    required this.registrationDate,
+    this.registrationDate,
   });
 
   factory GuestModel.fromJson(Map<String, dynamic> json) {
     return GuestModel(
+      gid: json[keyGid],
       uid: json[keyUid],
       firstName: json[keyFirstName],
       lastName: json[keyLastName],
@@ -45,6 +47,7 @@ class GuestModel {
 
   Map<String, dynamic> toJson() {
     return {
+      keyGid: uid + docId,
       keyUid: uid,
       keyFirstName: firstName,
       keyLastName: lastName,
@@ -52,7 +55,7 @@ class GuestModel {
       keyPeopleCount: peopleCount,
       keyDocId: docId,
       keyIsConfirmed: isConfirmed,
-      keyRegistrationDate: registrationDate
+      keyRegistrationDate: DateTime.now()
     };
   }
 }

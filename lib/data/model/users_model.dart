@@ -1,31 +1,38 @@
-class UsersModel {
-  
-  static String keyFirstName="firstName";
-  static String keyLastName="lastName";
-  static String keyUid="uid";
-  static String keyPhone="phone";
-  static String keyUserType="userType";
-  
+class UserModel {
+  static const String keyFirstName = "firstName";
+  static const String keyLastName = "lastName";
+  static const String keyUid = "uid";
+  static const String keyPhone = "phone";
+  static const String keyUserType = "userType";
+  static const String keyRegistrationDate = "registrationDate";
+  static const String keyImg = "img";
+
   final String firstName;
   final String lastName;
   final String uid;
   final String phone;
   final String userType;
+  final String? registrationDate;
+  final String? img;
 
-  const UsersModel(
-      {required this.uid,
-      required this.firstName,
-      required this.lastName,
-      required this.phone,
-      required this.userType});
+  const UserModel({
+    required this.uid,
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.userType,
+    this.registrationDate,
+    this.img,
+  });
 
-  factory UsersModel.fromJson(Map<String, dynamic> json) {
-    return UsersModel(
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
         uid: json[keyUid],
         firstName: json[keyFirstName],
         lastName: json[keyLastName],
         phone: json[keyPhone],
-        userType: json[keyUserType]);
+        userType: json[keyUserType],
+        img: json["img"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -34,7 +41,9 @@ class UsersModel {
       keyFirstName: firstName,
       keyLastName: lastName,
       keyPhone: phone,
-      keyUserType: userType
+      keyUserType: userType,
+      keyRegistrationDate: DateTime.now(),
+      keyImg:img
     };
   }
 }

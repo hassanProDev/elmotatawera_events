@@ -100,7 +100,7 @@ class SignUpScreen extends StatelessWidget {
                         try {
                           credential =
                           await RegistrationService().userSignUp(email!, password!);
-                          await UserService().addUser(UsersModel(
+                          await UserService().addUser(UserModel(
                               uid: credential!.user!.uid,
                               firstName: firstName!,
                               lastName: lastName!,
