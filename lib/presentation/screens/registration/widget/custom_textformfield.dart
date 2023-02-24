@@ -9,6 +9,7 @@ class CustomTextFormField extends StatelessWidget {
   IconData? iconData;
   Function? onClick;
   Function(String)? onChange;
+  String? Function(String?)? validator;
 
   CustomTextFormField(
       {this.regexCondition,
@@ -17,7 +18,7 @@ class CustomTextFormField extends StatelessWidget {
       this.iconData,
       this.onClick,
       this.isPassword = false,
-      this.onChange});
+      this.onChange,this.validator});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 2.w),
       child: TextFormField(
         onChanged: onChange,
-        validator: (value) {
+        validator:validator?? (value) {
           if (value == null || value.isEmpty) {
             return "Please Enter $text Currect";
           }

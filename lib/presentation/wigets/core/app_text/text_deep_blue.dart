@@ -24,9 +24,10 @@ class TextDeepBlue extends StatelessWidget {
       child: Text(
         text,
         style: Theme.of(context).textTheme.headline3!.copyWith(
-            fontSize: fontSize ?? SizeManager.size10,
-            fontStyle: fontStyle ?? FontStyle.normal,
-            fontWeight: fontWeight ?? FontWeight.normal),
+              fontSize: fontSize ?? SizeManager.size10,
+              fontStyle: fontStyle ?? FontStyle.normal,
+              fontWeight: fontWeight ?? FontWeight.normal,
+            ),
         textAlign: textAlign,
       ),
     );

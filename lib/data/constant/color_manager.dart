@@ -10,6 +10,5 @@ class ColorManager{
   static const blueColor =Color(0xff012840);
   static const deepBlue =Color(0xff011526);
   static const offWhite=Color(0xffEBEDF2);
-  // #E9ECF2
-  // #EBEDF2
+  static const redColor=Color(0xFFF44336);// #EBEDF2
 }

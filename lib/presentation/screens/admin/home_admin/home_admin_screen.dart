@@ -17,8 +17,8 @@ class HomeAdminScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        AppCubit myCubit=BlocProvider.of(context);
-        return CContainer(
+        AppCubit myCubit = BlocProvider.of(context);
+        return C0ntainer(
           child: Scaffold(
             body: Stack(
               children: [
@@ -28,18 +28,16 @@ class HomeAdminScreen extends StatelessWidget {
                   drawerSwitch: 0,
                   child: Scaffold(
                     body: SafeArea(
-                      child: ListView(
-                        children: [
-                          ActivityItem(
-                            img: "assets/images/activity_img.jpg",
-                          ),
-                        ],
-                      ),
+                      child: ListView.builder(
+                          itemCount: 0,
+                          itemBuilder: (_, index) {
+                            return ActivityItem(
+                              img: "assets/images/activity_img.jpg",
+                            );
+                          }),
                     ),
                     floatingActionButton: FloatingActionButton(
-                      onPressed: (){
-                        myCubit.myTruth();
-                      },
+                      onPressed: () {},
                       child: Icon(Icons.event),
                     ),
                   ),

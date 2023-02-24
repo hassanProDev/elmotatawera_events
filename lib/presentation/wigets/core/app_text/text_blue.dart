@@ -27,7 +27,7 @@ class TextBlue extends StatelessWidget {
         style: Theme.of(context).textTheme.headline2!.copyWith(
             fontSize: fontSize ?? SizeManager.size10,
             fontStyle: fontStyle ?? FontStyle.normal,
-            fontWeight: fontWeight ?? FontWeight.normal),
+            fontWeight: fontWeight ?? FontWeight.normal,),
         textAlign: textAlign,
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
+import 'package:elmotatawera_events/presentation/theming/app_theming.dart';
 import 'package:elmotatawera_events/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +32,9 @@ class MyApp extends StatelessWidget {
           builder: (context, state) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              initialRoute: RouteNameManager.homeAdminScreen,
+              initialRoute: RouteNameManager.splashScreen,
               onGenerateRoute: RoutesManager.generateRoute,
+              theme: AppTheming().lightTheme,
             );
           },
         ),

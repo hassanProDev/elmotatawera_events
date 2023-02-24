@@ -25,7 +25,7 @@ class GuestService {
         .get();
   }
 
-  getConfirmedGuest(String eventDocId) async {
+  getConfirmedGuests(String eventDocId) async {
     var collection = await getGuestColection();
     return collection
         .orderBy(GuestModel.keyRegistrationDate, descending: true)
@@ -34,7 +34,7 @@ class GuestService {
         .get();
   }
 
-  getUnConfirmedGuest(String eventDocId) async {
+  getUnConfirmedGuests(String eventDocId) async {
     var collection = await getGuestColection();
     return collection
         .orderBy(GuestModel.keyRegistrationDate, descending: true)

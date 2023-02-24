@@ -7,20 +7,10 @@ class AppTheming {
       scaffoldBackgroundColor: ColorManager.offWhite,
       appBarTheme: AppBarTheme(),
       textTheme: TextTheme(
-        headline1: GoogleFonts.poppins(
-          color: ColorManager.blackColor
-        ),
-        headline2:  GoogleFonts.poppins(
-            color: ColorManager.blueColor
-        ),
-        headline3:  GoogleFonts.poppins(
-            color: ColorManager.deepBlue
-        ),headline4:  GoogleFonts.poppins(
-          color: ColorManager.offWhite
-      ),
-        headline5:  GoogleFonts.poppins(
-            color: ColorManager.terkwazColor
-        ),
+        headline1: GoogleFonts.poppins(color: ColorManager.blackColor),
+        headline2: GoogleFonts.poppins(color: ColorManager.blueColor),
+        headline3: GoogleFonts.poppins(color: ColorManager.deepBlue),
+        headline4: GoogleFonts.poppins(color: ColorManager.offWhite),
+        headline5: GoogleFonts.poppins(color: ColorManager.terkwazColor),
       ));
-
 }
