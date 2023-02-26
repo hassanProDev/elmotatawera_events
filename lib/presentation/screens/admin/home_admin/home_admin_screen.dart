@@ -1,5 +1,9 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
-import 'package:elmotatawera_events/presentation/wigets/core/widgets/activity_item.dart';
+import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/model/event_model.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_app_bar.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_event_page.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_tab_bar.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_animate.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_bg.dart';
@@ -8,36 +12,58 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeAdminScreen extends StatelessWidget {
-  const HomeAdminScreen({Key? key}) : super(key: key);
+  List<EventModel> allEvent = [];
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<AppCubit, AppState>(
       builder: (context, state) {
         AppCubit myCubit = BlocProvider.of(context);
+        print(" ******** ${myCubit.allEventList} ******** ");
         return C0ntainer(
           child: Scaffold(
             body: Stack(
               children: [
                 DrawerBg(),
-                GlobalDrawer(),
+                GlobalDrawer(onPressed: (){
+                  myCubit.openDrawer();
+                },),
                 DrawerAnimate(
-                  drawerSwitch: 0,
+                  drawerSwitch: myCubit.drawerValue,
                   child: Scaffold(
                     body: SafeArea(
-                      child: ListView.builder(
-                          itemCount: 0,
-                          itemBuilder: (_, index) {
-                            return ActivityItem(
-                              img: "assets/images/activity_img.jpg",
-                            );
-                          }),
+                      child: DefaultTabController(
+                        animationDuration: Duration(seconds: 1),
+                        length: 3,
+                        child: Column(
+                          children: [
+                            CustomAppBar(),
+                            CustomTabBar(
+
+                              onTap: (index) {
+                                myCubit.changeTabIdex(index);
+                              },
+                              index: myCubit.currentTabIndex,
+                            ),
+                            Expanded(
+                              child: TabBarView(children: [
+                                CustomEventPage(
+                                    eventModelList: myCubit.allEventList),
+                                CustomEventPage(
+                                    eventModelList: myCubit.allActiveEvent),
+                                CustomEventPage(
+                                    eventModelList: myCubit.allUnActiveEvent),
+                              ]),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     floatingActionButton: FloatingActionButton(
-                      onPressed: () {},
+                      backgroundColor: ColorManager.terkwazColor,
+                      onPressed: () {
+                        myCubit.openDrawer();
+                      },
                       child: Icon(Icons.event),
                     ),
                   ),

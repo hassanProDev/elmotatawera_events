@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elmotatawera_events/data/model/attendence_model.dart';
 
 class AttendenceService {
-  CollectionReference<AttendenceModel> getAttendenceColection() {
+  CollectionReference<AttendanceModel> getAttendenceColection() {
     var attend = FirebaseFirestore.instance
         .collection('attendence')
-        .withConverter<AttendenceModel>(
+        .withConverter<AttendanceModel>(
           fromFirestore: (snapshot, _) =>
-              AttendenceModel.fromJson(snapshot.data()!),
+              AttendanceModel.fromJson(snapshot.data()!),
           toFirestore: (attendence, _) => attendence.toJson(),
         );
     return attend;
   }
 
-  Future<void> addAttendence(AttendenceModel attendenceModel) async {
+  Future<void> addAttendence(AttendanceModel attendenceModel) async {
     var doc = await getAttendenceColection().doc();
     return doc.set(attendenceModel);
   }
@@ -21,8 +21,8 @@ class AttendenceService {
   getAllAttendence(String eventDocId) async {
     var collection = await getAttendenceColection();
     collection
-        .orderBy(AttendenceModel.keyDateTime,descending: true)
-        .where(AttendenceModel.keyDocId, isEqualTo: eventDocId)
+        .orderBy(AttendanceModel.keyDateTime,descending: true)
+        .where(AttendanceModel.keyDocId, isEqualTo: eventDocId)
         .get();
   }
 }

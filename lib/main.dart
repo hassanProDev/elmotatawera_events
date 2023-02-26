@@ -23,8 +23,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, deviceType) {
-      return BlocProvider(
-        create: (context) => AppCubit(),
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider<AppCubit>(
+            create: (context) {
+              return AppCubit()
+                ..getAllEvents()
+                ..getAllUnActiveEvents()
+                ..getAllActiveEvents();
+            },
+          ),
+        ],
         child: BlocConsumer<AppCubit, AppState>(
           listener: (context, state) {
             // TODO: implement listener

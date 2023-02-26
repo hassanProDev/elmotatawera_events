@@ -8,6 +8,7 @@ class RouteNameManager{
 
 
   static const String homeAdminScreen="Admin";
+  static const String adminEventScreen="adminEventScreen";
   static const String addAdminScreen="addAdminScreen";
   static const String addSecurityScreen="addSecurityScreen";
 

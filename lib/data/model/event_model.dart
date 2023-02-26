@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class EventModel {
   static const String keyTitle = "title";
   static const String keyUid = "uid";
@@ -20,15 +22,15 @@ class EventModel {
   final int peopleCount;
   final DateTime dateTime;
   final String uid;
-  final String docId;
+  String docId;
   final bool isPaid;
   final double price;
   final String? img;
   final bool isEventDone;
 
-  const EventModel(
+   EventModel(
       {required this.uid,
-      required this.docId,
+       this.docId='',
       required this.title,
       required this.location,
       required this.dateTime,
@@ -45,7 +47,7 @@ class EventModel {
         uid: json[keyUid],
         title: json[keyTitle],
         location: json[keyLocation],
-        dateTime: json[keyDateTime],
+        dateTime: (json[keyDateTime] as Timestamp).toDate(),
         peopleCount: json[keyPeopleCount],
         docId: json[keyDocId],
         description: json[keyDescription],

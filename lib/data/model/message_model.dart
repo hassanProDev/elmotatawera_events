@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MessageModel {
   static const String keyMessage = "message";
   static const String keyDateTime = "dateTime";
@@ -18,7 +20,7 @@ class MessageModel {
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-        dateTime: json[keyDateTime],
+        dateTime: (json[keyDateTime] as Timestamp).toDate(),
         docId: json[keyDocId],
         uid: json[keyUid],
         message: json[keyMessage]);

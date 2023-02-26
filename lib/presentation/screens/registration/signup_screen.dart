@@ -23,11 +23,13 @@ class SignUpScreen extends StatelessWidget {
 
   bool isLoading = false;
   String? userType;
-  var formKey=GlobalKey<FormState>();
+
   SignUpScreen({this.userType, super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppCubit, AppState>(
+    AppCubit myCubit = BlocProvider.of(context);
+    return BlocListener<AppCubit, AppState>(
       listener: (context, state) {
         if (state is SignUpLoading) {
           isLoading = true;
@@ -39,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
             text: "Registration is Success",
           );
           Navigator.pushReplacementNamed(
-              context, userType??RouteNameManager.homeGuestScreen);
+              context, userType ?? RouteNameManager.homeGuestScreen);
         } else if (state is SignUpFailer) {
           isLoading = false;
           customToast(
@@ -49,114 +51,113 @@ class SignUpScreen extends StatelessWidget {
           );
         }
       },
-      builder: (context, state) {
-        AppCubit myCubit = BlocProvider.of(context);
-
-        return C0ntainer(
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.all(4.w),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 32.sp),
-                        child: GlobalRichText(
-                          firstString: "El Motatawera",
-                          secondString: " Events",
-                        ),
+      child: C0ntainer(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(4.w),
+              child: Form(
+                key: myCubit.signUpFormKey,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 32.sp),
+                      child: GlobalRichText(
+                        firstString: "El Motatawera",
+                        secondString: " Events",
                       ),
-                      SizedBox(
-                        height: 8.h,
-                      ),
-                      CustomTextFormField(
-                        text: "first name",
-                        onChange: (value) {
-                          firstName = value;
-                        },
-                      ),
-                      CustomTextFormField(
-                        text: "last name",
-                        onChange: (value) {
-                          lastName = value;
-                        },
-                      ),
-                      CustomTextFormField(
-                        text: "phone",
-                        onChange: (value) {
-                          phone = value;
-                        },
-                      ),
-                      CustomTextFormField(
-                        text: "email",
-                        onChange: (value) {
-                          email = value;
-                        },
-                      ),
-                      CustomTextFormField(
-                        text: "password",
-                        isPassword: myCubit.signUpPasswordVisibilty,
-                        onChange: (value) {
-                          password = value;
-                        },
-                        iconData: myCubit.signUpPasswordIcon,
-                        onClick: () {
-                          myCubit.changeSignUpPasswordVisibilty();
-                        },
-                      ),
-                      CustomTextFormField(
-                        text: "confirm-password",
-                        iconData: myCubit.signUpPasswordIcon,
-                        isPassword: myCubit.signUpPasswordVisibilty,
-                        onChange: (value){
-                          confirmPassword=value;
-                        },
-                        validator: (value){
-                          if(password!=confirmPassword){
-                            return "please confirm your password";
-                          }
-                        },
-                        onClick: () {
-                          myCubit.changeSignUpPasswordVisibilty();
-                        },
-                      ),
-                      CustomButton(
-                        text: "Sign Up",
-                        color: ColorManager.deepBlue,
-                        onTap: () async {
-                          if (formKey.currentState!.validate()) {
-                            await myCubit.userSignUp(email!, password!);
-                            await myCubit.addUser(UserModel(
-                              email: myCubit.userCredential!.user!.email,
-                              uid: myCubit.userCredential!.user!.uid,
-                              firstName: firstName!,
-                              lastName: lastName!,
-                              phone: phone!,
-                              userType:userType?? RouteNameManager.homeGuestScreen,
-                            ));
-                          }
-                        },
-                      ),
-                      SizedBox(
-                        height: 1.h,
-                      ),
-                      userType==null?GlobalPressedText(
-                        text: "Login",
-                        onTap: () {
-                          Navigator.pushReplacementNamed(
-                              context, RouteNameManager.loginScreen);
-                        },
-                      ):SizedBox(),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
+                    CustomTextFormField(
+                      text: "first name",
+                      onChange: (value) {
+                        firstName = value;
+                      },
+                    ),
+                    CustomTextFormField(
+                      text: "last name",
+                      onChange: (value) {
+                        lastName = value;
+                      },
+                    ),
+                    CustomTextFormField(
+                      text: "phone",
+                      onChange: (value) {
+                        phone = value;
+                      },
+                    ),
+                    CustomTextFormField(
+                      text: "email",
+                      onChange: (value) {
+                        email = value;
+                      },
+                    ),
+                    CustomTextFormField(
+                      text: "password",
+                      isPassword: myCubit.signUpPasswordVisibilty,
+                      onChange: (value) {
+                        password = value;
+                      },
+                      iconData: myCubit.signUpPasswordIcon,
+                      onClick: () {
+                        myCubit.changeSignUpPasswordVisibilty();
+                      },
+                    ),
+                    CustomTextFormField(
+                      text: "confirm-password",
+                      iconData: myCubit.signUpPasswordIcon,
+                      isPassword: myCubit.signUpPasswordVisibilty,
+                      onChange: (value) {
+                        confirmPassword = value;
+                      },
+                      validator: (value) {
+                        if (password != confirmPassword) {
+                          return "please confirm your password";
+                        }
+                      },
+                      onClick: () {
+                        myCubit.changeSignUpPasswordVisibilty();
+                      },
+                    ),
+                    CustomButton(
+                      text: "Sign Up",
+                      color: ColorManager.deepBlue,
+                      onTap: () async {
+                        if (myCubit.signUpFormKey.currentState!.validate()) {
+                          await myCubit.userSignUp(email!, password!);
+                          await myCubit.addUser(UserModel(
+                            email: myCubit.userCredential!.user!.email,
+                            uid: myCubit.userCredential!.user!.uid,
+                            firstName: firstName!,
+                            lastName: lastName!,
+                            phone: phone!,
+                            userType:
+                                userType ?? RouteNameManager.homeGuestScreen,
+                          ));
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 1.h,
+                    ),
+                    userType == null
+                        ? GlobalPressedText(
+                            text: "Login",
+                            onTap: () {
+                              Navigator.pushReplacementNamed(
+                                  context, RouteNameManager.loginScreen);
+                            },
+                          )
+                        : SizedBox(),
+                  ],
                 ),
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

@@ -1,4 +1,6 @@
-class AttendenceModel {
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class AttendanceModel {
   static const String keyUid = "uid";
   static const String keyDateTime = "dateTime";
   static const String keyFirstName = "firstName";
@@ -15,7 +17,7 @@ class AttendenceModel {
   final String title;
   final String attendedWithId;
 
-  const AttendenceModel(
+  const AttendanceModel(
       {required this.title,
       required this.firstName,
       required this.lastName,
@@ -24,13 +26,13 @@ class AttendenceModel {
       required this.docId,
       required this.attendedWithId});
 
-  factory AttendenceModel.fromJson(Map<String, dynamic> json) {
-    return AttendenceModel(
+  factory AttendanceModel.fromJson(Map<String, dynamic> json) {
+    return AttendanceModel(
         uid: json[keyUid],
         firstName: json[keyFirstName],
         lastName: json[keyLastName],
         title: json[keyTitle],
-        dateTime: json[keyDateTime],
+        dateTime: (json[keyDateTime] as Timestamp).toDate(),
         docId: json[keyDocId],
         attendedWithId: json[keyAttendedWithId]);
   }

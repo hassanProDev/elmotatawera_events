@@ -1,13 +1,13 @@
-
-
 import 'package:flutter/material.dart';
 
 class GlobalDrawer extends StatelessWidget {
-  const GlobalDrawer({Key? key}) : super(key: key);
+  void Function()? onPressed;
+
+  GlobalDrawer({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return                 SafeArea(
+    return SafeArea(
       child: Container(
         width: 200,
         child: Column(
@@ -16,6 +16,7 @@ class GlobalDrawer extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
+                  IconButton(onPressed: onPressed, icon: Icon(Icons.clear)),
                   ListTile(
                     title: Text("data"),
                   ),

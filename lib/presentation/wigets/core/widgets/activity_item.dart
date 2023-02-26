@@ -1,4 +1,5 @@
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
+import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_terkwaz.dart';
@@ -6,19 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class ActivityItem extends StatelessWidget {
-  final String? img;
-  final String? title;
-  final String? location;
-  final String? price;
+  // final String? img;
+  // final String? title;
+  // final String? location;
+  // final String? price;
   final VoidCallback? onTap;
+  final EventModel? eventModel;
 
   const ActivityItem({
     Key? key,
-    this.img,
-    this.price,
-    this.title,
-    this.location,
-    this.onTap
+    this.onTap,
+    this.eventModel
   }) : super(key: key);
 
   @override
@@ -34,10 +33,10 @@ class ActivityItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(height: 20.h,
+              eventModel?.img!=null?Container(height: 20.h,
                 child: ClipRRect(
                   child: Image.asset(
-                    img!,
+                    eventModel!.img!,
                     fit: BoxFit.fill,
                   ),
                   borderRadius: BorderRadius.only(
@@ -45,11 +44,11 @@ class ActivityItem extends StatelessWidget {
                     topLeft: Radius.circular(16.sp),
                   ),
                 ),
-              ),
+              ):SizedBox(),
               ListTile(
-                title: TextBlue(title ?? "title",fontSize: SizeManager.size16,),
-                subtitle: TextDeepBlue("location $location"),
-                trailing: TextTerkwaz("price $price"),
+                title: TextBlue(eventModel!.title ?? "title",fontSize: SizeManager.size16,),
+                subtitle: TextDeepBlue("location ${eventModel!.location}"),
+                trailing: TextTerkwaz("price ${eventModel!.price}"),
               )
             ],
           ),

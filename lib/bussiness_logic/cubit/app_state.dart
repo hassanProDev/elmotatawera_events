@@ -70,3 +70,69 @@ class UpdateUserDataFailer extends AppState {
 
   UpdateUserDataFailer({required this.errorMessage});
 }
+
+class EventLoading extends AppState {}
+
+class EventAddedSuccess extends AppState {}
+
+class EventAddedFailer extends AppState {
+  String errorMessage;
+
+  EventAddedFailer({required this.errorMessage});
+}
+
+class GetSelectedEventSuccess extends AppState {}
+
+class GetAllEventsSuccess extends AppState {
+  List<EventModel> events = [];
+
+  GetAllEventsSuccess({required this.events});
+}
+
+class GetAllEventsFailer extends AppState {
+  String errorMessage;
+
+  GetAllEventsFailer({required this.errorMessage});
+}
+
+class GetAllActiveEventsSuccess extends AppState {
+  List<EventModel> events = [];
+
+  GetAllActiveEventsSuccess({required this.events});
+}
+
+class GetAllActiveEventsFailer extends AppState {
+  String errorMessage;
+
+  GetAllActiveEventsFailer({required this.errorMessage});
+}
+
+class GetAllUnActiveEventsSuccess extends AppState {
+  List<EventModel> events = [];
+
+  GetAllUnActiveEventsSuccess({required this.events});
+}
+
+class GetAllUnActiveEventsFailer extends AppState {
+  String errorMessage;
+
+  GetAllUnActiveEventsFailer({required this.errorMessage});
+}
+
+class DeleteEventSuccess extends AppState {}
+
+class DeleteEventFailer extends AppState {
+  String errorMessage;
+
+  DeleteEventFailer({required this.errorMessage});
+}
+
+class UpdateEventDataSuccess extends AppState {}
+
+class UpdateEventDataFailer extends AppState {
+  String errorMessage;
+
+  UpdateEventDataFailer({required this.errorMessage});
+}
+
+class ChangeTabIndex extends AppState {}

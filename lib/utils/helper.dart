@@ -7,7 +7,7 @@ import 'package:sizer/sizer.dart';
 customToast(BuildContext context, {String? text,Color? color,IconData? icon}){
   showDialog(context: context, builder: (context){
     Timer(Duration(seconds: 2),(){
-      Navigator.pop(context);
+      // Navigator.pop(context);
     });
     return Dialog(
       backgroundColor: Colors.transparent,

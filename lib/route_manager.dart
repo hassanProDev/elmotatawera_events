@@ -1,6 +1,7 @@
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/add_security/add_admin.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/add_security_screen/add_security_screen.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/event/admin_event_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/home_admin_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/login_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/signup_screen.dart';
@@ -22,6 +23,8 @@ class RoutesManager {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RouteNameManager.homeAdminScreen:
         return MaterialPageRoute(builder: (_) => HomeAdminScreen());
+      case RouteNameManager.adminEventScreen:
+        return MaterialPageRoute(builder: (_) => AdminEventScreen());
       case RouteNameManager.homeGuestScreen:
         return MaterialPageRoute(builder: (_) => HomeAdminScreen());
       case RouteNameManager.homeSecurityScreen:

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class GuestModel {
   static const String keyFirstName = "firstName";
   static const String keyLastName = "lastName";
@@ -41,7 +43,7 @@ class GuestModel {
       peopleCount: json[keyPeopleCount],
       docId: json[keyDocId],
       isConfirmed: json[keyIsConfirmed],
-      registrationDate: json[keyRegistrationDate],
+      registrationDate: (json[keyRegistrationDate] as Timestamp).toDate(),
     );
   }
 
