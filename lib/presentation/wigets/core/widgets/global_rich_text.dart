@@ -22,12 +22,13 @@ class GlobalRichText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
+      textAlign: TextAlign.center,
       text: TextSpan(
         text: firstString,
         style: GoogleFonts.poppins(
             color: firstTextColor??ColorManager.redColor,
             fontWeight: FontWeight.bold,
-            fontSize: fontSize??SizeManager.size18),
+            fontSize: fontSize??SizeManager.size18,),
         children: [
           TextSpan(
               text: secondString,

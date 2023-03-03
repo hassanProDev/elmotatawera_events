@@ -8,17 +8,21 @@ class CustomTextFormField extends StatelessWidget {
   bool isPassword;
   IconData? iconData;
   Function? onClick;
+  TextInputType? keyboardType;
   Function(String)? onChange;
   String? Function(String?)? validator;
 
-  CustomTextFormField(
-      {this.regexCondition,
-      this.text,
-      this.controller,
-      this.iconData,
-      this.onClick,
-      this.isPassword = false,
-      this.onChange,this.validator});
+  CustomTextFormField({
+    this.regexCondition,
+    this.text,
+    this.controller,
+    this.iconData,
+    this.onClick,
+    this.keyboardType,
+    this.isPassword = false,
+    this.onChange,
+    this.validator,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +30,20 @@ class CustomTextFormField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 2.w),
       child: TextFormField(
         onChanged: onChange,
-        validator:validator?? (value) {
-          if (value == null || value.isEmpty) {
-            return "Please Enter $text Currect";
-          }
-          if (regexCondition != null) {
-            if (!RegExp('$regexCondition').hasMatch(value)) {
-              return 'your $text must be $regexCondition';
-            }
-          }
-        },
+        validator: validator ??
+            (value) {
+              if (value == null || value.isEmpty) {
+                return "Please Enter $text Currect";
+              }
+              if (regexCondition != null) {
+                if (!RegExp('$regexCondition').hasMatch(value)) {
+                  return 'your $text must be $regexCondition';
+                }
+              }
+            },
         controller: controller,
         obscureText: isPassword,
+        keyboardType: keyboardType,
         decoration: InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 3.w),

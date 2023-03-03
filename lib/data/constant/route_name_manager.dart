@@ -2,6 +2,8 @@
 class RouteNameManager{
 
   static const String splashScreen="splashScreen";
+  static const String chatScreen="chatScreen";
+
 
   static const String signUpScreen="signUpScreen";
   static const String loginScreen="loginScreen";
@@ -9,6 +11,7 @@ class RouteNameManager{
 
   static const String homeAdminScreen="Admin";
   static const String adminEventScreen="adminEventScreen";
+  static const String addEventScreen="addEventScreen";
   static const String addAdminScreen="addAdminScreen";
   static const String addSecurityScreen="addSecurityScreen";
 

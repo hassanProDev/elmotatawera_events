@@ -128,7 +128,6 @@ class AppCubit extends Cubit<AppState> {
     try {
       await user.where(UserModel.keyUid, isEqualTo: uid).get().then((value) {
         getUserData = value.docs.map((e) => e.data()).toList()[0];
-        print(" userrr ${getUserData!.userType}");
       });
       emit(GetUserSuccess());
       return getUserData;
@@ -180,6 +179,12 @@ class AppCubit extends Cubit<AppState> {
         toFirestore: (event, _) => event.toJson(),
       );
 
+  DateTime? eventDateTime;
+  getSelectedDate(DateTime? dateTime){
+    eventDateTime =dateTime;
+    emit(GetSelectedDate());
+  }
+
   Future<void> addEvent(EventModel eventModel) async {
     try {
       var doc=event.doc();
@@ -209,8 +214,7 @@ class AppCubit extends Cubit<AppState> {
         event.docs.map((e) => e.data()).toList().forEach((element) {
           allEventList.add(element);
         });
-        print("allEventList");
-        print(allEventList);
+
         emit(GetAllEventsSuccess(events: allEventList ?? []));
       });
     } on Exception catch (e) {
@@ -228,9 +232,8 @@ class AppCubit extends Cubit<AppState> {
           .where(EventModel.keyisEventDone, isEqualTo: false)
           .snapshots()
           .listen((event) {
+
         allActiveEvent = event.docs.map((e) => e.data()).toList();
-        print("allActiveEvent");
-        print(allActiveEvent);
         emit(GetAllActiveEventsSuccess(events: allActiveEvent ?? []));
       });
     } on Exception catch (e) {
@@ -249,8 +252,7 @@ class AppCubit extends Cubit<AppState> {
           .snapshots()
           .listen((event) {
         allUnActiveEvent = event.docs.map((e) => e.data()).toList();
-        print("allUnActiveEvent");
-        print(allUnActiveEvent);
+
         emit(GetAllUnActiveEventsSuccess(events: allUnActiveEvent ?? []));
       });
     } on Exception catch (e) {
@@ -368,21 +370,35 @@ class AppCubit extends Cubit<AppState> {
       );
 
   Future<void> addMessage(MessageModel messageModel) async {
-    await message.doc().set(messageModel);
+    try {
+      await message.doc().set(messageModel);
+      emit(AddMessageSuccess());
+    } on Exception catch (e) {
+      emit(AddMessageFailer(errorMessage: e.toString()));
+    }
   }
 
+  List<MessageModel> allMessages = [];
   getAllMessage(String docId) {
-    message
-        .orderBy(
-          MessageModel.keyDateTime,
-          descending: true,
-        )
-        .where(
-          MessageModel.keyDocId,
-          isEqualTo: docId,
-        )
-        .snapshots()
-        .listen((event) {});
+    try{
+      message
+          .orderBy(
+        MessageModel.keyDateTime,
+        descending: true,
+      )
+          .where(
+        MessageModel.keyDocId,
+        isEqualTo: docId,
+      )
+          .snapshots()
+          .listen((event) {
+        allMessages = event.docs.map((e) => e.data()).toList();
+        emit(GetAllMessagesSuccess(messages: allMessages ?? []));
+      });
+    }catch(e){
+      emit(GetAllMessagesFailer(errorMessage: e.toString()));
+    }
+
   }
 
   // end message cubit

@@ -4,7 +4,9 @@ import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_rich
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({Key? key}) : super(key: key);
+  final void Function()? onPressed;
+
+  const CustomAppBar({Key? key, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +25,21 @@ class CustomAppBar extends StatelessWidget {
                     bottomLeft: Radius.circular(SizeManager.size20),
                     bottomRight: Radius.circular(SizeManager.size20),
                   )),
-              child: GlobalRichText(
-                firstString: "El Motatawera ",
-                secondString: "Events",
-                secondTextColor: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                      onPressed: onPressed,
+                      icon: Icon(
+                        Icons.menu,
+                        color: Colors.white,
+                      )),
+                  GlobalRichText(
+                    firstString: "El Motatawera ",
+                    secondString: "Events",
+                    secondTextColor: Colors.white,
+                  ),
+                ],
               ),
             ),
             SizedBox(

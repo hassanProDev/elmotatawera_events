@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_app_bar.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_event_page.dart';
@@ -37,7 +38,9 @@ class HomeAdminScreen extends StatelessWidget {
                         length: 3,
                         child: Column(
                           children: [
-                            CustomAppBar(),
+                            CustomAppBar(onPressed: (){
+                              myCubit.openDrawer();
+                            },),
                             CustomTabBar(
 
                               onTap: (index) {
@@ -62,7 +65,7 @@ class HomeAdminScreen extends StatelessWidget {
                     floatingActionButton: FloatingActionButton(
                       backgroundColor: ColorManager.terkwazColor,
                       onPressed: () {
-                        myCubit.openDrawer();
+                        Navigator.pushNamed(context, RouteNameManager.addEventScreen);
                       },
                       child: Icon(Icons.event),
                     ),

@@ -71,7 +71,10 @@ class UpdateUserDataFailer extends AppState {
   UpdateUserDataFailer({required this.errorMessage});
 }
 
+// all events
+
 class EventLoading extends AppState {}
+class GetSelectedDate extends AppState {}
 
 class EventAddedSuccess extends AppState {}
 
@@ -136,3 +139,25 @@ class UpdateEventDataFailer extends AppState {
 }
 
 class ChangeTabIndex extends AppState {}
+
+// all messages
+
+class AddMessageSuccess extends AppState {}
+
+class AddMessageFailer extends AppState {
+  String errorMessage;
+
+  AddMessageFailer({required this.errorMessage});
+}
+
+class GetAllMessagesSuccess extends AppState {
+  List<MessageModel> messages = [];
+
+  GetAllMessagesSuccess({required this.messages});
+}
+
+class GetAllMessagesFailer extends AppState {
+  String errorMessage;
+
+  GetAllMessagesFailer({required this.errorMessage});
+}

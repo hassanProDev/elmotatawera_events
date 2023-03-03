@@ -6,6 +6,6 @@ class AddAdminScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SignUpScreen(userType: RouteNameManager.homeMasterScreen,);
+    return SignUpScreen(userType: RouteNameManager.homeAdminScreen ,);
   }
 }
