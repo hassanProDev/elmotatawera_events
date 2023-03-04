@@ -3,8 +3,8 @@ import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_app_bar.dart';
-import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_event_page.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_tab_bar.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/tab_bar_view_item.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_animate.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_bg.dart';
@@ -49,14 +49,7 @@ class HomeAdminScreen extends StatelessWidget {
                               index: myCubit.currentTabIndex,
                             ),
                             Expanded(
-                              child: TabBarView(children: [
-                                CustomEventPage(
-                                    eventModelList: myCubit.allEventList),
-                                CustomEventPage(
-                                    eventModelList: myCubit.allActiveEvent),
-                                CustomEventPage(
-                                    eventModelList: myCubit.allUnActiveEvent),
-                              ]),
+                              child:tabBarViewItem(myCubit)[myCubit.currentTabIndex],
                             ),
                           ],
                         ),

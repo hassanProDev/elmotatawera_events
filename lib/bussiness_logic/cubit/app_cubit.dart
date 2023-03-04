@@ -184,7 +184,22 @@ class AppCubit extends Cubit<AppState> {
     eventDateTime =dateTime;
     emit(GetSelectedDate());
   }
-
+  var eventFormKey=GlobalKey<FormState>();
+  var titleController=TextEditingController();
+  var descriptionController=TextEditingController();
+  var locationController=TextEditingController();
+  var locationUrlController=TextEditingController();
+  var peopleCountController=TextEditingController();
+  var priceController=TextEditingController();
+  resetEventController(){
+    titleController.clear();
+    descriptionController.clear();
+    locationController.clear();
+    locationUrlController.clear();
+    peopleCountController.clear();
+    priceController.clear();
+    emit(AppInitial());
+  }
   Future<void> addEvent(EventModel eventModel) async {
     try {
       var doc=event.doc();
