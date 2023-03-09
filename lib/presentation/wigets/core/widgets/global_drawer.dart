@@ -1,6 +1,8 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
+import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,6 +13,8 @@ class GlobalDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var myCubit = BlocProvider.of<AppCubit>(context);
+    Color colorbt=ColorManager.redColor;
     return SafeArea(
       child: Container(
         width: 200,
@@ -27,7 +31,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    BlocProvider.of<AppCubit>(context).getUserData!.userType,
+                    myCubit.getUserData!.userType,
                     fontWeight: FontWeight.bold,
                     fontSize: SizeManager.size14,
                   ),
@@ -36,7 +40,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    BlocProvider.of<AppCubit>(context).getUserData!.firstName +
+                    myCubit.getUserData!.firstName +
                         " " +
                         BlocProvider.of<AppCubit>(context)
                             .getUserData!
@@ -48,7 +52,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    BlocProvider.of<AppCubit>(context).getUserData!.phone,
+                    myCubit.getUserData!.phone,
                     fontSize: SizeManager.size14,
                   ),
                   TextOffWhite(
@@ -56,9 +60,18 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    BlocProvider.of<AppCubit>(context).getUserData!.email!,
+                    myCubit.getUserData!.email!,
                     fontSize: SizeManager.size10,
                   ),
+                  myCubit.xbt
+                      ? CustomButton(
+                          color: myCubit.cbt,
+                          text: "_",
+                          onTap: () async {
+                            await myCubit.ux();
+                          },
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

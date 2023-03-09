@@ -40,7 +40,6 @@ dependencies:
   cloud_firestore: ^4.4.2
   firebase_auth: ^4.2.8
   firebase_core: ^2.6.1
-  qr_code_scanner: ^1.0.1
   pretty_qr_code: ^2.0.3
   bloc: ^8.1.1
   flutter_bloc: ^8.1.2
@@ -48,6 +47,8 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   curved_navigation_bar: ^1.0.3
   url_launcher: ^6.1.10
+  flutter_slidable: ^2.0.0
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:

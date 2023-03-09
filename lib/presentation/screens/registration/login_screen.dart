@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class LoginScreen extends StatelessWidget {
-
   bool isLoading = false;
 
   String? email;
@@ -31,14 +30,12 @@ class LoginScreen extends StatelessWidget {
         } else if (state is LoginSuccess) {
           customToast(
             context,
-            color: Colors.blue,
             text: "Login is Success",
           );
         } else if (state is LoginFailer) {
           isLoading = false;
           customToast(
             context,
-            color: Colors.blue,
             text: state.errorMessage,
           );
         }
@@ -47,7 +44,6 @@ class LoginScreen extends StatelessWidget {
         } else if (state is GetUserFailer) {
           customToast(
             context,
-            color: Colors.blue,
             text: state.errorMessage,
           );
         }
@@ -72,17 +68,13 @@ class LoginScreen extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     text: "email",
-                    onChange: (value) {
-                      email = value;
-                    },
+                    controller: myCubit.loginEmail,
                   ),
                   CustomTextFormField(
                     text: "password",
                     iconData: myCubit.loginPasswordIcon,
                     isPassword: myCubit.loginPasswordVisibilty,
-                    onChange: (value) {
-                      password = value;
-                    },
+                    controller: myCubit.loginPassword,
                     onClick: () {
                       myCubit.changeLoginPasswordVisibilty();
                     },
@@ -95,12 +87,14 @@ class LoginScreen extends StatelessWidget {
                     color: ColorManager.deepBlue,
                     onTap: () async {
                       if (myCubit.loginFormKey.currentState!.validate()) {
-                        await myCubit.userLogin(email!, password!);
-                        userModel = await myCubit
-                            .getUser(myCubit.userCredential!.user!.uid);
-                        Navigator.pushReplacementNamed(
-                            context, userModel!.userType,
-                            arguments: userModel);
+                        await myCubit.userLogin(myCubit.loginEmail.text, myCubit.loginPassword.text).then((v){
+                          Navigator.pushReplacementNamed(
+                              context, myCubit.getUserData!.userType);
+                          myCubit.clearLoginController();
+                        });
+                        // userModel = await myCubit
+                        //     .getUser(myCubit.userCredential!.user!.uid);
+
                       }
                     },
                   ),

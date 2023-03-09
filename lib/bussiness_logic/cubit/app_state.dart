@@ -12,6 +12,7 @@ class PasswordVisibilty extends AppState {}
 class SignUpLoading extends AppState {}
 
 class SignUpSuccess extends AppState {}
+class ClearController extends AppState {}
 
 class SignUpFailer extends AppState {
   String errorMessage;
@@ -160,4 +161,99 @@ class GetAllMessagesFailer extends AppState {
   String errorMessage;
 
   GetAllMessagesFailer({required this.errorMessage});
+}
+
+// all guests
+
+class GuestLoading extends AppState {}
+
+class GuestAddedSuccess extends AppState {}
+
+class GuestAddedFailer extends AppState {
+  String errorMessage;
+
+  GuestAddedFailer({required this.errorMessage});
+}
+
+class GetSelectedGuestSuccess extends AppState {}
+
+class GetMyGuestsSuccess extends AppState {
+  List<GuestModel> guests = [];
+
+  GetMyGuestsSuccess({required this.guests});
+}
+
+class GetMyGuestsFailer extends AppState {
+  String errorMessage;
+
+  GetMyGuestsFailer({required this.errorMessage});
+}
+class GetMyInvitationSuccess extends AppState {
+  List<GuestModel> guests = [];
+
+  GetMyInvitationSuccess({required this.guests});
+}
+
+class GetMyInvitationFailer extends AppState {
+  String errorMessage;
+
+  GetMyInvitationFailer({required this.errorMessage});
+}
+class CheckInvitationSuccess extends AppState {
+  GuestModel guestModel;
+
+  CheckInvitationSuccess({required this.guestModel});
+}
+
+class CheckInvitationFailer extends AppState {
+  String errorMessage;
+
+  CheckInvitationFailer({required this.errorMessage});
+}
+class ScanQrSuccess extends AppState {}
+
+class ScanQrFailer extends AppState {
+  String errorMessage;
+
+  ScanQrFailer({required this.errorMessage});
+}
+
+class GetAllConfimedGuestsSuccess extends AppState {
+  List<GuestModel> guests = [];
+
+  GetAllConfimedGuestsSuccess({required this.guests});
+}
+
+class GetAllConfimedGuestsFailer extends AppState {
+  String errorMessage;
+
+  GetAllConfimedGuestsFailer({required this.errorMessage});
+}
+
+class GetAllUnConfimedGuestsSuccess extends AppState {
+  List<GuestModel> guests = [];
+
+  GetAllUnConfimedGuestsSuccess({required this.guests});
+}
+
+class GetAllUnConfimedGuestsFailer extends AppState {
+  String errorMessage;
+
+  GetAllUnConfimedGuestsFailer({required this.errorMessage});
+}
+
+class DeleteGuestSuccess extends AppState {}
+
+class DeleteGuestFailer extends AppState {
+  String errorMessage;
+
+  DeleteGuestFailer({required this.errorMessage});
+}
+
+class UpdateGuestDataSuccess extends AppState {}
+
+class UpdateGuestDataFailer extends AppState {
+  String errorMessage;
+
+  UpdateGuestDataFailer({required this.errorMessage});
 }

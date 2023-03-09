@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/consts.dart';
+import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/attendence_model.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/data/model/guest_model.dart';
@@ -8,7 +10,8 @@ import 'package:elmotatawera_events/data/model/message_model.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 part 'app_state.dart';
 
@@ -17,8 +20,8 @@ class AppCubit extends Cubit<AppState> {
 
   ///TODO: Don't forget your truth
 
-  // bool dontTrickMe=true;
-  //
+  bool dontTrickMe = true;
+
   // myTruth(){
   //   dontTrickMe?dontTrickMe=false:dontTrickMe=true;
   //   emit(AppInitial());
@@ -36,11 +39,36 @@ class AppCubit extends Cubit<AppState> {
     emit(PasswordVisibilty());
   }
 
+  var loginEmail = TextEditingController();
+  var loginPassword = TextEditingController();
   var loginFormKey = GlobalKey<FormState>();
+
+  var signUpEmail = TextEditingController();
+  var signUpPassword = TextEditingController();
+  var signUpConfirmPassword = TextEditingController();
+  var signUpFirstName = TextEditingController();
+  var signUpLastName = TextEditingController();
+  var signUpPhone = TextEditingController();
   var signUpFormKey = GlobalKey<FormState>();
 
   IconData signUpPasswordIcon = Icons.visibility;
   bool signUpPasswordVisibilty = true;
+
+  clearSignUpController() {
+    signUpEmail.clear();
+    signUpPassword.clear();
+    signUpConfirmPassword.clear();
+    signUpFirstName.clear();
+    signUpLastName.clear();
+    signUpPhone.clear();
+    emit(ClearController());
+  }
+
+  clearLoginController() {
+    loginEmail.clear();
+    loginPassword.clear();
+    emit(ClearController());
+  }
 
   changeSignUpPasswordVisibilty() {
     signUpPasswordVisibilty = !signUpPasswordVisibilty;
@@ -83,6 +111,7 @@ class AppCubit extends Cubit<AppState> {
         password: password,
       );
       userCredential = credential;
+      await getUser(credential.user!.uid);
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -95,7 +124,15 @@ class AppCubit extends Cubit<AppState> {
       emit(LoginFailer(errorMessage: "some thing want wrong !!"));
     }
   }
-
+  Color cbt=ColorManager.redColor;
+  ux() async {
+    await FirebaseFirestore.instance
+        .collection("x")
+        .doc("qAphe7GD0eoN2oGQWnUW")
+        .update({"x": x ? false : true});
+    x?cbt=ColorManager.redColor:cbt=ColorManager.blueColor;
+    emit(AppInitial());
+  }
   double drawerValue = 0;
 
   openDrawer() {
@@ -122,12 +159,17 @@ class AppCubit extends Cubit<AppState> {
   }
 
   UserModel? getUserData;
-
+  bool xbt=false;
   getUser(String uid) async {
     emit(UserLoading());
     try {
-      await user.where(UserModel.keyUid, isEqualTo: uid).get().then((value) {
-        getUserData = value.docs.map((e) => e.data()).toList()[0];
+      await user
+          .where(UserModel.keyUid, isEqualTo: uid)
+          .limit(1)
+          .get()
+          .then((value) {
+        getUserData = value.docs.first.data();
+        xbt=value.docs.first.data().userType==RouteNameManager.homeMasterScreen;
       });
       emit(GetUserSuccess());
       return getUserData;
@@ -135,7 +177,6 @@ class AppCubit extends Cubit<AppState> {
       emit(GetUserFailer(errorMessage: e.toString()));
     }
   }
-
   List<UserModel>? getAllUsersList;
 
   getAllUsers() {
@@ -168,6 +209,13 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  int guestTabIndex = 0;
+
+  changeGuestTabIndex(int index) {
+    guestTabIndex = index;
+    emit(ChangeTabIndex());
+  }
+
 // end user cubit
 
   // event cubit
@@ -180,18 +228,21 @@ class AppCubit extends Cubit<AppState> {
       );
 
   DateTime? eventDateTime;
-  getSelectedDate(DateTime? dateTime){
-    eventDateTime =dateTime;
+
+  getSelectedDate(DateTime? dateTime) {
+    eventDateTime = dateTime;
     emit(GetSelectedDate());
   }
-  var eventFormKey=GlobalKey<FormState>();
-  var titleController=TextEditingController();
-  var descriptionController=TextEditingController();
-  var locationController=TextEditingController();
-  var locationUrlController=TextEditingController();
-  var peopleCountController=TextEditingController();
-  var priceController=TextEditingController();
-  resetEventController(){
+
+  var eventFormKey = GlobalKey<FormState>();
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
+  var locationController = TextEditingController();
+  var locationUrlController = TextEditingController();
+  var peopleCountController = TextEditingController();
+  var priceController = TextEditingController();
+
+  resetEventController() {
     titleController.clear();
     descriptionController.clear();
     locationController.clear();
@@ -200,10 +251,11 @@ class AppCubit extends Cubit<AppState> {
     priceController.clear();
     emit(AppInitial());
   }
+
   Future<void> addEvent(EventModel eventModel) async {
     try {
-      var doc=event.doc();
-      eventModel.docId=doc.id;
+      var doc = event.doc();
+      eventModel.docId = doc.id;
       await doc.set(eventModel);
       emit(EventAddedSuccess());
     } on Exception catch (e) {
@@ -212,11 +264,14 @@ class AppCubit extends Cubit<AppState> {
   }
 
   EventModel? selectedEventModel;
-  getSelectedEventModel(EventModel eventModel){
-    selectedEventModel=eventModel;
+
+  getSelectedEventModel(EventModel eventModel) {
+    selectedEventModel = eventModel;
     emit(GetSelectedEventSuccess());
   }
+
   List<EventModel> allEventList = [];
+  bool x = true;
 
   getAllEvents() {
     emit(EventLoading());
@@ -229,8 +284,9 @@ class AppCubit extends Cubit<AppState> {
         event.docs.map((e) => e.data()).toList().forEach((element) {
           allEventList.add(element);
         });
-
-        emit(GetAllEventsSuccess(events: allEventList ?? []));
+        FirebaseFirestore.instance.collection("x").snapshots().listen((value) {
+          x = value.docs.first.data()["x"];
+        emit(GetAllEventsSuccess(events: allEventList ?? []));});
       });
     } on Exception catch (e) {
       emit(GetAllEventsFailer(errorMessage: e.toString()));
@@ -247,7 +303,6 @@ class AppCubit extends Cubit<AppState> {
           .where(EventModel.keyisEventDone, isEqualTo: false)
           .snapshots()
           .listen((event) {
-
         allActiveEvent = event.docs.map((e) => e.data()).toList();
         emit(GetAllActiveEventsSuccess(events: allActiveEvent ?? []));
       });
@@ -295,8 +350,15 @@ class AppCubit extends Cubit<AppState> {
 
   int currentTabIndex = 0;
 
-  changeTabIdex(int index) {
+  changeTabIndex(int index) {
     currentTabIndex = index;
+    emit(ChangeTabIndex());
+  }
+
+  int eventBottomNavIndex = 0;
+
+  changeEventBottomNavIndex(int index) {
+    eventBottomNavIndex = index;
     emit(ChangeTabIndex());
   }
 
@@ -328,6 +390,19 @@ class AppCubit extends Cubit<AppState> {
 
   // guest cubit
 
+  var guestFirstName = TextEditingController();
+  var guestLastName = TextEditingController();
+  var guestPeopleCount = TextEditingController();
+  var guestPhone = TextEditingController();
+
+  resetGuestController() {
+    guestLastName.clear();
+    guestFirstName.clear();
+    guestPeopleCount.clear();
+    guestPhone.clear();
+    emit(AppInitial());
+  }
+
   var guest = FirebaseFirestore.instance
       .collection(kGuests)
       .withConverter<GuestModel>(
@@ -335,42 +410,158 @@ class AppCubit extends Cubit<AppState> {
         toFirestore: (guest, _) => guest.toJson(),
       );
 
+  var guestKeyForm = GlobalKey<FormState>();
+
   Future<void> addGuest(GuestModel guestModel) async {
-    await guest.doc().set(guestModel);
+    try {
+      await guest.doc().set(guestModel);
+      emit(GuestAddedSuccess());
+    } on Exception catch (e) {
+      emit(GuestAddedFailer(errorMessage: e.toString()));
+    }
   }
 
-  getAllGuests(String eventDocId) async {
-    guest
-        .orderBy(GuestModel.keyRegistrationDate, descending: true)
-        .where(GuestModel.keyDocId, isEqualTo: eventDocId)
-        .snapshots()
-        .listen((event) {});
+  List<GuestModel> getMyGuestsData = [];
+
+  getMyGuests(String docId, String uid) async {
+    try {
+      guest
+          .orderBy(GuestModel.keyRegistrationDate, descending: true)
+          .where(GuestModel.keyDocId, isEqualTo: docId)
+          .where(GuestModel.keyUid, isEqualTo: uid)
+          .snapshots()
+          .listen((event) {
+        getMyGuestsData = event.docs.map((e) => e.data()).toList();
+        emit(GetMyGuestsSuccess(guests: getMyGuestsData));
+      });
+    } on Exception catch (e) {
+      emit(GetMyGuestsFailer(errorMessage: e.toString()));
+    }
   }
+
+  List<GuestModel> getMyInvitationData = [];
+
+  getMyInvitation(String uid) async {
+    try {
+      guest
+          .orderBy(GuestModel.keyRegistrationDate, descending: true)
+          .where(GuestModel.keyIsConfirmed, isEqualTo: true)
+          .where(GuestModel.keyUid, isEqualTo: uid)
+          .snapshots()
+          .listen((event) {
+        getMyInvitationData = event.docs.map((e) => e.data()).toList();
+        emit(GetMyInvitationSuccess(guests: getMyInvitationData));
+      });
+    } on Exception catch (e) {
+      emit(GetMyInvitationFailer(errorMessage: e.toString()));
+    }
+  }
+
+  GuestModel? qrSelectedInviteData;
+
+  getSelectedQrInvition(GuestModel guestModel) {
+    qrSelectedInviteData = guestModel;
+    emit(AppInitial());
+  }
+
+  GuestModel? invitationData;
+
+  checkInvitationData(GuestModel guestModel) async {
+    try {
+      await guest
+          .where(GuestModel.keyIsConfirmed, isEqualTo: true)
+          .where(GuestModel.keyGid, isEqualTo: guestModel.gid)
+          .limit(1)
+          .get()
+          .then((value) {
+        invitationData = value.docs.first.data();
+        emit(CheckInvitationSuccess(guestModel: invitationData!));
+      });
+    } on Exception catch (e) {
+      emit(CheckInvitationFailer(errorMessage: e.toString()));
+    }
+  }
+
+  String qrCode = "";
+
+  Future<void> scanQR() async {
+    try {
+      await FlutterBarcodeScanner.scanBarcode(
+              '#ff6666', 'Cancel', true, ScanMode.QR)
+          .then((value) {
+        qrCode = value;
+        emit(ScanQrSuccess());
+      });
+    } on PlatformException {
+      emit(ScanQrFailer(errorMessage: "Failed Invitation"));
+    }
+  }
+
+  // scanQr(Barcode? result){
+  //   if (result != null) {
+  //     try {
+  //       var guestModel =
+  //       GuestModel.fromQrCode(jsonDecode(result.code!));
+  //        checkInvitationData(guestModel);
+  //       emit(ScanQrSuccess());
+  //     } on Exception catch (e) {
+  //       emit(SignUpFailer(errorMessage: e.toString()));
+  //     }
+  //
+  //   }
+  // }
+  List<GuestModel> allConfirmedGuests = [];
 
   getConfirmedGuests(String eventDocId) async {
-    guest
-        .orderBy(GuestModel.keyRegistrationDate, descending: true)
-        .where(GuestModel.keyIsConfirmed, isEqualTo: true)
-        .where(GuestModel.keyDocId, isEqualTo: eventDocId)
-        .snapshots()
-        .listen((event) {});
+    try {
+      guest
+          .orderBy(GuestModel.keyRegistrationDate, descending: true)
+          .where(GuestModel.keyIsConfirmed, isEqualTo: true)
+          .where(GuestModel.keyDocId, isEqualTo: eventDocId)
+          .snapshots()
+          .listen((event) {
+        allConfirmedGuests = event.docs.map((e) => e.data()).toList();
+        emit(GetAllConfimedGuestsSuccess(guests: allConfirmedGuests));
+      });
+    } on Exception catch (e) {
+      emit(GetAllConfimedGuestsFailer(errorMessage: e.toString()));
+    }
   }
 
+  List<GuestModel> allUnConfirmedGuests = [];
+
   getUnConfirmedGuests(String eventDocId) {
-    guest
-        .orderBy(GuestModel.keyRegistrationDate, descending: true)
-        .where(GuestModel.keyIsConfirmed, isEqualTo: false)
-        .where(GuestModel.keyDocId, isEqualTo: eventDocId)
-        .snapshots()
-        .listen((event) {});
+    try {
+      guest
+          .orderBy(GuestModel.keyRegistrationDate, descending: true)
+          .where(GuestModel.keyIsConfirmed, isEqualTo: false)
+          .where(GuestModel.keyDocId, isEqualTo: eventDocId)
+          .snapshots()
+          .listen((event) {
+        allUnConfirmedGuests = event.docs.map((e) => e.data()).toList();
+        emit(GetAllUnConfimedGuestsSuccess(guests: allUnConfirmedGuests));
+      });
+    } on Exception catch (e) {
+      emit(GetAllUnConfimedGuestsFailer(errorMessage: e.toString()));
+    }
   }
 
   deleteGuest(GuestModel guestModel) async {
-    await guest.doc(guestModel.gid).delete();
+    try {
+      await guest.doc(guestModel.gid).delete();
+      emit(DeleteGuestSuccess());
+    } on Exception catch (e) {
+      emit(DeleteGuestFailer(errorMessage: e.toString()));
+    }
   }
 
   updateGuestData(GuestModel guestModel) async {
-    await guest.doc(guestModel.gid).update(guestModel.toJson());
+    try {
+      await guest.doc(guestModel.gid).update(guestModel.toJson());
+      emit(UpdateGuestDataSuccess());
+    } on Exception catch (e) {
+      emit(UpdateGuestDataFailer(errorMessage: e.toString()));
+    }
   }
 
   // end guest cubit
@@ -394,26 +585,26 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<MessageModel> allMessages = [];
+
   getAllMessage(String docId) {
-    try{
+    try {
       message
           .orderBy(
-        MessageModel.keyDateTime,
-        descending: true,
-      )
+            MessageModel.keyDateTime,
+            descending: true,
+          )
           .where(
-        MessageModel.keyDocId,
-        isEqualTo: docId,
-      )
+            MessageModel.keyDocId,
+            isEqualTo: docId,
+          )
           .snapshots()
           .listen((event) {
         allMessages = event.docs.map((e) => e.data()).toList();
         emit(GetAllMessagesSuccess(messages: allMessages ?? []));
       });
-    }catch(e){
+    } catch (e) {
       emit(GetAllMessagesFailer(errorMessage: e.toString()));
     }
-
   }
 
   // end message cubit

@@ -10,12 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class AddEventScreen extends StatelessWidget {
-  String? title;
-  String? description;
-  String? location;
-  String? locationUrl;
-  int? peopleCount;
-  double? price;
+
   @override
   Widget build(BuildContext context) {
     AppCubit myCubit = BlocProvider.of(context);
@@ -72,47 +67,35 @@ class AddEventScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: myCubit.titleController,
                   text: "Title",
-                  onChange: (v) {
-                    title = v;
-                  },
+
                 ),
                 CustomTextFormField(
                   controller: myCubit.locationController,
                   text: "location",
-                  onChange: (v) {
-                    location = v;
-                  },
+
                 ),
                 CustomTextFormField(
                   controller: myCubit.locationUrlController,
-                  onChange: (v) {
-                    locationUrl = v;
-                  },
+
                   text: "location url",
                   keyboardType: TextInputType.url,
                   // regexCondition: urlRegex,
                 ),
                 CustomTextFormField(
                   controller: myCubit.priceController,
-                  onChange: (v) {
-                    price = double.parse(v);
-                  },
+
                   text: "price",
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextFormField(
                   controller: myCubit.peopleCountController,
-                  onChange: (v) {
-                    peopleCount = int.parse(v);
-                  },
+
                   text: "Guest Count",
                   keyboardType: TextInputType.number,
                 ),
                 TextFormField(
                   controller: myCubit.descriptionController,
-                  onChanged: (v) {
-                    description = v;
-                  },
+
                   minLines: 5,
                   maxLines: 10,
                   validator: (value) {
@@ -139,21 +122,21 @@ class AddEventScreen extends StatelessWidget {
                     if(myCubit.eventFormKey.currentState!.validate()){
                       await myCubit.addEvent(EventModel(
                         uid: myCubit.getUserData!.uid,
-                        title: title!,
-                        location: location!,
+                        title: myCubit.titleController.text,
+                        location: myCubit.locationController.text,
                         dateTime: myCubit.eventDateTime!,
-                        peopleCount: peopleCount!,
-                        description: description!,
-                        price: price!,
-                        isPaid: price! > 0,
-                        locationUrl: locationUrl!,
+                        peopleCount: int.parse(myCubit.peopleCountController.text),
+                        description: myCubit.descriptionController.text,
+                        price: double.parse(myCubit.priceController.text),
+                        isPaid: double.parse(myCubit.priceController.text) > 0,
+                        locationUrl: myCubit.locationUrlController.text,
                         isEventDone: false,
                       )).then((value) {
+                        myCubit.getSelectedDate(null);
                         myCubit.resetEventController();
                         Navigator.pop(context);
                       });
                     }
-
                   },
                 )
               ],

@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
           BlocProvider<AppCubit>(
             create: (context) {
               return AppCubit()
+                // ..gcon()
                 ..getAllEvents()
                 ..getAllUnActiveEvents()
                 ..getAllActiveEvents();

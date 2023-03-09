@@ -12,6 +12,7 @@ class CustomEventPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppCubit myCubit = BlocProvider.of(context);
     return BlocListener<AppCubit, AppState>(
       listener: (context, state) {
         // TODO: implement listener
@@ -25,8 +26,13 @@ class CustomEventPage extends StatelessWidget {
                 print(eventModelList[index].description + index.toString());
                 EventModel eventModel = eventModelList[index];
                 print(eventModel);
-                BlocProvider.of<AppCubit>(context)
-                    .getSelectedEventModel(eventModelList[index]);
+                myCubit.changeTabIndex(0);
+                myCubit.changeGuestTabIndex(0);
+                myCubit.changeEventBottomNavIndex(0);
+                myCubit.getSelectedEventModel(eventModelList[index]);
+                myCubit.getMyGuests(eventModelList[index].docId, myCubit.getUserData!.uid);
+                myCubit.getConfirmedGuests(eventModelList[index].docId);
+                myCubit.getUnConfirmedGuests(eventModelList[index].docId);
                 Navigator.pushNamed(context, RouteNameManager.adminEventScreen);
               },
             );

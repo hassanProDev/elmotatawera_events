@@ -14,12 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class SignUpScreen extends StatelessWidget {
-  String? email;
-  String? password;
-  String? confirmPassword;
-  String? firstName;
-  String? lastName;
-  String? phone;
 
   bool isLoading = false;
   String? userType;
@@ -37,7 +31,6 @@ class SignUpScreen extends StatelessWidget {
           isLoading = false;
           customToast(
             context,
-            color: Colors.blue,
             text: "Registration is Success",
           );
           Navigator.pushReplacementNamed(
@@ -46,7 +39,6 @@ class SignUpScreen extends StatelessWidget {
           isLoading = false;
           customToast(
             context,
-            color: Colors.blue,
             text: state.errorMessage,
           );
         }
@@ -63,8 +55,8 @@ class SignUpScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 32.sp),
                       child: GlobalRichText(
-                        firstString: "El Motatawera",
-                        secondString: " Events",
+                        firstString: userType!=null?"New":"El Motatawera",
+                        secondString: userType??" Events",
                       ),
                     ),
                     SizedBox(
@@ -72,34 +64,24 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     CustomTextFormField(
                       text: "first name",
-                      onChange: (value) {
-                        firstName = value;
-                      },
+                      controller: myCubit.signUpFirstName,
                     ),
                     CustomTextFormField(
                       text: "last name",
-                      onChange: (value) {
-                        lastName = value;
-                      },
+                      controller: myCubit.signUpLastName,
                     ),
                     CustomTextFormField(
                       text: "phone",
-                      onChange: (value) {
-                        phone = value;
-                      },
+                      controller: myCubit.signUpPhone,
                     ),
                     CustomTextFormField(
                       text: "email",
-                      onChange: (value) {
-                        email = value;
-                      },
+                      controller: myCubit.signUpEmail,
                     ),
                     CustomTextFormField(
                       text: "password",
                       isPassword: myCubit.signUpPasswordVisibilty,
-                      onChange: (value) {
-                        password = value;
-                      },
+                      controller: myCubit.signUpPassword,
                       iconData: myCubit.signUpPasswordIcon,
                       onClick: () {
                         myCubit.changeSignUpPasswordVisibilty();
@@ -109,11 +91,9 @@ class SignUpScreen extends StatelessWidget {
                       text: "confirm-password",
                       iconData: myCubit.signUpPasswordIcon,
                       isPassword: myCubit.signUpPasswordVisibilty,
-                      onChange: (value) {
-                        confirmPassword = value;
-                      },
+                      controller: myCubit.signUpConfirmPassword,
                       validator: (value) {
-                        if (password != confirmPassword) {
+                        if (myCubit.signUpPassword.text != myCubit.signUpConfirmPassword.text) {
                           return "please confirm your password";
                         }
                       },
@@ -121,24 +101,32 @@ class SignUpScreen extends StatelessWidget {
                         myCubit.changeSignUpPasswordVisibilty();
                       },
                     ),
-                    CustomButton(
-                      text: "Sign Up",
-                      color: ColorManager.deepBlue,
-                      onTap: () async {
-                        if (myCubit.signUpFormKey.currentState!.validate()) {
-                          await myCubit.userSignUp(email!, password!);
-                          await myCubit.addUser(UserModel(
-                            email: myCubit.userCredential!.user!.email,
-                            uid: myCubit.userCredential!.user!.uid,
-                            firstName: firstName!,
-                            lastName: lastName!,
-                            phone: phone!,
-                            userType:
-                                userType ?? RouteNameManager.homeGuestScreen,
-                          ));
-                        }
-                      },
-                    ),
+                        CustomButton(
+                          text: "Sign Up",
+                          color: ColorManager.deepBlue,
+                          onTap: () async {
+                            if (myCubit.signUpFormKey.currentState!
+                                .validate()) {
+                              await myCubit.userSignUp(myCubit.signUpEmail.text, myCubit.signUpPassword.text);
+                              await myCubit
+                                  .addUser(UserModel(
+                                email: myCubit.userCredential!.user!.email,
+                                uid: myCubit.userCredential!.user!.uid,
+                                firstName: myCubit.signUpFirstName.text,
+                                lastName: myCubit.signUpLastName.text,
+                                phone: myCubit.signUpPhone.text,
+                                userType: userType ??
+                                    RouteNameManager.homeGuestScreen,
+                              )).then((value) {
+                                userType == null
+                                    ? Navigator.pushReplacementNamed(
+                                        context, RouteNameManager.homeGuestScreen)
+                                    : Navigator.pop(context);
+                                myCubit.clearSignUpController();
+                              });
+                            }
+                          },
+                        ),
                     SizedBox(
                       height: 1.h,
                     ),

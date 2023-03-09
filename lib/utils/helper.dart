@@ -2,11 +2,12 @@
 
 import 'dart:async';
 
+import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-customToast(BuildContext context, {String? text,Color? color,IconData? icon}){
+customToast(BuildContext context, {String? text,Color? color=ColorManager.blueColor,IconData? icon,int? milliseconds }){
   showDialog(context: context, builder: (context){
-    Timer(Duration(seconds: 2),(){
+    Timer(Duration(milliseconds: milliseconds??2000),(){
       // Navigator.pop(context);
     });
     return Dialog(
