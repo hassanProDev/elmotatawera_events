@@ -257,3 +257,19 @@ class UpdateGuestDataFailer extends AppState {
 
   UpdateGuestDataFailer({required this.errorMessage});
 }
+class AddAttendanceSuccess extends AppState {}
+
+class AddAttendanceFailer extends AppState {
+  String errorMessage;
+
+  AddAttendanceFailer({required this.errorMessage});
+}
+class GetAllAttendanceSuccess extends AppState {}
+
+class GetAllAttendanceFailer extends AppState {
+  String errorMessage;
+
+  GetAllAttendanceFailer({required this.errorMessage});
+}
+
+

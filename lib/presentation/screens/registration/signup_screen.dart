@@ -14,7 +14,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class SignUpScreen extends StatelessWidget {
-
   bool isLoading = false;
   String? userType;
 
@@ -29,12 +28,16 @@ class SignUpScreen extends StatelessWidget {
           isLoading = true;
         } else if (state is SignUpSuccess) {
           isLoading = false;
+          if (userType == null) {
+            Navigator.pushReplacementNamed(
+                context, RouteNameManager.loginScreen);
+          } else {
+            Navigator.pop(context);
+          }
           customToast(
             context,
             text: "Registration is Success",
           );
-          Navigator.pushReplacementNamed(
-              context, userType ?? RouteNameManager.homeGuestScreen);
         } else if (state is SignUpFailer) {
           isLoading = false;
           customToast(
@@ -55,8 +58,8 @@ class SignUpScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 32.sp),
                       child: GlobalRichText(
-                        firstString: userType!=null?"New":"El Motatawera",
-                        secondString: userType??" Events",
+                        firstString: userType != null ? "New" : "El Motatawera",
+                        secondString: userType ?? " Events",
                       ),
                     ),
                     SizedBox(
@@ -93,7 +96,8 @@ class SignUpScreen extends StatelessWidget {
                       isPassword: myCubit.signUpPasswordVisibilty,
                       controller: myCubit.signUpConfirmPassword,
                       validator: (value) {
-                        if (myCubit.signUpPassword.text != myCubit.signUpConfirmPassword.text) {
+                        if (myCubit.signUpPassword.text !=
+                            myCubit.signUpConfirmPassword.text) {
                           return "please confirm your password";
                         }
                       },
@@ -101,43 +105,43 @@ class SignUpScreen extends StatelessWidget {
                         myCubit.changeSignUpPasswordVisibilty();
                       },
                     ),
-                        CustomButton(
-                          text: "Sign Up",
-                          color: ColorManager.deepBlue,
-                          onTap: () async {
-                            if (myCubit.signUpFormKey.currentState!
-                                .validate()) {
-                              await myCubit.userSignUp(myCubit.signUpEmail.text, myCubit.signUpPassword.text);
-                              await myCubit
-                                  .addUser(UserModel(
-                                email: myCubit.userCredential!.user!.email,
-                                uid: myCubit.userCredential!.user!.uid,
+                    CustomButton(
+                      text: "Sign Up",
+                      color: ColorManager.deepBlue,
+                      onTap: () async {
+                        if (myCubit.signUpFormKey.currentState!.validate()) {
+                          await myCubit.userSignUp(myCubit.signUpEmail.text,
+                              myCubit.signUpPassword.text);
+                          await myCubit
+                              .addUser(UserModel(
+                            userData: UserData(
                                 firstName: myCubit.signUpFirstName.text,
                                 lastName: myCubit.signUpLastName.text,
                                 phone: myCubit.signUpPhone.text,
                                 userType: userType ??
                                     RouteNameManager.homeGuestScreen,
-                              )).then((value) {
-                                userType == null
-                                    ? Navigator.pushReplacementNamed(
-                                        context, RouteNameManager.homeGuestScreen)
-                                    : Navigator.pop(context);
-                                myCubit.clearSignUpController();
-                              });
-                            }
-                          },
-                        ),
+                                email: myCubit.userCredential!.user!.email),
+                            uid: myCubit.userCredential!.user!.uid,
+                          ))
+                              .then((value) {
+
+
+                            myCubit.clearSignUpController();
+                          });
+                        }
+                      },
+                    ),
                     SizedBox(
                       height: 1.h,
                     ),
                     userType == null
                         ? GlobalPressedText(
-                            text: "Login",
-                            onTap: () {
-                              Navigator.pushReplacementNamed(
-                                  context, RouteNameManager.loginScreen);
-                            },
-                          )
+                      text: "Login",
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, RouteNameManager.loginScreen);
+                      },
+                    )
                         : SizedBox(),
                   ],
                 ),

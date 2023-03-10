@@ -69,10 +69,10 @@ class AddGuestScreen extends StatelessWidget {
                                         myCubit.guestPeopleCount.text),
                                     phone: myCubit.guestPhone.text,
                                     eventDate:
-                                        myCubit.selectedEventModel!.dateTime,
+                                        myCubit.selectedEventModel!.eventData.dateTime,
                                     titleEvent:
-                                        myCubit.selectedEventModel!.title,attendance: false),
-                                docId: myCubit.selectedEventModel!.docId,
+                                        myCubit.selectedEventModel!.eventData.title,attendance: false),
+                                docId: myCubit.selectedEventModel!.eventData.docId!,
                                 isConfirmed: true,))
                             .then((value) {
                           myCubit.changeEventBottomNavIndex(0);

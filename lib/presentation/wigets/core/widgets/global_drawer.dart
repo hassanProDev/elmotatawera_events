@@ -31,7 +31,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    myCubit.getUserData!.userType,
+                    myCubit.getUserData!.userData.userType,
                     fontWeight: FontWeight.bold,
                     fontSize: SizeManager.size14,
                   ),
@@ -40,10 +40,10 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    myCubit.getUserData!.firstName +
+                    myCubit.getUserData!.userData.firstName +
                         " " +
                         BlocProvider.of<AppCubit>(context)
-                            .getUserData!
+                            .getUserData!.userData
                             .lastName,
                     fontSize: SizeManager.size14,
                   ),
@@ -52,7 +52,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    myCubit.getUserData!.phone,
+                    myCubit.getUserData!.userData.phone,
                     fontSize: SizeManager.size14,
                   ),
                   TextOffWhite(
@@ -60,7 +60,7 @@ class GlobalDrawer extends StatelessWidget {
                     fontSize: SizeManager.size12,
                   ),
                   TextOffWhite(
-                    myCubit.getUserData!.email!,
+                    myCubit.getUserData!.userData.email!,
                     fontSize: SizeManager.size10,
                   ),
                   myCubit.xbt

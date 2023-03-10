@@ -89,7 +89,7 @@ class LoginScreen extends StatelessWidget {
                       if (myCubit.loginFormKey.currentState!.validate()) {
                         await myCubit.userLogin(myCubit.loginEmail.text, myCubit.loginPassword.text).then((v){
                           Navigator.pushReplacementNamed(
-                              context, myCubit.getUserData!.userType);
+                              context, myCubit.getUserData!.userData.userType);
                           myCubit.clearLoginController();
                         });
                         // userModel = await myCubit

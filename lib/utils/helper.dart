@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 customToast(BuildContext context, {String? text,Color? color=ColorManager.blueColor,IconData? icon,int? milliseconds }){
@@ -21,7 +22,7 @@ customToast(BuildContext context, {String? text,Color? color=ColorManager.blueCo
         ),
         child: Row(mainAxisSize: MainAxisSize.min,
           children: [
-          Text(text??""),SizedBox(width: 2.w,),Icon(icon)
+          TextOffWhite(text??""),SizedBox(width: 2.w,),Icon(icon)
         ],),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/add_event_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/admin_event_screen.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/event/widgets/attended_guests_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/home_admin_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/new_responsible_screen/new_responsible_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/new_responsible_screen/pages/add_admin_screen/add_admin.dart';
@@ -38,8 +39,8 @@ class RoutesManager {
         return MaterialPageRoute(builder: (_) => AdminEventScreen());
       case RouteNameManager.inviteScreen:
         return MaterialPageRoute(builder: (_) => QRInvititionScreen());
-      // case RouteNameManager.scannerScreen:
-      //   return MaterialPageRoute(builder: (_) => QrScnnerScreen());
+      case RouteNameManager.guestAttendanceScreen:
+        return MaterialPageRoute(builder: (_) => AttendedGuestsScreen());
       case RouteNameManager.attendanceScreen:
         return MaterialPageRoute(builder: (_) => AttendanceScreen());
       case RouteNameManager.homeGuestScreen:

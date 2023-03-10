@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class GuestModel {
-  static const String keyGid = "gid";
   static const String keyUid = "uid";
   static const String keyDocId = "docId";
   static const String keyIsConfirmed = "isConfirmed";
@@ -11,15 +10,13 @@ class GuestModel {
   static const String keyGuestData = "guestDate";
 
   final GuestData guestData;
-  final String? gid;
   final String uid;
   final String docId;
-  final bool isConfirmed;
+   bool isConfirmed;
   final DateTime? registrationDate;
 
-  const GuestModel({
+   GuestModel({
     required this.guestData,
-    this.gid,
     required this.uid,
     required this.docId,
     required this.isConfirmed,
@@ -29,7 +26,6 @@ class GuestModel {
   factory GuestModel.fromJson(Map<String, dynamic> json) {
     return GuestModel(
       guestData: GuestData.fromJson(jsonDecode(json[keyGuestData])),
-      gid: json[keyGid],
       uid: json[keyUid],
       docId: json[keyDocId],
       isConfirmed: json[keyIsConfirmed],
@@ -40,7 +36,6 @@ class GuestModel {
   Map<String, dynamic> toJson() {
     return {
       keyGuestData: jsonEncode(guestData.toJson()),
-      keyGid: uid + docId,
       keyUid: uid,
       keyDocId: docId,
       keyIsConfirmed: isConfirmed,
@@ -51,7 +46,6 @@ class GuestModel {
   Map<String, dynamic> toQrCode() {
     return {
       keyGuestData: jsonEncode(guestData.toJson()),
-      keyGid: uid + docId,
       keyUid: uid,
       keyDocId: docId,
       keyIsConfirmed: isConfirmed,
@@ -63,7 +57,6 @@ class GuestModel {
   factory GuestModel.fromQrCode(Map<String, dynamic> json) {
     return GuestModel(
       guestData: GuestData.fromJson(jsonDecode(json[keyGuestData])),
-      gid: json[keyGid],
       uid: json[keyUid],
       docId: json[keyDocId],
       isConfirmed: json[keyIsConfirmed],
@@ -80,6 +73,7 @@ class GuestData {
   static const String keyFirstName = "firstName";
   static const String keyLastName = "lastName";
   static const String keyAttendance = "attendance";
+  static const String keyGid = "gid";
 
   final String phone;
   final String firstName;
@@ -88,13 +82,17 @@ class GuestData {
   final String titleEvent;
   final DateTime eventDate;
   bool attendance;
+  String? gid;
 
-   GuestData(
+
+  GuestData(
       {required this.firstName,
       required this.lastName,
       required this.peopleCount,
       required this.phone,
-      required this.eventDate,
+        this.gid,
+
+        required this.eventDate,
       required this.titleEvent,
       required this.attendance});
 
@@ -104,6 +102,8 @@ class GuestData {
       lastName: json[keyLastName],
       peopleCount: json[keyPeopleCount],
       phone: json[keyPhone],
+      gid: json[keyGid],
+
       eventDate: DateTime.parse(json[keyEventDate]),
       titleEvent: json[keyTitleInvitation],
       attendance: json[keyAttendance],
@@ -116,6 +116,7 @@ class GuestData {
       keyFirstName: firstName,
       keyLastName: lastName,
       keyPhone: phone,
+      keyGid: gid,
       keyPeopleCount: peopleCount,
       keyAttendance: attendance,
       keyEventDate: eventDate.toString()

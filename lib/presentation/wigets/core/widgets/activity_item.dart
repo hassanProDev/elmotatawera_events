@@ -33,10 +33,10 @@ class ActivityItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              eventModel?.img!=null?Container(height: 20.h,
+              eventModel?.eventData.img!=null?Container(height: 20.h,
                 child: ClipRRect(
                   child: Image.asset(
-                    eventModel!.img!,
+                    eventModel!.eventData.img!,
                     fit: BoxFit.fill,
                   ),
                   borderRadius: BorderRadius.only(
@@ -46,9 +46,9 @@ class ActivityItem extends StatelessWidget {
                 ),
               ):SizedBox(),
               ListTile(
-                title: TextBlue(eventModel!.title ?? "title",fontSize: SizeManager.size16,),
-                subtitle: TextDeepBlue("location ${eventModel!.location}"),
-                trailing: TextTerkwaz("price ${eventModel!.price}"),
+                title: TextBlue(eventModel!.eventData.title ?? "title",fontSize: SizeManager.size16,),
+                subtitle: TextDeepBlue("location ${eventModel!.eventData.location}"),
+                trailing: TextTerkwaz("price ${eventModel!.eventData.price}"),
               )
             ],
           ),

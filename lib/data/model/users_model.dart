@@ -1,37 +1,67 @@
-class UserModel {
-  static const String keyFirstName = "firstName";
-  static const String keyLastName = "lastName";
-  static const String keyUid = "uid";
-  static const String keyPhone = "phone";
-  static const String keyUserType = "userType";
-  static const String keyRegistrationDate = "registrationDate";
-  static const String keyImg = "img";
-  static const String keyEmail = "email";
+import 'dart:convert';
 
-  final String firstName;
-  final String lastName;
+class UserModel {
+  static const String keyUid = "uid";
+  static const String keyUserData = "userData";
+  static const String keyRegistrationDate = "registrationDate";
+
   final String uid;
-  final String phone;
-  final String userType;
+  final UserData userData;
   final String? registrationDate;
-  final String? img;
-  final String? email;
 
   const UserModel({
     required this.uid,
-    required this.firstName,
-    required this.lastName,
-    required this.phone,
-    required this.userType,
     this.registrationDate,
-    this.img,
-    required this.email,
+    required this.userData,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      uid: json[keyUid],
+      userData: UserData.fromJson(jsonDecode(json[keyUserData])),
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      keyUid: uid,
+      keyRegistrationDate: DateTime.now(),
+      keyUserData: jsonEncode(userData.toJson()),
+    };
+  }
+}
+
+class UserData {
+  static const String keyFirstName = "firstName";
+  static const String keyLastName = "lastName";
+  static const String keyPhone = "phone";
+  static const String keyUserType = "userType";
+  static const String keyImg = "img";
+  static const String keyId = "id";
+  static const String keyEmail = "email";
+
+  final String firstName;
+  final String lastName;
+  final String? img;
+  final String? email;
+  final String phone;
+  final String userType;
+  String? id;
+
+   UserData({
+    required this.firstName,
+    required this.lastName,
+    required this.phone,
+    required this.userType,
+    this.img,
+    this.id,
+    required this.email,
+  });
+
+  factory UserData.fromJson(Map<String, dynamic> json) {
+    return UserData(
+      id: json[keyId],
         email: json[keyEmail],
-        uid: json[keyUid],
         firstName: json[keyFirstName],
         lastName: json[keyLastName],
         phone: json[keyPhone],
@@ -41,12 +71,11 @@ class UserModel {
 
   Map<String, dynamic> toJson() {
     return {
-      keyUid: uid,
+      keyId:id,
       keyFirstName: firstName,
       keyLastName: lastName,
       keyPhone: phone,
       keyUserType: userType,
-      keyRegistrationDate: DateTime.now(),
       keyImg: img,
       keyEmail: email,
     };

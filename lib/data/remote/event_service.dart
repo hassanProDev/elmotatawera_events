@@ -42,11 +42,11 @@ class EventService {
 
   deleteEvent(EventModel eventModel) async {
     var collection = await getEventColection();
-    return collection.doc(eventModel.docId).delete();
+    return collection.doc(eventModel.eventData.docId).delete();
   }
 
   updateEvent(EventModel eventModel) async {
     var collection = await getEventColection();
-    return collection.doc(eventModel.docId).update(eventModel.toJson());
+    return collection.doc(eventModel.eventData.docId).update(eventModel.toJson());
   }
 }

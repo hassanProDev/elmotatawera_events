@@ -16,7 +16,7 @@ class RouteNameManager{
   static const String addAdminScreen="addAdminScreen";
   static const String addSecurityScreen="addSecurityScreen";
   static const String inviteScreen="inviteScreen";
-  static const String scannerScreen="scannerScreen";
+  static const String guestAttendanceScreen="guestAttendanceScreen";
   static const String attendanceScreen="attendanceScreen";
 
   static const String homeGuestScreen="Guest";

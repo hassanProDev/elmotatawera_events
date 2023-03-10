@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class AddEventScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     AppCubit myCubit = BlocProvider.of(context);
@@ -67,12 +66,10 @@ class AddEventScreen extends StatelessWidget {
                 CustomTextFormField(
                   controller: myCubit.titleController,
                   text: "Title",
-
                 ),
                 CustomTextFormField(
                   controller: myCubit.locationController,
                   text: "location",
-
                 ),
                 CustomTextFormField(
                   controller: myCubit.locationUrlController,
@@ -83,19 +80,16 @@ class AddEventScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   controller: myCubit.priceController,
-
                   text: "price",
                   keyboardType: TextInputType.number,
                 ),
                 CustomTextFormField(
                   controller: myCubit.peopleCountController,
-
                   text: "Guest Count",
                   keyboardType: TextInputType.number,
                 ),
                 TextFormField(
                   controller: myCubit.descriptionController,
-
                   minLines: 5,
                   maxLines: 10,
                   validator: (value) {
@@ -118,20 +112,25 @@ class AddEventScreen extends StatelessWidget {
                 ),
                 CustomButton(
                   text: "Add Event",
-                  onTap: () async{
-                    if(myCubit.eventFormKey.currentState!.validate()){
-                      await myCubit.addEvent(EventModel(
-                        uid: myCubit.getUserData!.uid,
-                        title: myCubit.titleController.text,
-                        location: myCubit.locationController.text,
-                        dateTime: myCubit.eventDateTime!,
-                        peopleCount: int.parse(myCubit.peopleCountController.text),
-                        description: myCubit.descriptionController.text,
-                        price: double.parse(myCubit.priceController.text),
-                        isPaid: double.parse(myCubit.priceController.text) > 0,
-                        locationUrl: myCubit.locationUrlController.text,
+                  onTap: () async {
+                    if (myCubit.eventFormKey.currentState!.validate()) {
+                      await myCubit
+                          .addEvent(EventModel(
+                        eventData: EventData(
+                            uid: myCubit.getUserData!.uid,
+                            title: myCubit.titleController.text,
+                            location: myCubit.locationController.text,
+                            dateTime: myCubit.eventDateTime!,
+                            peopleCount:
+                                int.parse(myCubit.peopleCountController.text),
+                            description: myCubit.descriptionController.text,
+                            price: double.parse(myCubit.priceController.text),
+                            isPaid:
+                                double.parse(myCubit.priceController.text) > 0,
+                            locationUrl: myCubit.locationUrlController.text),
                         isEventDone: false,
-                      )).then((value) {
+                      ))
+                          .then((value) {
                         myCubit.getSelectedDate(null);
                         myCubit.resetEventController();
                         Navigator.pop(context);

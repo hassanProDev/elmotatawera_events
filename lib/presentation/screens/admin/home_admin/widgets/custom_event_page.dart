@@ -23,16 +23,16 @@ class CustomEventPage extends StatelessWidget {
             return ActivityItem(
               eventModel: eventModelList[index],
               onTap: () {
-                print(eventModelList[index].description + index.toString());
+                print(eventModelList[index].eventData.description + index.toString());
                 EventModel eventModel = eventModelList[index];
                 print(eventModel);
                 myCubit.changeTabIndex(0);
                 myCubit.changeGuestTabIndex(0);
                 myCubit.changeEventBottomNavIndex(0);
                 myCubit.getSelectedEventModel(eventModelList[index]);
-                myCubit.getMyGuests(eventModelList[index].docId, myCubit.getUserData!.uid);
-                myCubit.getConfirmedGuests(eventModelList[index].docId);
-                myCubit.getUnConfirmedGuests(eventModelList[index].docId);
+                myCubit.getMyGuests(eventModelList[index].eventData.docId!, myCubit.getUserData!.uid);
+                myCubit.getConfirmedGuests(eventModelList[index].eventData.docId!);
+                myCubit.getUnConfirmedGuests(eventModelList[index].eventData.docId!);
                 Navigator.pushNamed(context, RouteNameManager.adminEventScreen);
               },
             );

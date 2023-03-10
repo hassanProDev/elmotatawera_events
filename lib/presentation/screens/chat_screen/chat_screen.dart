@@ -21,14 +21,17 @@ class ChatScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             leading: InkWell(
-              onTap: (){
+              onTap: () {
                 Navigator.pop(context);
               },
-              child: Icon(Icons.arrow_back_ios,color: ColorManager.blueColor,),
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: ColorManager.blueColor,
+              ),
             ),
             backgroundColor: Colors.white,
             title: GlobalRichText(
-              firstString: myCubit.selectedEventModel!.title,
+              firstString: myCubit.selectedEventModel!.eventData.title,
               secondString: " Chat",
             ),
             centerTitle: true,
@@ -42,26 +45,29 @@ class ChatScreen extends StatelessWidget {
                       reverse: true,
                       controller: controller,
                       itemCount: myCubit.allMessages.length,
-                      itemBuilder: (_, index) => MessageBubble(currentUser: myCubit.getUserData!.uid,
-                            messageUser: myCubit.allMessages[index].uid,
-                        textMessage: myCubit.allMessages[index].message,
+                      itemBuilder: (_, index) => MessageBubble(
+                            currentUser: myCubit.getUserData!.uid,
+                            messageUser:
+                                myCubit.allMessages[index].messageData.uid,
+                            textMessage:
+                                myCubit.allMessages[index].messageData.message,
                           )),
                 ),
                 MessageTextField(
                   controller: message,
                   onTap: () async {
-                    if(message.text==null||message.text.isEmpty){
+                    if (message.text == null || message.text.isEmpty) {
                       return;
                     }
-                      await myCubit.addMessage(MessageModel(
-                          docId: myCubit.selectedEventModel!.docId,
-                          uid: myCubit.getUserData!.uid,
-                          message: message.text));
-                      controller.animateTo(0,
-                          duration: Duration(milliseconds: 1500),
-                          curve: Curves.easeInOutSine);
-                      message.clear();
-
+                    await myCubit.addMessage(MessageModel(
+                      messageData: MessageData(
+                          uid: myCubit.getUserData!.uid, message: message.text),
+                      docId: myCubit.selectedEventModel!.eventData.docId!,
+                    ));
+                    controller.animateTo(0,
+                        duration: Duration(milliseconds: 1500),
+                        curve: Curves.easeInOutSine);
+                    message.clear();
                   },
                 )
               ],

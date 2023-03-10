@@ -45,11 +45,11 @@ class GuestService {
 
   deleteGuest(GuestModel guestModel) async {
     var collection = await getGuestColection();
-    return collection.doc(guestModel.gid).delete();
+    return collection.doc(guestModel.guestData.gid).delete();
   }
 
   updateGuestData(GuestModel guestModel) async {
     var collection = await getGuestColection();
-    return collection.doc(guestModel.gid).update(guestModel.toJson());
+    return collection.doc(guestModel.guestData.gid).update(guestModel.toJson());
   }
 }

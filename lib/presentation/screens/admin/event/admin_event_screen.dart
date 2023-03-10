@@ -25,10 +25,9 @@ class AdminEventScreen extends StatelessWidget {
           child: Icon(Icons.chat),
           onPressed: () async{
             // myCubit.getSelectedEventModel(myCubit.selectedEventModel!);
-            myCubit.getAllMessage(myCubit.selectedEventModel!.docId);
+            myCubit.getAllMessage(myCubit.selectedEventModel!.eventData.docId!);
             print(" ********* all messages **************");
             print(myCubit.allMessages);
-            await myCubit.ux();
             Navigator.pushNamed(context, RouteNameManager.chatScreen);
           },
         ),
