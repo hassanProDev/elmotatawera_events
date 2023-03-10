@@ -13,6 +13,7 @@ import 'package:elmotatawera_events/presentation/screens/guest/home_guest_screen
 import 'package:elmotatawera_events/presentation/screens/invitation_screen/qr_invite_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/login_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/signup_screen.dart';
+import 'package:elmotatawera_events/presentation/screens/security/home_security_screen/home_security_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class RoutesManager {
       case RouteNameManager.guestEventScreen:
         return MaterialPageRoute(builder: (_) => GuestEventScreen());
       case RouteNameManager.homeSecurityScreen:
-        return MaterialPageRoute(builder: (_) => HomeAdminScreen());
+        return MaterialPageRoute(builder: (_) => HomeSecurityScreen());
       case RouteNameManager.homeMasterScreen:
         return MaterialPageRoute(builder: (_) => MasterScreen());
       default:

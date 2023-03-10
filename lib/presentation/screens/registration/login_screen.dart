@@ -88,9 +88,7 @@ class LoginScreen extends StatelessWidget {
                     onTap: () async {
                       if (myCubit.loginFormKey.currentState!.validate()) {
                         await myCubit.userLogin(myCubit.loginEmail.text, myCubit.loginPassword.text).then((v){
-                          if( myCubit.getUserData!.userData.userType==RouteNameManager.homeGuestScreen){
-                            myCubit.getMyInvitation(myCubit.getUserData!.uid);
-                          }
+                         myCubit.init();
                           Navigator.pushReplacementNamed(
                               context, myCubit.getUserData!.userData.userType);
                           myCubit.clearLoginController();

@@ -29,9 +29,7 @@ class InvitationTile extends StatelessWidget {
             Navigator.pushNamed(context, RouteNameManager.inviteScreen);
           },
           title: Text(
-            guestModel!.guestData.firstName +
-                " " +
-                guestModel!.guestData.lastName,
+            guestModel!.guestData.titleEvent ,
             style: GoogleFonts.poppins(
                 fontSize: SizeManager.size12, color: ColorManager.deepBlue),
           ),

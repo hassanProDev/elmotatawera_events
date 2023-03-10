@@ -38,8 +38,8 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                         Card(elevation: 5,
                           child: IconButton(
                             onPressed: () {
-                              if (AppCubit().guestCount > 1) {
-                                AppCubit().changeGuestCounter(AppCubit().guestCount--);
+                              if (BlocProvider.of<AppCubit>(context).guestCount > 1) {
+                                BlocProvider.of<AppCubit>(context).decrementGuestCounter();
                               }
                             },
                             icon: TextDeepBlue(
@@ -52,7 +52,7 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                           width: SizeManager.size10,
                         ),
                         TextDeepBlue(
-                          guestModel.guestData.peopleCount.toString(),
+                          BlocProvider.of<AppCubit>(context).guestCount.toString(),
                           fontSize: SizeManager.size12,
                         ),
                         SizedBox(
@@ -61,9 +61,9 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                         Card(elevation: 5,
                           child: IconButton(
                             onPressed: () {
-                              if (AppCubit().guestCount <
+                              if (BlocProvider.of<AppCubit>(context).guestCount <
                                   maxGuest) {
-                                AppCubit().changeGuestCounter(AppCubit().guestCount++);
+                                BlocProvider.of<AppCubit>(context).incrementGuestCounter();
 
                               }
                             },
@@ -83,6 +83,7 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                 CustomButton(
                   text: "Request an Invite",
                   onTap: () {
+                    guestModel.guestData.peopleCount=BlocProvider.of<AppCubit>(context).guestCount;
                     BlocProvider.of<AppCubit>(context).addGuest(guestModel);
                     Navigator.pop(context);
                   },

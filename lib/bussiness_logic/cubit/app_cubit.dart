@@ -438,11 +438,17 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  int guestCount=1;
-  changeGuestCounter(int guestCount){
-    this.guestCount=guestCount;
+  int guestCount = 1;
+
+  incrementGuestCounter() {
+    guestCount++;
     emit(GuestCounter());
   }
+  decrementGuestCounter() {
+    guestCount--;
+    emit(GuestCounter());
+  }
+
   List<GuestModel> getMyGuestsData = [];
 
   getMyGuests(String docId, String uid) async {
@@ -631,8 +637,16 @@ class AppCubit extends Cubit<AppState> {
   }
 
   // end message cubit
-
   init() async {
-    await getAllUsers();
+    if (getUserData!.userData.userType == RouteNameManager.homeGuestScreen) {
+      getMyInvitation(getUserData!.uid);
+        getAllActiveEvents();
+    } else if (getUserData!.userData.userType ==
+        RouteNameManager.homeMasterScreen||getUserData!.userData.userType ==
+        RouteNameManager.homeMasterScreen) {
+        getAllEvents();
+        getAllUnActiveEvents();
+        getAllActiveEvents();
+    }
   }
 }
