@@ -121,6 +121,7 @@ class AddEventScreen extends StatelessWidget {
                             title: myCubit.titleController.text,
                             location: myCubit.locationController.text,
                             dateTime: myCubit.eventDateTime!,
+                            adminPhone: myCubit.getUserData!.userData.phone,
                             peopleCount:
                                 int.parse(myCubit.peopleCountController.text),
                             description: myCubit.descriptionController.text,

@@ -438,6 +438,11 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  int guestCount=1;
+  changeGuestCounter(int guestCount){
+    this.guestCount=guestCount;
+    emit(GuestCounter());
+  }
   List<GuestModel> getMyGuestsData = [];
 
   getMyGuests(String docId, String uid) async {
@@ -462,7 +467,6 @@ class AppCubit extends Cubit<AppState> {
     try {
       guest
           .orderBy(GuestModel.keyRegistrationDate, descending: true)
-          .where(GuestModel.keyIsConfirmed, isEqualTo: true)
           .where(GuestModel.keyUid, isEqualTo: uid)
           .snapshots()
           .listen((event) {

@@ -13,6 +13,7 @@ class SignUpLoading extends AppState {}
 
 class SignUpSuccess extends AppState {}
 class ClearController extends AppState {}
+class GuestCounter extends AppState {}
 
 class SignUpFailer extends AppState {
   String errorMessage;

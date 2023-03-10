@@ -40,6 +40,8 @@ class EventData {
   static const String keyIsPaid = "isPaid";
   static const String keyPrice = "price";
   static const String keyImg = "image";
+  static const String keyAdminPhone = "adminPhone";
+
 
   final String title;
   final String description;
@@ -51,6 +53,7 @@ class EventData {
   final bool isPaid;
   final double price;
   final String? img;
+  final String adminPhone;
   String? docId;
 
   EventData({
@@ -64,11 +67,13 @@ class EventData {
     required this.price,
     required this.isPaid,
     required this.locationUrl,
+    required this.adminPhone,
     this.img,
   });
 
   factory EventData.form(Map<String, dynamic> json) {
     return EventData(
+      adminPhone: json[keyAdminPhone],
       docId: json[keyDocId],
       uid: json[keyUid],
       title: json[keyTitle],
@@ -85,6 +90,7 @@ class EventData {
 
   Map<String, dynamic> toJson() {
     return {
+      keyAdminPhone:adminPhone,
       keyDocId: docId,
       keyUid: uid,
       keyTitle: title,

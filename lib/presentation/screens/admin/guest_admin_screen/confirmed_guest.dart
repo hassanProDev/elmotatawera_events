@@ -1,8 +1,8 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/guest_admin_screen/widgets/guest_tile.dart';
-import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/tab_item.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_rich_text.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

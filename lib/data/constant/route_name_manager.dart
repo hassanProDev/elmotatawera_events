@@ -20,6 +20,7 @@ class RouteNameManager{
   static const String attendanceScreen="attendanceScreen";
 
   static const String homeGuestScreen="Guest";
+  static const String guestEventScreen="guestEventScreen";
 
   static const String homeSecurityScreen="Security";
 

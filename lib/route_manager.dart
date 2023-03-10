@@ -8,6 +8,8 @@ import 'package:elmotatawera_events/presentation/screens/admin/new_responsible_s
 import 'package:elmotatawera_events/presentation/screens/admin/new_responsible_screen/pages/add_security_screen/add_security_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/attendance_Screen/attendance_Screen.dart';
 import 'package:elmotatawera_events/presentation/screens/chat_screen/chat_screen.dart';
+import 'package:elmotatawera_events/presentation/screens/guest/guest_event_screen/guest_event_screen.dart';
+import 'package:elmotatawera_events/presentation/screens/guest/home_guest_screen/home_guest_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/invitation_screen/qr_invite_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/login_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/signup_screen.dart';
@@ -44,7 +46,9 @@ class RoutesManager {
       case RouteNameManager.attendanceScreen:
         return MaterialPageRoute(builder: (_) => AttendanceScreen());
       case RouteNameManager.homeGuestScreen:
-        return MaterialPageRoute(builder: (_) => HomeAdminScreen());
+        return MaterialPageRoute(builder: (_) => HomeGuestScreen());
+      case RouteNameManager.guestEventScreen:
+        return MaterialPageRoute(builder: (_) => GuestEventScreen());
       case RouteNameManager.homeSecurityScreen:
         return MaterialPageRoute(builder: (_) => HomeAdminScreen());
       case RouteNameManager.homeMasterScreen:

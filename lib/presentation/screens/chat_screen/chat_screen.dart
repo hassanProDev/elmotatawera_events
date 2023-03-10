@@ -64,9 +64,11 @@ class ChatScreen extends StatelessWidget {
                           uid: myCubit.getUserData!.uid, message: message.text),
                       docId: myCubit.selectedEventModel!.eventData.docId!,
                     ));
-                    controller.animateTo(0,
-                        duration: Duration(milliseconds: 1500),
-                        curve: Curves.easeInOutSine);
+                    if(controller.hasClients){
+                      controller.animateTo(0,
+                          duration: Duration(milliseconds: 1500),
+                          curve: Curves.easeInOutSine);
+                    }
                     message.clear();
                   },
                 )

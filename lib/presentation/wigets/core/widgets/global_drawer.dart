@@ -1,6 +1,7 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,18 @@ class GlobalDrawer extends StatelessWidget {
                           },
                         )
                       : SizedBox(),
+                  TextDeepBlue(
+                    "The Founder",
+                    fontSize: SizeManager.size18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  TextOffWhite(
+                    "Hassan Ashraf",
+                    fontSize: SizeManager.size12,
+                  ),TextOffWhite(
+                    "01114898895",
+                    fontSize: SizeManager.size12,
+                  ),
                 ],
               ),
             ),

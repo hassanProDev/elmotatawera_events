@@ -1,4 +1,4 @@
-import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/tab_item.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/tab_item.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatelessWidget {

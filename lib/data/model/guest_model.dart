@@ -12,10 +12,10 @@ class GuestModel {
   final GuestData guestData;
   final String uid;
   final String docId;
-   bool isConfirmed;
+  bool isConfirmed;
   final DateTime? registrationDate;
 
-   GuestModel({
+  GuestModel({
     required this.guestData,
     required this.uid,
     required this.docId,
@@ -74,36 +74,41 @@ class GuestData {
   static const String keyLastName = "lastName";
   static const String keyAttendance = "attendance";
   static const String keyGid = "gid";
+  static const String keyPaid = "paid";
+  static const String keyAdminPhone = "adminPhone";
 
   final String phone;
   final String firstName;
   final String lastName;
-  final int peopleCount;
+  int peopleCount;
   final String titleEvent;
   final DateTime eventDate;
+  final String adminPhone;
   bool attendance;
   String? gid;
-
+  final bool paid;
 
   GuestData(
       {required this.firstName,
       required this.lastName,
       required this.peopleCount,
       required this.phone,
-        this.gid,
-
-        required this.eventDate,
+      required this.adminPhone,
+      this.gid,
+        required this.paid,
+      required this.eventDate,
       required this.titleEvent,
       required this.attendance});
 
   factory GuestData.fromJson(Map<String, dynamic> json) {
     return GuestData(
+      paid: json[keyPaid],
+      adminPhone: json[keyAdminPhone],
       firstName: json[keyFirstName],
       lastName: json[keyLastName],
       peopleCount: json[keyPeopleCount],
       phone: json[keyPhone],
       gid: json[keyGid],
-
       eventDate: DateTime.parse(json[keyEventDate]),
       titleEvent: json[keyTitleInvitation],
       attendance: json[keyAttendance],
@@ -112,6 +117,8 @@ class GuestData {
 
   Map<String, dynamic> toJson() {
     return {
+      keyPaid:paid,
+      keyAdminPhone:adminPhone,
       keyTitleInvitation: titleEvent,
       keyFirstName: firstName,
       keyLastName: lastName,

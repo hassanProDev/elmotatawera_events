@@ -5,10 +5,9 @@ import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/widgets/event_tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AdminEventScreen extends StatelessWidget {
-  var panelController = PanelController();
+  // var panelController = PanelController();
 
   @override
   Widget build(BuildContext context) {

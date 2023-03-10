@@ -70,6 +70,8 @@ class AddGuestScreen extends StatelessWidget {
                                     phone: myCubit.guestPhone.text,
                                     eventDate:
                                         myCubit.selectedEventModel!.eventData.dateTime,
+                                    adminPhone: myCubit.getUserData!.userData.phone,
+                                    paid: myCubit.selectedEventModel!.eventData.isPaid,
                                     titleEvent:
                                         myCubit.selectedEventModel!.eventData.title,attendance: false),
                                 docId: myCubit.selectedEventModel!.eventData.docId!,
