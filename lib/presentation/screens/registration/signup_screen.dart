@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/regex_manager.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/widget/custom_textformfield.dart';
@@ -10,7 +11,6 @@ import 'package:elmotatawera_events/presentation/wigets/core/widgets/pressed_tex
 import 'package:elmotatawera_events/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sizer/sizer.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -68,18 +68,22 @@ class SignUpScreen extends StatelessWidget {
                     CustomTextFormField(
                       text: "first name",
                       controller: myCubit.signUpFirstName,
+                      regexCondition: RegexManager.stringRegex,
                     ),
                     CustomTextFormField(
                       text: "last name",
                       controller: myCubit.signUpLastName,
+                      regexCondition: RegexManager.stringRegex,
                     ),
                     CustomTextFormField(
                       text: "phone",
                       controller: myCubit.signUpPhone,
+                      regexCondition: RegexManager.phoneRegex,
                     ),
                     CustomTextFormField(
                       text: "email",
                       controller: myCubit.signUpEmail,
+                      keyboardType: TextInputType.emailAddress,
                     ),
                     CustomTextFormField(
                       text: "password",

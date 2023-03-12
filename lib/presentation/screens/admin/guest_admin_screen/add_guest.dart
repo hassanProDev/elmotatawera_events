@@ -1,4 +1,5 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
+import 'package:elmotatawera_events/data/constant/regex_manager.dart';
 import 'package:elmotatawera_events/data/model/guest_model.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/widget/custom_textformfield.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
@@ -38,19 +39,23 @@ class AddGuestScreen extends StatelessWidget {
                   CustomTextFormField(
                     text: "first name",
                     controller: myCubit.guestFirstName,
+                    regexCondition: RegexManager.stringRegex,
                   ),
                   CustomTextFormField(
                     text: "last name",
                     controller: myCubit.guestLastName,
+                    regexCondition: RegexManager.stringRegex,
                   ),
                   CustomTextFormField(
                     text: "phone",
                     controller: myCubit.guestPhone,
+                    regexCondition: RegexManager.phoneRegex,
                   ),
                   CustomTextFormField(
                     text: "people count",
                     keyboardType: TextInputType.number,
                     controller: myCubit.guestPeopleCount,
+                    regexCondition: RegexManager.countRegex,
                   ),
                   SizedBox(
                     height: 16.sp,

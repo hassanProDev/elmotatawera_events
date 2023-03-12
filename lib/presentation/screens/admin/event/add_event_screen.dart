@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/regex_manager.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/widget/custom_textformfield.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
@@ -73,20 +74,21 @@ class AddEventScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   controller: myCubit.locationUrlController,
-
                   text: "location url",
                   keyboardType: TextInputType.url,
-                  // regexCondition: urlRegex,
+                  regexCondition: RegexManager.locatinUrlRegex,
                 ),
                 CustomTextFormField(
                   controller: myCubit.priceController,
                   text: "price",
                   keyboardType: TextInputType.number,
+                  regexCondition: RegexManager.priceRegex,
                 ),
                 CustomTextFormField(
                   controller: myCubit.peopleCountController,
                   text: "Guest Count",
                   keyboardType: TextInputType.number,
+                  regexCondition: RegexManager.countRegex,
                 ),
                 TextFormField(
                   controller: myCubit.descriptionController,

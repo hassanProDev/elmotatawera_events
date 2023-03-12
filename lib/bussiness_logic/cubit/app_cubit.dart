@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
@@ -12,11 +14,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_state.dart';
 
 class AppCubit extends Cubit<AppState> {
   AppCubit() : super(AppInitial());
+
+
+
+
 
   // Registration Cubit
   IconData loginPasswordIcon = Icons.visibility;
@@ -75,7 +82,7 @@ class AppCubit extends Cubit<AppState> {
     emit(SignUpLoading());
     try {
       UserCredential credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -97,7 +104,7 @@ class AppCubit extends Cubit<AppState> {
     emit(LoginLoading());
     try {
       UserCredential credential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -139,9 +146,9 @@ class AppCubit extends Cubit<AppState> {
   var user = FirebaseFirestore.instance
       .collection(kUsers)
       .withConverter<UserModel>(
-        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
-        toFirestore: (user, _) => user.toJson(),
-      );
+    fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+    toFirestore: (user, _) => user.toJson(),
+  );
 
   Future<void> addUser(UserModel userModel) async {
     var doc = user.doc();
@@ -164,9 +171,14 @@ class AppCubit extends Cubit<AppState> {
           .where(UserModel.keyUid, isEqualTo: uid)
           .limit(1)
           .get()
-          .then((value) {
+          .then((value) async{
         getUserData = value.docs.first.data();
-        xbt = value.docs.first.data().userData.userType ==
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString(kUsers, jsonEncode(getUserData!.toJson()));
+        xbt = value.docs.first
+            .data()
+            .userData
+            .userType ==
             RouteNameManager.homeMasterScreen;
       });
       emit(GetUserSuccess());
@@ -222,9 +234,9 @@ class AppCubit extends Cubit<AppState> {
   var event = FirebaseFirestore.instance
       .collection(kEvents)
       .withConverter<EventModel>(
-        fromFirestore: (snapshot, _) => EventModel.fromJson(snapshot.data()!),
-        toFirestore: (event, _) => event.toJson(),
-      );
+    fromFirestore: (snapshot, _) => EventModel.fromJson(snapshot.data()!),
+    toFirestore: (event, _) => event.toJson(),
+  );
 
   DateTime? eventDateTime;
 
@@ -369,10 +381,10 @@ class AppCubit extends Cubit<AppState> {
   var attend = FirebaseFirestore.instance
       .collection(kAttendence)
       .withConverter<AttendanceModel>(
-        fromFirestore: (snapshot, _) =>
-            AttendanceModel.fromJson(snapshot.data()!),
-        toFirestore: (attendance, _) => attendance.toJson(),
-      );
+    fromFirestore: (snapshot, _) =>
+        AttendanceModel.fromJson(snapshot.data()!),
+    toFirestore: (attendance, _) => attendance.toJson(),
+  );
 
   Future<void> addAttendance(AttendanceModel attendenceModel) async {
     try {
@@ -421,9 +433,9 @@ class AppCubit extends Cubit<AppState> {
   var guest = FirebaseFirestore.instance
       .collection(kGuests)
       .withConverter<GuestModel>(
-        fromFirestore: (snapshot, _) => GuestModel.fromJson(snapshot.data()!),
-        toFirestore: (guest, _) => guest.toJson(),
-      );
+    fromFirestore: (snapshot, _) => GuestModel.fromJson(snapshot.data()!),
+    toFirestore: (guest, _) => guest.toJson(),
+  );
 
   var guestKeyForm = GlobalKey<FormState>();
 
@@ -444,6 +456,7 @@ class AppCubit extends Cubit<AppState> {
     guestCount++;
     emit(GuestCounter());
   }
+
   decrementGuestCounter() {
     guestCount--;
     emit(GuestCounter());
@@ -514,7 +527,7 @@ class AppCubit extends Cubit<AppState> {
   Future<void> scanQR() async {
     try {
       await FlutterBarcodeScanner.scanBarcode(
-              '#ff6666', 'Cancel', true, ScanMode.QR)
+          '#ff6666', 'Cancel', true, ScanMode.QR)
           .then((value) {
         qrCode = value;
         emit(ScanQrSuccess());
@@ -553,6 +566,13 @@ class AppCubit extends Cubit<AppState> {
     } on Exception catch (e) {
       emit(GetAllConfimedGuestsFailer(errorMessage: e.toString()));
     }
+  }
+
+  getData() {
+    FirebaseFirestore.instance.collection("x").snapshots().listen((value) {
+      x = value.docs.first.data()["x"];
+      emit(GetAllEventsSuccess(events: allEventList ?? []));
+    });
   }
 
   List<GuestModel> allUnConfirmedGuests = [];
@@ -598,9 +618,9 @@ class AppCubit extends Cubit<AppState> {
   var message = FirebaseFirestore.instance
       .collection(kMessages)
       .withConverter<MessageModel>(
-        fromFirestore: (snapshot, _) => MessageModel.fromJson(snapshot.data()!),
-        toFirestore: (message, _) => message.toJson(),
-      );
+    fromFirestore: (snapshot, _) => MessageModel.fromJson(snapshot.data()!),
+    toFirestore: (message, _) => message.toJson(),
+  );
 
   Future<void> addMessage(MessageModel messageModel) async {
     var doc = message.doc();
@@ -619,13 +639,13 @@ class AppCubit extends Cubit<AppState> {
     try {
       message
           .orderBy(
-            MessageModel.keyDateTime,
-            descending: true,
-          )
+        MessageModel.keyDateTime,
+        descending: true,
+      )
           .where(
-            MessageModel.keyDocId,
-            isEqualTo: docId,
-          )
+        MessageModel.keyDocId,
+        isEqualTo: docId,
+      )
           .snapshots()
           .listen((event) {
         allMessages = event.docs.map((e) => e.data()).toList();
@@ -640,13 +660,19 @@ class AppCubit extends Cubit<AppState> {
   init() async {
     if (getUserData!.userData.userType == RouteNameManager.homeGuestScreen) {
       getMyInvitation(getUserData!.uid);
-        getAllActiveEvents();
+      getAllActiveEvents();
     } else if (getUserData!.userData.userType ==
-        RouteNameManager.homeMasterScreen||getUserData!.userData.userType ==
+        RouteNameManager.homeMasterScreen || getUserData!.userData.userType ==
         RouteNameManager.homeMasterScreen) {
-        getAllEvents();
-        getAllUnActiveEvents();
-        getAllActiveEvents();
+      getAllEvents();
+      getAllUnActiveEvents();
+      getAllActiveEvents();
     }
+  }
+
+
+  String? userLocalData;
+  initPref()async{
+
   }
 }
