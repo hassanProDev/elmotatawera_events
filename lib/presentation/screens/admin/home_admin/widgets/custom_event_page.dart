@@ -1,7 +1,7 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
-import 'package:elmotatawera_events/presentation/wigets/core/widgets/activity_item.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/event/widgets/admin_activity_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +20,7 @@ class CustomEventPage extends StatelessWidget {
       child: ListView.builder(
           itemCount: eventModelList.length,
           itemBuilder: (_, index) {
-            return ActivityItem(
+            return AdminActivityItem(
               eventModel: eventModelList[index],
               onTap: () {
                 print(eventModelList[index].eventData.description + index.toString());

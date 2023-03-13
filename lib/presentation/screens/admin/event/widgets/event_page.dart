@@ -39,7 +39,7 @@ class EventPage extends StatelessWidget {
                     CustomButton(
                       text: "Attendance",
                       onTap: () {
-                        myCubit.getAllAttendence(myCubit.selectedEventModel!.eventData.docId!);
+                        myCubit.getAllAttendance(myCubit.selectedEventModel!.eventData.docId!);
                         Navigator.pushNamed(context, RouteNameManager.guestAttendanceScreen);
                       },
                     )

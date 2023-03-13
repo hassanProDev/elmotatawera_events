@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class EventModel {
   static const String keyPublishDate = "publishDate";
-  static const String keyisEventDone = "isEventDone";
+  static const String keyIsEventDone = "isEventDone";
   static const String keyEventData = "eventData";
 
   final bool isEventDone;
@@ -16,14 +16,14 @@ class EventModel {
   factory EventModel.fromJson(Map<String, dynamic> json) {
     return EventModel(
         eventData: EventData.form(jsonDecode(json[keyEventData])),
-        isEventDone: json[keyisEventDone]);
+        isEventDone: json[keyIsEventDone]);
   }
 
   Map<String, dynamic> toJson() {
     return {
       keyEventData: jsonEncode(eventData.toJson()),
       keyPublishDate: DateTime.now(),
-      keyisEventDone: isEventDone
+      keyIsEventDone: isEventDone
     };
   }
 }
@@ -41,8 +41,7 @@ class EventData {
   static const String keyPrice = "price";
   static const String keyImg = "image";
   static const String keyAdminPhone = "adminPhone";
-
-
+  static const String keyMaxGuest = "maxGuest";
   final String title;
   final String description;
   final String location;
@@ -55,8 +54,11 @@ class EventData {
   final String? img;
   final String adminPhone;
   String? docId;
+  final int maxGuest;
+
 
   EventData({
+    required this.maxGuest,
     this.docId,
     required this.uid,
     required this.title,
@@ -85,6 +87,7 @@ class EventData {
       isPaid: json[keyIsPaid],
       locationUrl: json[keyLocationUrl],
       img: json[keyImg],
+      maxGuest: json[keyMaxGuest],
     );
   }
 
@@ -102,6 +105,7 @@ class EventData {
       keyPrice: price,
       keyLocationUrl: locationUrl,
       keyImg: img,
+      keyMaxGuest:maxGuest
     };
   }
 }

@@ -272,5 +272,10 @@ class GetAllAttendanceFailer extends AppState {
 
   GetAllAttendanceFailer({required this.errorMessage});
 }
+class UpdateAttendanceDataSuccess extends AppState {}
 
+class UpdateAttendanceDataFailer extends AppState {
+  String errorMessage;
 
+  UpdateAttendanceDataFailer({required this.errorMessage});
+}

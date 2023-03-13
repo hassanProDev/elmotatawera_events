@@ -8,17 +8,21 @@ class GuestModel {
   static const String keyIsConfirmed = "isConfirmed";
   static const String keyRegistrationDate = "registrationDate";
   static const String keyGuestData = "guestDate";
+  static const String keyGid = "gid";
+
 
   final GuestData guestData;
   final String uid;
   final String docId;
   bool isConfirmed;
   final DateTime? registrationDate;
+  String? gid;
 
   GuestModel({
     required this.guestData,
     required this.uid,
     required this.docId,
+    this.gid,
     required this.isConfirmed,
     this.registrationDate,
   });
@@ -27,6 +31,7 @@ class GuestModel {
     return GuestModel(
       guestData: GuestData.fromJson(jsonDecode(json[keyGuestData])),
       uid: json[keyUid],
+      gid: json[keyGid],
       docId: json[keyDocId],
       isConfirmed: json[keyIsConfirmed],
       registrationDate: (json[keyRegistrationDate] as Timestamp).toDate(),
@@ -38,6 +43,7 @@ class GuestModel {
       keyGuestData: jsonEncode(guestData.toJson()),
       keyUid: uid,
       keyDocId: docId,
+      keyGid: gid,
       keyIsConfirmed: isConfirmed,
       keyRegistrationDate: DateTime.now()
     };
@@ -48,6 +54,7 @@ class GuestModel {
       keyGuestData: jsonEncode(guestData.toJson()),
       keyUid: uid,
       keyDocId: docId,
+      keyGid: gid,
       keyIsConfirmed: isConfirmed,
       keyRegistrationDate:
           registrationDate?.toString() ?? DateTime.now().toString()
@@ -58,6 +65,7 @@ class GuestModel {
     return GuestModel(
       guestData: GuestData.fromJson(jsonDecode(json[keyGuestData])),
       uid: json[keyUid],
+      gid: json[keyGid],
       docId: json[keyDocId],
       isConfirmed: json[keyIsConfirmed],
       registrationDate: DateTime.parse(json[keyRegistrationDate]),
@@ -73,9 +81,9 @@ class GuestData {
   static const String keyFirstName = "firstName";
   static const String keyLastName = "lastName";
   static const String keyAttendance = "attendance";
-  static const String keyGid = "gid";
   static const String keyPaid = "paid";
   static const String keyAdminPhone = "adminPhone";
+  static const String keyAvailableInvite = "availableInvite";
 
   final String phone;
   final String firstName;
@@ -85,20 +93,21 @@ class GuestData {
   final DateTime eventDate;
   final String adminPhone;
   bool attendance;
-  String? gid;
   final bool paid;
+  int availableInvite;
 
-  GuestData(
-      {required this.firstName,
-      required this.lastName,
-      required this.peopleCount,
-      required this.phone,
-      required this.adminPhone,
-      this.gid,
-        required this.paid,
-      required this.eventDate,
-      required this.titleEvent,
-      required this.attendance});
+  GuestData({
+    required this.firstName,
+    required this.lastName,
+    required this.peopleCount,
+    required this.phone,
+    required this.adminPhone,
+    required this.paid,
+    required this.eventDate,
+    required this.titleEvent,
+    required this.attendance,
+    required this.availableInvite,
+  });
 
   factory GuestData.fromJson(Map<String, dynamic> json) {
     return GuestData(
@@ -108,25 +117,25 @@ class GuestData {
       lastName: json[keyLastName],
       peopleCount: json[keyPeopleCount],
       phone: json[keyPhone],
-      gid: json[keyGid],
       eventDate: DateTime.parse(json[keyEventDate]),
       titleEvent: json[keyTitleInvitation],
       attendance: json[keyAttendance],
+      availableInvite: json[keyAvailableInvite],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      keyPaid:paid,
-      keyAdminPhone:adminPhone,
+      keyPaid: paid,
+      keyAdminPhone: adminPhone,
       keyTitleInvitation: titleEvent,
       keyFirstName: firstName,
       keyLastName: lastName,
       keyPhone: phone,
-      keyGid: gid,
       keyPeopleCount: peopleCount,
       keyAttendance: attendance,
-      keyEventDate: eventDate.toString()
+      keyEventDate: eventDate.toString(),
+      keyAvailableInvite: availableInvite
     };
   }
 }

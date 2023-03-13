@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 invitationBottomSheet(BuildContext context, GuestModel guestModel,
-    {int maxGuest = 1}) {
+    {required int maxGuest }) {
   return showModalBottomSheet(
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -64,7 +64,6 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                               if (BlocProvider.of<AppCubit>(context).guestCount <
                                   maxGuest) {
                                 BlocProvider.of<AppCubit>(context).incrementGuestCounter();
-
                               }
                             },
                             icon: TextDeepBlue(

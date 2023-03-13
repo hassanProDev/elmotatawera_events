@@ -95,9 +95,6 @@ class LoginScreen extends StatelessWidget {
                                 context, myCubit.getUserData!.userData.userType);
                             myCubit.clearLoginController();
                           });
-                          // userModel = await myCubit
-                          //     .getUser(myCubit.userCredential!.user!.uid);
-
                         }
                       },
                     ),

@@ -38,6 +38,7 @@ class AttendanceData {
   static const String keyAttendedWithId = "attendedWithId";
   static const String keyUid = "uid";
   static const String keyAttendId = "attendId";
+  static const String keyAttendanceCount = "attendanceCount";
 
   final String title;
   final String attendedWithId;
@@ -45,6 +46,7 @@ class AttendanceData {
   final String lastName;
   final String uid;
   String? attendId;
+  int? attendanceCount;
 
   AttendanceData(
       {required this.title,
@@ -52,26 +54,30 @@ class AttendanceData {
       required this.lastName,
       required this.uid,
       this.attendId,
-      required this.attendedWithId});
+      required this.attendedWithId,
+      required this.attendanceCount});
 
   factory AttendanceData.from(Map<String, dynamic> json) {
     return AttendanceData(
       attendId: json[keyAttendId],
-        uid: json[keyUid],
-        firstName: json[keyFirstName],
-        lastName: json[keyLastName],
-        title: json[keyTitle],
-        attendedWithId: json[keyAttendedWithId]);
+      uid: json[keyUid],
+      firstName: json[keyFirstName],
+      lastName: json[keyLastName],
+      title: json[keyTitle],
+      attendedWithId: json[keyAttendedWithId],
+      attendanceCount: json[keyAttendanceCount],
+    );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      keyAttendId:attendId,
+      keyAttendId: attendId,
       keyUid: uid,
       keyFirstName: firstName,
       keyLastName: lastName,
       keyTitle: title,
-      keyAttendedWithId: attendedWithId
+      keyAttendedWithId: attendedWithId,
+      keyAttendanceCount: attendanceCount
     };
   }
 }

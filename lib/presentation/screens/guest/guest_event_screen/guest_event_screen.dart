@@ -152,6 +152,7 @@ class GuestEventScreen extends StatelessWidget {
                             context,
                             GuestModel(
                                 guestData: GuestData(
+                                  availableInvite: myCubit.guestCount,
                                     firstName:
                                         myCubit.getUserData!.userData.firstName,
                                     lastName:
@@ -172,7 +173,7 @@ class GuestEventScreen extends StatelessWidget {
                                     myCubit.selectedEventModel!.eventData.docId!,
                                 isConfirmed: !myCubit
                                     .selectedEventModel!.eventData.isPaid),
-                            maxGuest: 5);
+                            maxGuest: myCubit.selectedEventModel!.eventData.maxGuest);
                       },
                     ),
                   ],

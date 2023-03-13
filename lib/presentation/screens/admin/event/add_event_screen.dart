@@ -90,6 +90,12 @@ class AddEventScreen extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   regexCondition: RegexManager.countRegex,
                 ),
+                CustomTextFormField(
+                  controller: myCubit.maxAttendanceCountController,
+                  text: "Max Attendance Count",
+                  keyboardType: TextInputType.number,
+                  regexCondition: RegexManager.countRegex,
+                ),
                 TextFormField(
                   controller: myCubit.descriptionController,
                   minLines: 5,
@@ -130,7 +136,8 @@ class AddEventScreen extends StatelessWidget {
                             price: double.parse(myCubit.priceController.text),
                             isPaid:
                                 double.parse(myCubit.priceController.text) > 0,
-                            locationUrl: myCubit.locationUrlController.text),
+                            locationUrl: myCubit.locationUrlController.text,
+                            maxGuest: int.parse(myCubit.maxAttendanceCountController.text)),
                         isEventDone: false,
                       ))
                           .then((value) {

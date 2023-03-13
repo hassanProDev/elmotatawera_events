@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
@@ -14,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_state.dart';
 
@@ -173,8 +170,6 @@ class AppCubit extends Cubit<AppState> {
           .get()
           .then((value) async{
         getUserData = value.docs.first.data();
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(kUsers, jsonEncode(getUserData!.toJson()));
         xbt = value.docs.first
             .data()
             .userData
@@ -251,9 +246,11 @@ class AppCubit extends Cubit<AppState> {
   var locationController = TextEditingController();
   var locationUrlController = TextEditingController();
   var peopleCountController = TextEditingController();
+  var maxAttendanceCountController = TextEditingController();
   var priceController = TextEditingController();
 
   resetEventController() {
+    maxAttendanceCountController.clear();
     titleController.clear();
     descriptionController.clear();
     locationController.clear();
@@ -312,7 +309,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       event
           .orderBy(EventModel.keyPublishDate, descending: true)
-          .where(EventModel.keyisEventDone, isEqualTo: false)
+          .where(EventModel.keyIsEventDone, isEqualTo: false)
           .snapshots()
           .listen((event) {
         allActiveEvent = event.docs.map((e) => e.data()).toList();
@@ -330,7 +327,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       event
           .orderBy(EventModel.keyPublishDate, descending: true)
-          .where(EventModel.keyisEventDone, isEqualTo: true)
+          .where(EventModel.keyIsEventDone, isEqualTo: true)
           .snapshots()
           .listen((event) {
         allUnActiveEvent = event.docs.map((e) => e.data()).toList();
@@ -387,8 +384,10 @@ class AppCubit extends Cubit<AppState> {
   );
 
   Future<void> addAttendance(AttendanceModel attendenceModel) async {
+    var doc= attend.doc();
+    attendenceModel.attendanceData.attendId=doc.id;
     try {
-      await attend.doc().set(attendenceModel);
+      await doc.set(attendenceModel);
       emit(AddAttendanceSuccess());
     } on Exception catch (e) {
       // TODO
@@ -398,7 +397,7 @@ class AppCubit extends Cubit<AppState> {
 
   List<AttendanceModel> allAttendance = [];
 
-  getAllAttendence(String eventDocId) async {
+  getAllAttendance(String eventDocId) async {
     try {
       attend
           .orderBy(AttendanceModel.keyDateTime, descending: true)
@@ -413,6 +412,14 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  updateAttendanceData(AttendanceModel attendanceModel) async {
+    try {
+      await guest.doc(attendanceModel.attendanceData.attendId).update(attendanceModel.toJson());
+      emit(UpdateAttendanceDataSuccess());
+    } on Exception catch (e) {
+      emit(UpdateAttendanceDataFailer(errorMessage: e.toString()));
+    }
+  }
   // end attendance cubit
 
   // guest cubit
@@ -442,7 +449,7 @@ class AppCubit extends Cubit<AppState> {
   Future<void> addGuest(GuestModel guestModel) async {
     try {
       var doc = guest.doc();
-      guestModel.guestData.gid = doc.id;
+      guestModel.gid = doc.id;
       await doc.set(guestModel);
       emit(GuestAddedSuccess());
     } on Exception catch (e) {
@@ -510,7 +517,7 @@ class AppCubit extends Cubit<AppState> {
     try {
       await guest
           .where(GuestModel.keyIsConfirmed, isEqualTo: true)
-          .where(GuestModel.keyUid, isEqualTo: guestModel.uid)
+          .where(GuestModel.keyGid, isEqualTo: guestModel.gid)
           .limit(1)
           .get()
           .then((value) {
@@ -595,7 +602,7 @@ class AppCubit extends Cubit<AppState> {
 
   deleteGuest(GuestModel guestModel) async {
     try {
-      await guest.doc(guestModel.guestData.gid).delete();
+      await guest.doc(guestModel.gid).delete();
       emit(DeleteGuestSuccess());
     } on Exception catch (e) {
       emit(DeleteGuestFailer(errorMessage: e.toString()));
@@ -604,7 +611,7 @@ class AppCubit extends Cubit<AppState> {
 
   updateGuestData(GuestModel guestModel) async {
     try {
-      await guest.doc(guestModel.guestData.gid).update(guestModel.toJson());
+      await guest.doc(guestModel.gid).update(guestModel.toJson());
       emit(UpdateGuestDataSuccess());
     } on Exception catch (e) {
       emit(UpdateGuestDataFailer(errorMessage: e.toString()));
@@ -660,19 +667,14 @@ class AppCubit extends Cubit<AppState> {
   init() async {
     if (getUserData!.userData.userType == RouteNameManager.homeGuestScreen) {
       getMyInvitation(getUserData!.uid);
-      getAllActiveEvents();
-    } else if (getUserData!.userData.userType ==
-        RouteNameManager.homeMasterScreen || getUserData!.userData.userType ==
-        RouteNameManager.homeMasterScreen) {
-      getAllEvents();
-      getAllUnActiveEvents();
-      getAllActiveEvents();
+      // getAllActiveEvents();
+    }
+    // else if (getUserData!.userData.userType ==
+    //     RouteNameManager.homeMasterScreen || getUserData!.userData.userType ==
+    //     RouteNameManager.homeMasterScreen) {
+    //   getAllEvents();
+    //   getAllUnActiveEvents();
+    //   getAllActiveEvents();
     }
   }
 
-
-  String? userLocalData;
-  initPref()async{
-
-  }
-}

@@ -66,21 +66,26 @@ class AddGuestScreen extends StatelessWidget {
                       if (myCubit.guestKeyForm.currentState!.validate()) {
                         await myCubit
                             .addGuest(GuestModel(
-                                uid: myCubit.getUserData!.uid,
-                                guestData: GuestData(
-                                    firstName: myCubit.guestFirstName.text,
-                                    lastName: myCubit.guestLastName.text,
-                                    peopleCount: int.parse(
-                                        myCubit.guestPeopleCount.text),
-                                    phone: myCubit.guestPhone.text,
-                                    eventDate:
-                                        myCubit.selectedEventModel!.eventData.dateTime,
-                                    adminPhone: myCubit.getUserData!.userData.phone,
-                                    paid: myCubit.selectedEventModel!.eventData.isPaid,
-                                    titleEvent:
-                                        myCubit.selectedEventModel!.eventData.title,attendance: false),
-                                docId: myCubit.selectedEventModel!.eventData.docId!,
-                                isConfirmed: true,))
+                          uid: myCubit.getUserData!.uid,
+                          guestData: GuestData(
+                            firstName: myCubit.guestFirstName.text,
+                            lastName: myCubit.guestLastName.text,
+                            peopleCount:
+                                int.parse(myCubit.guestPeopleCount.text),
+                            phone: myCubit.guestPhone.text,
+                            eventDate:
+                                myCubit.selectedEventModel!.eventData.dateTime,
+                            adminPhone: myCubit.getUserData!.userData.phone,
+                            paid: myCubit.selectedEventModel!.eventData.isPaid,
+                            titleEvent:
+                                myCubit.selectedEventModel!.eventData.title,
+                            attendance: false,
+                            availableInvite:
+                                int.parse(myCubit.guestPeopleCount.text),
+                          ),
+                          docId: myCubit.selectedEventModel!.eventData.docId!,
+                          isConfirmed: true,
+                        ))
                             .then((value) {
                           myCubit.changeEventBottomNavIndex(0);
                           myCubit.resetGuestController();
