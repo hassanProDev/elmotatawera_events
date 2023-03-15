@@ -12,7 +12,9 @@ class PasswordVisibilty extends AppState {}
 class SignUpLoading extends AppState {}
 
 class SignUpSuccess extends AppState {}
+
 class ClearController extends AppState {}
+
 class GuestCounter extends AppState {}
 
 class SignUpFailer extends AppState {
@@ -76,6 +78,7 @@ class UpdateUserDataFailer extends AppState {
 // all events
 
 class EventLoading extends AppState {}
+
 class GetSelectedDate extends AppState {}
 
 class EventAddedSuccess extends AppState {}
@@ -86,6 +89,8 @@ class EventAddedFailer extends AppState {
   EventAddedFailer({required this.errorMessage});
 }
 
+class GetDataToUpdateScreen extends AppState {}
+
 class GetSelectedEventSuccess extends AppState {}
 
 class GetAllEventsSuccess extends AppState {
@@ -93,6 +98,8 @@ class GetAllEventsSuccess extends AppState {
 
   GetAllEventsSuccess({required this.events});
 }
+
+class AppSetting extends AppState {}
 
 class GetAllEventsFailer extends AppState {
   String errorMessage;
@@ -142,8 +149,6 @@ class UpdateEventDataFailer extends AppState {
 
 class ChangeTabIndex extends AppState {}
 
-// all messages
-
 class AddMessageSuccess extends AppState {}
 
 class AddMessageFailer extends AppState {
@@ -189,6 +194,7 @@ class GetMyGuestsFailer extends AppState {
 
   GetMyGuestsFailer({required this.errorMessage});
 }
+
 class GetMyInvitationSuccess extends AppState {
   List<GuestModel> guests = [];
 
@@ -200,6 +206,7 @@ class GetMyInvitationFailer extends AppState {
 
   GetMyInvitationFailer({required this.errorMessage});
 }
+
 class CheckInvitationSuccess extends AppState {
   GuestModel guestModel;
 
@@ -211,6 +218,7 @@ class CheckInvitationFailer extends AppState {
 
   CheckInvitationFailer({required this.errorMessage});
 }
+
 class ScanQrSuccess extends AppState {}
 
 class ScanQrFailer extends AppState {
@@ -258,6 +266,7 @@ class UpdateGuestDataFailer extends AppState {
 
   UpdateGuestDataFailer({required this.errorMessage});
 }
+
 class AddAttendanceSuccess extends AppState {}
 
 class AddAttendanceFailer extends AppState {
@@ -265,6 +274,7 @@ class AddAttendanceFailer extends AppState {
 
   AddAttendanceFailer({required this.errorMessage});
 }
+
 class GetAllAttendanceSuccess extends AppState {}
 
 class GetAllAttendanceFailer extends AppState {
@@ -272,6 +282,7 @@ class GetAllAttendanceFailer extends AppState {
 
   GetAllAttendanceFailer({required this.errorMessage});
 }
+
 class UpdateAttendanceDataSuccess extends AppState {}
 
 class UpdateAttendanceDataFailer extends AppState {

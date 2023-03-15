@@ -29,7 +29,7 @@ class CustomDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             TextDeepBlue(
-              description!,
+              description??"",
               fontSize: SizeManager.size12,
               textAlign: TextAlign.center,
             ),

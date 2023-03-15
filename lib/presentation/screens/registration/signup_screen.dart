@@ -22,6 +22,8 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppCubit myCubit = BlocProvider.of(context);
+    print(myCubit.appSetting)
+    ;
     return BlocListener<AppCubit, AppState>(
       listener: (context, state) {
         if (state is SignUpLoading) {

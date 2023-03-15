@@ -25,9 +25,15 @@ class MyApp extends StatelessWidget {
     return Sizer(builder: (context, orientation, deviceType) {
       return MultiBlocProvider(
         providers: [
+          // BlocProvider(create: create),
           BlocProvider<AppCubit>(
             create: (context) {
-              return AppCubit()..getData()..getAllActiveEvents()..getAllUnActiveEvents()..getAllEvents();
+              return AppCubit()
+                ..getData()
+                ..getAllActiveEvents()
+                ..getAllUnActiveEvents()
+                ..getAllEvents()
+                ..updateChatState(true);
             },
           ),
         ],

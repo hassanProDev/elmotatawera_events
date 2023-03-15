@@ -19,7 +19,7 @@ class C0ntainer extends StatelessWidget {
       builder: (context, state) {
         return Visibility(
           child: child!,
-          visible:BlocProvider.of<AppCubit>(context).x
+          visible:BlocProvider.of<AppCubit>(context).hasSetting
         );
       },
     );

@@ -13,6 +13,7 @@ class RouteNameManager{
   static const String adminEventScreen="adminEventScreen";
   static const String newResponsibleScreen="newResponsibleScreen";
   static const String addEventScreen="addEventScreen";
+  static const String updateEventScreen="updateEventScreen";
   static const String addAdminScreen="addAdminScreen";
   static const String addSecurityScreen="addSecurityScreen";
   static const String inviteScreen="inviteScreen";

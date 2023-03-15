@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_blue.dart';
@@ -62,6 +63,26 @@ class AdminActivityItem extends StatelessWidget {
         motion: ScrollMotion(),
         children: [
           SlidableAction(
+            onPressed: (context) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return CustomDialog(
+                      title: "do you want update this event",
+                      onSureText: "update",
+                      onSure: (){
+                        Navigator.pop(context);
+                        BlocProvider.of<AppCubit>(context).getSelectedEventModel(eventModel!);
+                        Navigator.pushNamed(context, RouteNameManager.updateEventScreen);
+                      },
+                    );
+                  });
+            },
+            backgroundColor: ColorManager.terkwazColor,
+            foregroundColor: Colors.white,
+            icon: Icons.update,
+            label: 'Update',
+          ), SlidableAction(
             onPressed: (context) {
               showDialog(
                   context: context,

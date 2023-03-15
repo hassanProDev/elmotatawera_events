@@ -42,19 +42,19 @@ class EventData {
   static const String keyImg = "image";
   static const String keyAdminPhone = "adminPhone";
   static const String keyMaxGuest = "maxGuest";
-  final String title;
-  final String description;
-  final String location;
-  final String locationUrl;
-  final int peopleCount;
-  final DateTime dateTime;
+   String title;
+   String description;
+   String location;
+   String locationUrl;
+   int peopleCount;
+   DateTime dateTime;
   final String uid;
-  final bool isPaid;
-  final double price;
+   bool isPaid;
+   double price;
   final String? img;
   final String adminPhone;
   String? docId;
-  final int maxGuest;
+  int maxGuest;
 
 
   EventData({

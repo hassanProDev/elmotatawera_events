@@ -1,5 +1,4 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
-import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
@@ -15,7 +14,6 @@ class GlobalDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var myCubit = BlocProvider.of<AppCubit>(context);
-    Color colorbt=ColorManager.redColor;
     return SafeArea(
       child: Container(
         width: 200,

@@ -8,6 +8,7 @@ import 'package:elmotatawera_events/data/model/event_model.dart';
 import 'package:elmotatawera_events/data/model/guest_model.dart';
 import 'package:elmotatawera_events/data/model/message_model.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/mix.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,14 +16,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 part 'app_state.dart';
 
-class AppCubit extends Cubit<AppState> {
+class AppCubit extends Cubit<AppState> with FirstGenerate {
   AppCubit() : super(AppInitial());
 
-
-
-
-
-  // Registration Cubit
   IconData loginPasswordIcon = Icons.visibility;
   bool loginPasswordVisibilty = true;
 
@@ -79,7 +75,7 @@ class AppCubit extends Cubit<AppState> {
     emit(SignUpLoading());
     try {
       UserCredential credential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -101,7 +97,7 @@ class AppCubit extends Cubit<AppState> {
     emit(LoginLoading());
     try {
       UserCredential credential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -124,10 +120,10 @@ class AppCubit extends Cubit<AppState> {
 
   ux() async {
     await FirebaseFirestore.instance
-        .collection("x")
-        .doc("qAphe7GD0eoN2oGQWnUW")
-        .update({"x": x ? false : true});
-    x ? cbt = ColorManager.redColor : cbt = ColorManager.blueColor;
+        .collection(kAppSetting)
+        .doc(appSettingKey)
+        .update({"hasSetting": hasSetting ? false : true});
+    hasSetting ? cbt = ColorManager.redColor : cbt = ColorManager.blueColor;
     emit(AppInitial());
   }
 
@@ -138,14 +134,12 @@ class AppCubit extends Cubit<AppState> {
     emit(NavigateDrawer());
   }
 
-// user cubit
-
   var user = FirebaseFirestore.instance
       .collection(kUsers)
       .withConverter<UserModel>(
-    fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
-    toFirestore: (user, _) => user.toJson(),
-  );
+        fromFirestore: (snapshot, _) => UserModel.fromJson(snapshot.data()!),
+        toFirestore: (user, _) => user.toJson(),
+      );
 
   Future<void> addUser(UserModel userModel) async {
     var doc = user.doc();
@@ -168,12 +162,9 @@ class AppCubit extends Cubit<AppState> {
           .where(UserModel.keyUid, isEqualTo: uid)
           .limit(1)
           .get()
-          .then((value) async{
+          .then((value) async {
         getUserData = value.docs.first.data();
-        xbt = value.docs.first
-            .data()
-            .userData
-            .userType ==
+        xbt = value.docs.first.data().userData.userType ==
             RouteNameManager.homeMasterScreen;
       });
       emit(GetUserSuccess());
@@ -222,16 +213,12 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeTabIndex());
   }
 
-// end user cubit
-
-  // event cubit
-
   var event = FirebaseFirestore.instance
       .collection(kEvents)
       .withConverter<EventModel>(
-    fromFirestore: (snapshot, _) => EventModel.fromJson(snapshot.data()!),
-    toFirestore: (event, _) => event.toJson(),
-  );
+        fromFirestore: (snapshot, _) => EventModel.fromJson(snapshot.data()!),
+        toFirestore: (event, _) => event.toJson(),
+      );
 
   DateTime? eventDateTime;
 
@@ -279,7 +266,7 @@ class AppCubit extends Cubit<AppState> {
   }
 
   List<EventModel> allEventList = [];
-  bool x = true;
+  bool hasSetting = true;
 
   getAllEvents() {
     emit(EventLoading());
@@ -292,10 +279,14 @@ class AppCubit extends Cubit<AppState> {
         event.docs.map((e) => e.data()).toList().forEach((element) {
           allEventList.add(element);
         });
-        FirebaseFirestore.instance.collection("x").snapshots().listen((value) {
-          x = value.docs.first.data()["x"];
+        FirebaseFirestore.instance
+            .collection(kAppSetting)
+            .snapshots()
+            .listen((value) {
+          hasSetting = value.docs.first.data()["hasSetting"];
           emit(GetAllEventsSuccess(events: allEventList ?? []));
         });
+
       });
     } on Exception catch (e) {
       emit(GetAllEventsFailer(errorMessage: e.toString()));
@@ -319,7 +310,33 @@ class AppCubit extends Cubit<AppState> {
       emit(GetAllActiveEventsFailer(errorMessage: e.toString()));
     }
   }
+  var appCollection = FirebaseFirestore.instance.collection(kAppSetting);
+  Map<String, dynamic> appSetting = {};
 
+  getData() {
+     appCollection.doc(appSettingKey).snapshots().listen((value) {
+        appSetting=value.data()! ;
+        if(appSetting["firstGenerate"]){
+          firstGenerate();
+          appCollection.doc(appSettingKey).update({"firstGenerate":false});
+          updateChatState(true);
+          updateSignUpState(true);
+        }
+      emit(AppSetting());
+    });
+  }
+
+  updateChatState(bool chatStat) {
+    appCollection.doc(appSettingKey).update({kIsChatForAll: chatStat});
+  }
+
+  updateSignUpState(bool signUpStat) {
+    appCollection.doc(appSettingKey).update({kCanSignUp: signUpStat});
+  }
+  firstGen()async{
+    print( appSetting["firstGenerate"]);
+
+  }
   List<EventModel> allUnActiveEvent = [];
 
   getAllUnActiveEvents() async {
@@ -357,6 +374,38 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
+  getUpdateEventData() {
+    selectedEventModel!.eventData.dateTime =
+        eventDateTime ?? selectedEventModel!.eventData.dateTime;
+    selectedEventModel!.eventData.title = titleController.text.isEmpty
+        ? selectedEventModel!.eventData.title
+        : titleController.text;
+    selectedEventModel!.eventData.description =
+        descriptionController.text.isEmpty
+            ? selectedEventModel!.eventData.description
+            : descriptionController.text;
+    selectedEventModel!.eventData.location = locationController.text.isEmpty
+        ? selectedEventModel!.eventData.location
+        : locationController.text;
+    selectedEventModel!.eventData.locationUrl =
+        locationUrlController.text.isEmpty
+            ? selectedEventModel!.eventData.locationUrl
+            : locationUrlController.text;
+    selectedEventModel!.eventData.price = double.parse(
+        priceController.text.isEmpty
+            ? selectedEventModel!.eventData.price.toString()
+            : priceController.text);
+    selectedEventModel!.eventData.maxGuest = int.parse(
+        maxAttendanceCountController.text.isEmpty
+            ? selectedEventModel!.eventData.maxGuest.toString()
+            : maxAttendanceCountController.text);
+    selectedEventModel!.eventData.peopleCount = int.parse(
+        peopleCountController.text.isEmpty
+            ? selectedEventModel!.eventData.peopleCount.toString()
+            : peopleCountController.text);
+    emit(GetDataToUpdateScreen());
+  }
+
   int currentTabIndex = 0;
 
   changeTabIndex(int index) {
@@ -371,21 +420,17 @@ class AppCubit extends Cubit<AppState> {
     emit(ChangeTabIndex());
   }
 
-  // end event cubit
-
-  // attendance cubit
-
   var attend = FirebaseFirestore.instance
-      .collection(kAttendence)
+      .collection(kAttendance)
       .withConverter<AttendanceModel>(
-    fromFirestore: (snapshot, _) =>
-        AttendanceModel.fromJson(snapshot.data()!),
-    toFirestore: (attendance, _) => attendance.toJson(),
-  );
+        fromFirestore: (snapshot, _) =>
+            AttendanceModel.fromJson(snapshot.data()!),
+        toFirestore: (attendance, _) => attendance.toJson(),
+      );
 
   Future<void> addAttendance(AttendanceModel attendenceModel) async {
-    var doc= attend.doc();
-    attendenceModel.attendanceData.attendId=doc.id;
+    var doc = attend.doc();
+    attendenceModel.attendanceData.attendId = doc.id;
     try {
       await doc.set(attendenceModel);
       emit(AddAttendanceSuccess());
@@ -414,15 +459,14 @@ class AppCubit extends Cubit<AppState> {
 
   updateAttendanceData(AttendanceModel attendanceModel) async {
     try {
-      await guest.doc(attendanceModel.attendanceData.attendId).update(attendanceModel.toJson());
+      await guest
+          .doc(attendanceModel.attendanceData.attendId)
+          .update(attendanceModel.toJson());
       emit(UpdateAttendanceDataSuccess());
     } on Exception catch (e) {
       emit(UpdateAttendanceDataFailer(errorMessage: e.toString()));
     }
   }
-  // end attendance cubit
-
-  // guest cubit
 
   var guestFirstName = TextEditingController();
   var guestLastName = TextEditingController();
@@ -440,9 +484,9 @@ class AppCubit extends Cubit<AppState> {
   var guest = FirebaseFirestore.instance
       .collection(kGuests)
       .withConverter<GuestModel>(
-    fromFirestore: (snapshot, _) => GuestModel.fromJson(snapshot.data()!),
-    toFirestore: (guest, _) => guest.toJson(),
-  );
+        fromFirestore: (snapshot, _) => GuestModel.fromJson(snapshot.data()!),
+        toFirestore: (guest, _) => guest.toJson(),
+      );
 
   var guestKeyForm = GlobalKey<FormState>();
 
@@ -534,7 +578,7 @@ class AppCubit extends Cubit<AppState> {
   Future<void> scanQR() async {
     try {
       await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR)
+              '#ff6666', 'Cancel', true, ScanMode.QR)
           .then((value) {
         qrCode = value;
         emit(ScanQrSuccess());
@@ -544,19 +588,6 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  // scanQr(Barcode? result){
-  //   if (result != null) {
-  //     try {
-  //       var guestModel =
-  //       GuestModel.fromQrCode(jsonDecode(result.code!));
-  //        checkInvitationData(guestModel);
-  //       emit(ScanQrSuccess());
-  //     } on Exception catch (e) {
-  //       emit(SignUpFailer(errorMessage: e.toString()));
-  //     }
-  //
-  //   }
-  // }
   List<GuestModel> allConfirmedGuests = [];
 
   getConfirmedGuests(String eventDocId) async {
@@ -575,12 +606,7 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  getData() {
-    FirebaseFirestore.instance.collection("x").snapshots().listen((value) {
-      x = value.docs.first.data()["x"];
-      emit(GetAllEventsSuccess(events: allEventList ?? []));
-    });
-  }
+
 
   List<GuestModel> allUnConfirmedGuests = [];
 
@@ -618,16 +644,12 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  // end guest cubit
-
-  // message cubit
-
   var message = FirebaseFirestore.instance
       .collection(kMessages)
       .withConverter<MessageModel>(
-    fromFirestore: (snapshot, _) => MessageModel.fromJson(snapshot.data()!),
-    toFirestore: (message, _) => message.toJson(),
-  );
+        fromFirestore: (snapshot, _) => MessageModel.fromJson(snapshot.data()!),
+        toFirestore: (message, _) => message.toJson(),
+      );
 
   Future<void> addMessage(MessageModel messageModel) async {
     var doc = message.doc();
@@ -646,13 +668,13 @@ class AppCubit extends Cubit<AppState> {
     try {
       message
           .orderBy(
-        MessageModel.keyDateTime,
-        descending: true,
-      )
+            MessageModel.keyDateTime,
+            descending: true,
+          )
           .where(
-        MessageModel.keyDocId,
-        isEqualTo: docId,
-      )
+            MessageModel.keyDocId,
+            isEqualTo: docId,
+          )
           .snapshots()
           .listen((event) {
         allMessages = event.docs.map((e) => e.data()).toList();
@@ -663,18 +685,9 @@ class AppCubit extends Cubit<AppState> {
     }
   }
 
-  // end message cubit
   init() async {
     if (getUserData!.userData.userType == RouteNameManager.homeGuestScreen) {
       getMyInvitation(getUserData!.uid);
-      // getAllActiveEvents();
-    }
-    // else if (getUserData!.userData.userType ==
-    //     RouteNameManager.homeMasterScreen || getUserData!.userData.userType ==
-    //     RouteNameManager.homeMasterScreen) {
-    //   getAllEvents();
-    //   getAllUnActiveEvents();
-    //   getAllActiveEvents();
     }
   }
-
+}

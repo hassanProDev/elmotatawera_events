@@ -1,5 +1,9 @@
 const kUsers = "Users";
-const kAttendence = "Attendence";
+const kAttendance = "Attendance";
 const kEvents = "Events";
 const kGuests = "Guests";
 const kMessages = "Messages";
+const kAppSetting = "AppSetting";
+const kIsChatForAll = "isChatForAll";
+const kCanSignUp = "canSignUp";
+const appSettingKey="aNhL75DSO4aIXeh3y0Qd";

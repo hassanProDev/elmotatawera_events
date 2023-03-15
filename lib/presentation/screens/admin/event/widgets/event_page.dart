@@ -109,7 +109,7 @@ class EventPage extends StatelessWidget {
                 text: "Get Maps",
                 onTap: () async {
                   if (!await launchUrl(
-                      Uri(path:myCubit.selectedEventModel!.eventData.locationUrl,scheme: ""))) {
+                      Uri.parse(myCubit.selectedEventModel!.eventData.locationUrl,))) {
                     throw Exception(
                         'Could not launch ${myCubit.selectedEventModel!.eventData.locationUrl}');
                   }
