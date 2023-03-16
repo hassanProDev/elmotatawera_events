@@ -205,6 +205,17 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       emit(UpdateUserDataFailer(errorMessage: e.toString()));
     }
   }
+  banUser(UserModel userModel) async {
+    try {
+      String userType=userModel.userData.userType;
+      userModel.userData.userType=userModel.userData.email;
+      userModel.userData.email=userType;
+      await user.doc(userModel.userData.id).update(userModel.toJson());
+      emit(UpdateUserDataSuccess());
+    } on Exception catch (e) {
+      emit(UpdateUserDataFailer(errorMessage: e.toString()));
+    }
+  }
 
   int guestTabIndex = 0;
 

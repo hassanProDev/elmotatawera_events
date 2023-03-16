@@ -43,9 +43,9 @@ class UserData {
   final String firstName;
   final String lastName;
   final String? img;
-  final String? email;
+   String email;
   final String phone;
-  final String userType;
+   String userType;
   String? id;
 
    UserData({

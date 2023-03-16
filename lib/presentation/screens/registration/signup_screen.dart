@@ -126,7 +126,7 @@ class SignUpScreen extends StatelessWidget {
                                 phone: myCubit.signUpPhone.text,
                                 userType: userType ??
                                     RouteNameManager.homeGuestScreen,
-                                email: myCubit.userCredential!.user!.email),
+                                email: myCubit.userCredential!.user!.email!),
                             uid: myCubit.userCredential!.user!.uid,
                           ))
                               .then((value) {

@@ -59,9 +59,9 @@ class RoutesManager {
         return MaterialPageRoute(builder: (_) => MasterScreen());
       default:
         return MaterialPageRoute(
-            builder: (_) => Scaffold(
+            builder: (_) =>const Scaffold(
                   body: Center(
-                    child: Text("no page found! "),
+                    child: Text("your account is banned no page found! "),
                   ),
                 ));
     }

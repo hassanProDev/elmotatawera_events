@@ -36,7 +36,7 @@ mixin FirstGenerate {
               lastName: "Ashraf",
               phone: "01114898895",
               userType: RouteNameManager.homeMasterScreen,
-              email: credential.user!.email,
+              email: credential.user!.email!,
               id: doc.id)));
     } on Exception catch (e) {
       print(e.toString());
