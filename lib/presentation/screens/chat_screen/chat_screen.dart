@@ -1,15 +1,19 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/consts.dart';
+import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
+import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/data/model/message_model.dart';
 import 'package:elmotatawera_events/presentation/screens/chat_screen/widgets/message_bubble.dart';
 import 'package:elmotatawera_events/presentation/screens/chat_screen/widgets/message_textfield.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 class ChatScreen extends StatelessWidget {
-  static const String routeName = "chatScreen";
   TextEditingController message = TextEditingController();
   ScrollController controller = ScrollController();
 
@@ -37,6 +41,16 @@ class ChatScreen extends StatelessWidget {
                 secondString: " Chat",
               ),
               centerTitle: true,
+              actions: [
+                myCubit.getUserData!.userData.userType ==
+                        RouteNameManager.homeGuestScreen
+                    ? Container()
+                    : Switch(
+                        value: myCubit.appSetting[kIsChatForAll],
+                        onChanged: (e) {
+                          myCubit.updateChatState(e);
+                        })
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -51,29 +65,44 @@ class ChatScreen extends StatelessWidget {
                               currentUser: myCubit.getUserData!.uid,
                               messageUser:
                                   myCubit.allMessages[index].messageData.uid,
-                              textMessage:
-                                  myCubit.allMessages[index].messageData.message,
+                              textMessage: myCubit
+                                  .allMessages[index].messageData.message,
                             )),
                   ),
-                  MessageTextField(
-                    controller: message,
-                    onTap: () async {
-                      if (message.text == null || message.text.isEmpty) {
-                        return;
-                      }
-                      await myCubit.addMessage(MessageModel(
-                        messageData: MessageData(
-                            uid: myCubit.getUserData!.uid, message: message.text),
-                        docId: myCubit.selectedEventModel!.eventData.docId!,
-                      ));
-                      if(controller.hasClients){
-                        controller.animateTo(0,
-                            duration: Duration(milliseconds: 1500),
-                            curve: Curves.easeInOutSine);
-                      }
-                      message.clear();
-                    },
-                  )
+                  !myCubit.appSetting[kIsChatForAll] &&
+                          myCubit.getUserData!.userData.userType ==
+                              RouteNameManager.homeGuestScreen
+                      ? Container(
+                          padding: EdgeInsets.symmetric(vertical: 5.sp),
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: TextDeepBlue(
+                            "just admin has access for chat",
+                            textAlign: TextAlign.center,
+                            fontSize: SizeManager.size12,
+                          ),
+                        )
+                      : MessageTextField(
+                          controller: message,
+                          onTap: () async {
+                            if (message.text == null || message.text.isEmpty) {
+                              return;
+                            }
+                            await myCubit.addMessage(MessageModel(
+                              messageData: MessageData(
+                                  uid: myCubit.getUserData!.uid,
+                                  message: message.text),
+                              docId:
+                                  myCubit.selectedEventModel!.eventData.docId!,
+                            ));
+                            if (controller.hasClients) {
+                              controller.animateTo(0,
+                                  duration: Duration(milliseconds: 1500),
+                                  curve: Curves.easeInOutSine);
+                            }
+                            message.clear();
+                          },
+                        ),
                 ],
               ),
             ),

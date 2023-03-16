@@ -71,15 +71,15 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
 
   UserCredential? userCredential;
 
-  userSignUp(String email, String password) async {
+  userSignUp(String email, String password,UserModel userModel) async {
     emit(SignUpLoading());
     try {
-      UserCredential credential =
+      userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      userCredential = credential;
+      await addUser(userModel);
       emit(SignUpSuccess());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -340,10 +340,10 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
   updateChatState(bool chatStat) {
     appCollection.doc(appSettingKey).update({kIsChatForAll: chatStat});
   }
-
   updateSignUpState(bool signUpStat) {
     appCollection.doc(appSettingKey).update({kCanSignUp: signUpStat});
   }
+
   firstGen()async{
     print( appSetting["firstGenerate"]);
 

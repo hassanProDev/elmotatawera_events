@@ -117,21 +117,17 @@ class SignUpScreen extends StatelessWidget {
                       onTap: () async {
                         if (myCubit.signUpFormKey.currentState!.validate()) {
                           await myCubit.userSignUp(myCubit.signUpEmail.text,
-                              myCubit.signUpPassword.text);
-                          await myCubit
-                              .addUser(UserModel(
-                            userData: UserData(
-                                firstName: myCubit.signUpFirstName.text,
-                                lastName: myCubit.signUpLastName.text,
-                                phone: myCubit.signUpPhone.text,
-                                userType: userType ??
-                                    RouteNameManager.homeGuestScreen,
-                                email: myCubit.userCredential!.user!.email!),
-                            uid: myCubit.userCredential!.user!.uid,
-                          ))
+                              myCubit.signUpPassword.text,UserModel(
+                                userData: UserData(
+                                    firstName: myCubit.signUpFirstName.text,
+                                    lastName: myCubit.signUpLastName.text,
+                                    phone: myCubit.signUpPhone.text,
+                                    userType: userType ??
+                                        RouteNameManager.homeGuestScreen,
+                                    email: myCubit.userCredential!.user!.email!),
+                                uid: myCubit.userCredential!.user!.uid,
+                              ))
                               .then((value) {
-
-
                             myCubit.clearSignUpController();
                           });
                         }
