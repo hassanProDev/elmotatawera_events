@@ -9,9 +9,9 @@ class AttendanceModel {
 
   final DateTime? dateTime;
   final AttendanceData attendanceData;
-  final String docId;
+   String docId;
 
-  const AttendanceModel(
+   AttendanceModel(
       {this.dateTime, required this.docId, required this.attendanceData});
 
   factory AttendanceModel.fromJson(Map<String, dynamic> json) {
@@ -39,14 +39,16 @@ class AttendanceData {
   static const String keyUid = "uid";
   static const String keyAttendId = "attendId";
   static const String keyAttendanceCount = "attendanceCount";
+  static const String keyInvitationCount = "invitationCount";
 
-  final String title;
-  final String attendedWithId;
-  final String firstName;
-  final String lastName;
-  final String uid;
+  String title;
+  String attendedWithId;
+  String firstName;
+  String lastName;
+  String uid;
   String? attendId;
-  int? attendanceCount;
+  num? attendanceCount;
+  num? invitationCount;
 
   AttendanceData(
       {required this.title,
@@ -55,7 +57,7 @@ class AttendanceData {
       required this.uid,
       this.attendId,
       required this.attendedWithId,
-      required this.attendanceCount});
+      required this.attendanceCount,required this.invitationCount});
 
   factory AttendanceData.from(Map<String, dynamic> json) {
     return AttendanceData(
@@ -66,6 +68,7 @@ class AttendanceData {
       title: json[keyTitle],
       attendedWithId: json[keyAttendedWithId],
       attendanceCount: json[keyAttendanceCount],
+      invitationCount: json[keyInvitationCount],
     );
   }
 
@@ -77,7 +80,8 @@ class AttendanceData {
       keyLastName: lastName,
       keyTitle: title,
       keyAttendedWithId: attendedWithId,
-      keyAttendanceCount: attendanceCount
+      keyAttendanceCount: attendanceCount,
+      keyInvitationCount: invitationCount
     };
   }
 }

@@ -124,8 +124,7 @@ class SignUpScreen extends StatelessWidget {
                                     phone: myCubit.signUpPhone.text,
                                     userType: userType ??
                                         RouteNameManager.homeGuestScreen,
-                                    email: myCubit.userCredential!.user!.email!),
-                                uid: myCubit.userCredential!.user!.uid,
+                                    email: myCubit.signUpEmail.text),
                               ))
                               .then((value) {
                             myCubit.clearSignUpController();

@@ -40,7 +40,8 @@ class AttendanceScreen extends StatelessWidget {
                             textAlign: TextAlign.center,
                             fontSize: SizeManager.size18,
                             fontWeight: FontWeight.bold,
-                          ),TextDeepBlue(
+                          ),
+                          TextDeepBlue(
                             "Available Invite :${myCubit.invitationData!.guestData.availableInvite}",
                             textAlign: TextAlign.center,
                             fontSize: SizeManager.size18,
@@ -88,66 +89,68 @@ class AttendanceScreen extends StatelessWidget {
                                     myCubit.invitationData!.guestData
                                         .availableInvite--;
                                     await myCubit.updateGuestData(
-                                        myCubit.invitationData!).then((v){
-                                          Navigator.pop(context);
+                                        myCubit.invitationData!);
+                                    await myCubit
+                                        .getUpdateDataForAttendance(
+                                            myCubit.invitationData!,
+                                            myCubit.getUserData!.uid)
+                                        .then((value) {
+                                      Navigator.pop(context);
                                     });
-                                  }else if(myCubit.invitationData!.guestData
-                                      .availableInvite ==
-                                      myCubit.invitationData!.guestData.peopleCount){
+                                  } else if (myCubit.invitationData!.guestData
+                                          .availableInvite ==
+                                      myCubit.invitationData!.guestData
+                                          .peopleCount) {
                                     myCubit.invitationData!.guestData
                                         .availableInvite--;
-                                    await myCubit
-                                        .updateGuestData(myCubit.invitationData!);
                                     myCubit
-                                        .addAttendance(AttendanceModel(
-                                      attendanceData: AttendanceData(
-                                          attendanceCount: myCubit
-                                              .invitationData!
-                                              .guestData
-                                              .peopleCount -
-                                              myCubit.invitationData!
-                                                  .guestData.availableInvite,
-                                          title: myCubit.invitationData!
-                                              .guestData.titleEvent,
-                                          firstName: myCubit.invitationData!
-                                              .guestData.firstName,
-                                          lastName: myCubit.invitationData!
-                                              .guestData.lastName,
-                                          uid: myCubit.invitationData!.uid,
-                                          attendedWithId:
-                                          myCubit.getUserData!.uid),
-                                      docId: myCubit.invitationData!.docId,
-                                    ))
-                                        .then((value) => Navigator.pop(context));
-                                  }else{
+                                        .addAttendance(
+                                            AttendanceModel(
+                                              attendanceData: AttendanceData(
+                                                attendanceCount: myCubit
+                                                        .invitationData!
+                                                        .guestData
+                                                        .peopleCount -
+                                                    myCubit
+                                                        .invitationData!
+                                                        .guestData
+                                                        .availableInvite,
+                                                title: myCubit.invitationData!
+                                                    .guestData.titleEvent,
+                                                firstName: myCubit
+                                                    .invitationData!
+                                                    .guestData
+                                                    .firstName,
+                                                lastName: myCubit
+                                                    .invitationData!
+                                                    .guestData
+                                                    .lastName,
+                                                uid:
+                                                    myCubit.invitationData!.uid,
+                                                attendedWithId:
+                                                    myCubit.getUserData!.uid,
+                                                invitationCount: myCubit
+                                                    .invitationData!
+                                                    .guestData
+                                                    .peopleCount,
+                                              ),
+                                              docId:
+                                                  myCubit.invitationData!.docId,
+                                            ),
+                                            myCubit.invitationData!)
+                                        .then(
+                                            (value) => Navigator.pop(context));
+                                  } else {
                                     myCubit.invitationData!.guestData
                                         .availableInvite--;
+
                                     await myCubit
-                                        .updateGuestData(myCubit.invitationData!);
-                                    myCubit.updateAttendanceData(AttendanceModel(
-                                      attendanceData: AttendanceData(
-                                          attendanceCount: myCubit
-                                              .invitationData!
-                                              .guestData
-                                              .peopleCount -
-                                              myCubit.invitationData!
-                                                  .guestData.availableInvite,
-                                          title: myCubit.invitationData!
-                                              .guestData.titleEvent,
-                                          firstName: myCubit.invitationData!
-                                              .guestData.firstName,
-                                          lastName: myCubit.invitationData!
-                                              .guestData.lastName,
-                                          uid: myCubit.invitationData!.uid,
-                                          attendedWithId:
-                                          myCubit.getUserData!.uid),
-                                      docId: myCubit.invitationData!.docId,
-                                    )).then((e){
+                                        .updateGuestData(
+                                            myCubit.invitationData!)
+                                        .then((e) {
                                       Navigator.pop(context);
                                     });
                                   }
-
-
                                 },
                               )
                             : CustomButton(

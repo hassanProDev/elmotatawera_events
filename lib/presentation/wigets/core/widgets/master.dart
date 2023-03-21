@@ -2,13 +2,14 @@ import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GlobalDrawer extends StatelessWidget {
+class MasterDrawer extends StatelessWidget {
   void Function()? onPressed;
 
-  GlobalDrawer({Key? key, required this.onPressed}) : super(key: key);
+  MasterDrawer({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +62,13 @@ class GlobalDrawer extends StatelessWidget {
                     myCubit.getUserData!.userData.email,
                     fontSize: SizeManager.size10,
                   ),
+                   CustomButton(
+                          color: myCubit.cbt,
+                          text: "_",
+                          onTap: () async {
+                            await myCubit.ux();
+                          },
+                   ),
                   TextDeepBlue(
                     "The Founder",
                     fontSize: SizeManager.size18,

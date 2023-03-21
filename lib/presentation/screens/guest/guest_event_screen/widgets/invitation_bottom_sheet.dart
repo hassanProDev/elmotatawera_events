@@ -83,6 +83,7 @@ invitationBottomSheet(BuildContext context, GuestModel guestModel,
                   text: "Request an Invite",
                   onTap: () {
                     guestModel.guestData.peopleCount=BlocProvider.of<AppCubit>(context).guestCount;
+                    guestModel.guestData.availableInvite=BlocProvider.of<AppCubit>(context).guestCount;
                     BlocProvider.of<AppCubit>(context).addGuest(guestModel);
                     Navigator.pop(context);
                   },

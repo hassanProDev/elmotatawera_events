@@ -86,7 +86,7 @@ class AddEventScreen extends StatelessWidget {
                 ),
                 CustomTextFormField(
                   controller: myCubit.peopleCountController,
-                  text: "Guest Count",
+                  text: "total guest of event",
                   keyboardType: TextInputType.number,
                   regexCondition: RegexManager.countRegex,
                 ),

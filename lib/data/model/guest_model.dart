@@ -84,6 +84,7 @@ class GuestData {
   static const String keyPaid = "paid";
   static const String keyAdminPhone = "adminPhone";
   static const String keyAvailableInvite = "availableInvite";
+  static const String keyAttendanceId = "attendanceId";
 
   final String phone;
   final String firstName;
@@ -95,6 +96,7 @@ class GuestData {
   bool attendance;
   final bool paid;
   int availableInvite;
+  String? attendanceId;
 
   GuestData({
     required this.firstName,
@@ -107,6 +109,7 @@ class GuestData {
     required this.titleEvent,
     required this.attendance,
     required this.availableInvite,
+    this.attendanceId
   });
 
   factory GuestData.fromJson(Map<String, dynamic> json) {
@@ -121,6 +124,7 @@ class GuestData {
       titleEvent: json[keyTitleInvitation],
       attendance: json[keyAttendance],
       availableInvite: json[keyAvailableInvite],
+      attendanceId: json[keyAttendanceId],
     );
   }
 
@@ -135,7 +139,8 @@ class GuestData {
       keyPeopleCount: peopleCount,
       keyAttendance: attendance,
       keyEventDate: eventDate.toString(),
-      keyAvailableInvite: availableInvite
+      keyAvailableInvite: availableInvite,
+      keyAttendanceId:attendanceId
     };
   }
 }

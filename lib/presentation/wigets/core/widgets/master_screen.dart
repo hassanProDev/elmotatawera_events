@@ -11,7 +11,7 @@ import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widget
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_icon_button.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_animate.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_bg.dart';
-import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_drawer.dart';
+import 'package:elmotatawera_events/presentation/wigets/core/widgets/master.dart';
 import 'package:elmotatawera_events/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +46,7 @@ class MasterScreen extends StatelessWidget {
               body: Stack(
                 children: [
                   DrawerBg(),
-                  GlobalDrawer(
+                  MasterDrawer(
                     onPressed: () {
                       myCubit.openDrawer();
                     },

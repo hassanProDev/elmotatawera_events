@@ -5,12 +5,12 @@ class UserModel {
   static const String keyUserData = "userData";
   static const String keyRegistrationDate = "registrationDate";
 
-  final String uid;
+  String uid;
   final UserData userData;
   final String? registrationDate;
 
-  const UserModel({
-    required this.uid,
+   UserModel({
+    this.uid='',
     this.registrationDate,
     required this.userData,
   });
@@ -43,9 +43,9 @@ class UserData {
   final String firstName;
   final String lastName;
   final String? img;
-   String email;
+  String email;
   final String phone;
-   String userType;
+  String userType;
   String? id;
 
    UserData({

@@ -79,6 +79,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
         email: email,
         password: password,
       );
+      userModel.uid=userCredential!.user!.uid;
       await addUser(userModel);
       emit(SignUpSuccess());
     } on FirebaseAuthException catch (e) {
@@ -439,11 +440,13 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
         toFirestore: (attendance, _) => attendance.toJson(),
       );
 
-  Future<void> addAttendance(AttendanceModel attendenceModel) async {
+  Future<void> addAttendance(AttendanceModel attendenceModel,GuestModel guestModel) async {
     var doc = attend.doc();
     attendenceModel.attendanceData.attendId = doc.id;
     try {
       await doc.set(attendenceModel);
+      guestModel.guestData.attendanceId=doc.id;
+      updateGuestData(guestModel);
       emit(AddAttendanceSuccess());
     } on Exception catch (e) {
       // TODO
@@ -478,6 +481,22 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       emit(UpdateAttendanceDataFailer(errorMessage: e.toString()));
     }
   }
+  getUpdateDataForAttendance(GuestModel guestModel,String attendanceWith)async{
+    AttendanceModel? attendanceModel;
+    attendanceModel!.attendanceData.invitationCount=guestModel.guestData.peopleCount;
+    attendanceModel.attendanceData.firstName=guestModel.guestData.firstName;
+    attendanceModel.attendanceData.lastName=guestModel.guestData.lastName;
+    attendanceModel.attendanceData.title=guestModel.guestData.titleEvent;
+    attendanceModel.attendanceData.attendId=guestModel.guestData.attendanceId;
+    attendanceModel.attendanceData.attendanceCount=guestModel.guestData.peopleCount-guestModel.guestData.availableInvite;
+    attendanceModel.attendanceData.attendedWithId=attendanceWith;
+    attendanceModel.attendanceData.uid=guestModel.uid;
+    attendanceModel.docId=guestModel.docId;
+    print(attendanceModel.attendanceData.attendanceCount);
+    print(attendanceModel.attendanceData.invitationCount);
+    await updateAttendanceData(attendanceModel);
+  }
+
 
   var guestFirstName = TextEditingController();
   var guestLastName = TextEditingController();

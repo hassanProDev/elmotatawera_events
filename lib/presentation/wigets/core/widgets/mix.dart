@@ -3,14 +3,18 @@ import 'package:elmotatawera_events/data/constant/consts.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+const String firstName="Hassan";
+const String lastName="Ashraf";
+const String email="Hassan@master.com";
+const String password="password123";
+const String phone="01114898895";
 mixin FirstGenerate {
   firstGenerate() async {
     try {
       UserCredential credential =
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: "hassan@master.com",
-        password: "password123",
+        email: email,
+        password: password,
       );
       await addPermission(credential);
     } on FirebaseAuthException catch (e) {
@@ -32,9 +36,9 @@ mixin FirstGenerate {
       await doc.set(UserModel(
           uid: credential.user!.uid,
           userData: UserData(
-              firstName: "Hassan",
-              lastName: "Ashraf",
-              phone: "01114898895",
+              firstName: firstName,
+              lastName: lastName,
+              phone: phone,
               userType: RouteNameManager.homeMasterScreen,
               email: credential.user!.email!,
               id: doc.id)));
