@@ -32,6 +32,13 @@ class LoginFailer extends AppState {
 
   LoginFailer({required this.errorMessage});
 }
+class AutoLoginSuccess extends AppState {}
+
+class AutoLoginFailer extends AppState {
+  String errorMessage;
+
+  AutoLoginFailer({required this.errorMessage});
+}
 
 class UserLoading extends AppState {}
 

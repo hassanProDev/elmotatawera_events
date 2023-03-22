@@ -13,6 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_state.dart';
 
@@ -102,6 +103,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
         email: email,
         password: password,
       );
+      await autoLogin(email, password);
       userCredential = credential;
       await getUser(credential.user!.uid);
       emit(LoginSuccess());
@@ -114,6 +116,18 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       }
     } on Exception catch (e) {
       emit(LoginFailer(errorMessage: "some thing want wrong !!"));
+    }
+  }
+
+  autoLogin(String email, String password)async{
+    SharedPreferences prefs=await SharedPreferences.getInstance();
+    try {
+      await prefs.setString("email",email);
+      await prefs.setString("password",password);
+      emit(AutoLoginSuccess());
+    } on Exception catch (e) {
+      print(e.toString());
+      emit(AutoLoginFailer(errorMessage: e.toString()));
     }
   }
 

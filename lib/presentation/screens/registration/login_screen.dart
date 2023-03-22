@@ -1,5 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
+import 'package:elmotatawera_events/data/constant/consts.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/users_model.dart';
 import 'package:elmotatawera_events/presentation/screens/registration/widget/custom_textformfield.dart';
@@ -101,13 +102,13 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 1.h,
                     ),
-                    GlobalPressedText(
+                    myCubit.appSetting[kCanSignUp]?GlobalPressedText(
                       text: "Sign Up",
                       onTap: () {
                         Navigator.pushReplacementNamed(
                             context, RouteNameManager.signUpScreen);
                       },
-                    ),
+                    ):Container(),
                   ],
                 ),
               ),

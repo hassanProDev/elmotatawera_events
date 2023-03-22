@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "686144051056",
-    "project_id": "events-app-446c5",
-    "storage_bucket": "events-app-446c5.appspot.com"
+    "project_number": "888019477779",
+    "project_id": "event-app-4609e",
+    "storage_bucket": "event-app-4609e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:686144051056:android:68cd23888541cd6cfba1b5",
+        "mobilesdk_app_id": "1:888019477779:android:edcada4ad911b2e035e6e6",
         "android_client_info": {
           "package_name": "com.example.elmotatawera_events"
         }
       },
       "oauth_client": [
         {
-          "client_id": "686144051056-h39iq4qts0van25ieqel7hq5el9cfbt5.apps.googleusercontent.com",
+          "client_id": "888019477779-op58lcuqtm4kphcdp0e32ep1psrdlniv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA3WcvyNBVqCAfm0cvC4sSCWwC2fmoU_9U"
+          "current_key": "AIzaSyBRze1iO5KXg1axhvwT9RK4llviOaTMhxw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "686144051056-h39iq4qts0van25ieqel7hq5el9cfbt5.apps.googleusercontent.com",
+              "client_id": "888019477779-op58lcuqtm4kphcdp0e32ep1psrdlniv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

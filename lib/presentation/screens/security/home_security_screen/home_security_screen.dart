@@ -4,11 +4,11 @@ import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/model/guest_model.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/home_admin/widgets/custom_app_bar.dart';
+import 'package:elmotatawera_events/presentation/screens/security/home_security_screen/widgets/security_drawer.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_icon_button.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_animate.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/drawer_bg.dart';
-import 'package:elmotatawera_events/presentation/wigets/core/widgets/global_drawer.dart';
 import 'package:elmotatawera_events/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +28,6 @@ class HomeSecurityScreen extends StatelessWidget {
           } else if(state is ScanQrFailer){
             customToast(context,text:"" );
           }else if(state is CheckInvitationSuccess){
-            print(myCubit.invitationData.toString()+"3333333333333");
             Navigator.pushNamed(context, RouteNameManager.attendanceScreen);
           }else if(state is CheckInvitationFailer){
             customToast(context,text: "state.errorMessage");
@@ -41,7 +40,7 @@ class HomeSecurityScreen extends StatelessWidget {
             body: Stack(
               children: [
                 DrawerBg(),
-                GlobalDrawer(
+                SecurityDrawer(
                   onPressed: () {
                     myCubit.openDrawer();
                   },

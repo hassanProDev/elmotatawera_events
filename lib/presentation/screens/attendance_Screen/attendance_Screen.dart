@@ -1,7 +1,6 @@
 import 'package:elmotatawera_events/bussiness_logic/cubit/app_cubit.dart';
 import 'package:elmotatawera_events/data/constant/color_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
-import 'package:elmotatawera_events/data/model/attendence_model.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_container_widget.dart';
@@ -97,50 +96,52 @@ class AttendanceScreen extends StatelessWidget {
                                         .then((value) {
                                       Navigator.pop(context);
                                     });
-                                  } else if (myCubit.invitationData!.guestData
-                                          .availableInvite ==
-                                      myCubit.invitationData!.guestData
-                                          .peopleCount) {
-                                    myCubit.invitationData!.guestData
-                                        .availableInvite--;
-                                    myCubit
-                                        .addAttendance(
-                                            AttendanceModel(
-                                              attendanceData: AttendanceData(
-                                                attendanceCount: myCubit
-                                                        .invitationData!
-                                                        .guestData
-                                                        .peopleCount -
-                                                    myCubit
-                                                        .invitationData!
-                                                        .guestData
-                                                        .availableInvite,
-                                                title: myCubit.invitationData!
-                                                    .guestData.titleEvent,
-                                                firstName: myCubit
-                                                    .invitationData!
-                                                    .guestData
-                                                    .firstName,
-                                                lastName: myCubit
-                                                    .invitationData!
-                                                    .guestData
-                                                    .lastName,
-                                                uid:
-                                                    myCubit.invitationData!.uid,
-                                                attendedWithId:
-                                                    myCubit.getUserData!.uid,
-                                                invitationCount: myCubit
-                                                    .invitationData!
-                                                    .guestData
-                                                    .peopleCount,
-                                              ),
-                                              docId:
-                                                  myCubit.invitationData!.docId,
-                                            ),
-                                            myCubit.invitationData!)
-                                        .then(
-                                            (value) => Navigator.pop(context));
-                                  } else {
+                                  }
+                                  // else if (myCubit.invitationData!.guestData
+                                  //         .availableInvite ==
+                                  //     myCubit.invitationData!.guestData
+                                  //         .peopleCount) {
+                                  //   myCubit.invitationData!.guestData
+                                  //       .availableInvite--;
+                                  //   myCubit
+                                  //       .addAttendance(
+                                  //           AttendanceModel(
+                                  //             attendanceData: AttendanceData(
+                                  //               attendanceCount: myCubit
+                                  //                       .invitationData!
+                                  //                       .guestData
+                                  //                       .peopleCount -
+                                  //                   myCubit
+                                  //                       .invitationData!
+                                  //                       .guestData
+                                  //                       .availableInvite,
+                                  //               title: myCubit.invitationData!
+                                  //                   .guestData.titleEvent,
+                                  //               firstName: myCubit
+                                  //                   .invitationData!
+                                  //                   .guestData
+                                  //                   .firstName,
+                                  //               lastName: myCubit
+                                  //                   .invitationData!
+                                  //                   .guestData
+                                  //                   .lastName,
+                                  //               uid:
+                                  //                   myCubit.invitationData!.uid,
+                                  //               attendedWithId:
+                                  //                   myCubit.getUserData!.uid,
+                                  //               invitationCount: myCubit
+                                  //                   .invitationData!
+                                  //                   .guestData
+                                  //                   .peopleCount,
+                                  //             ),
+                                  //             docId:
+                                  //                 myCubit.invitationData!.docId,
+                                  //           ),
+                                  //           myCubit.invitationData!)
+                                  //       .then(
+                                  //           (value) => Navigator.pop(context));
+                                  // }
+                                  else {
                                     myCubit.invitationData!.guestData
                                         .availableInvite--;
 

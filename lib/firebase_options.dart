@@ -44,40 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBX93HOuC_wfriCu7zl3d8przryGWfb52I',
-    appId: '1:686144051056:web:53e0acf9bba8b1f7fba1b5',
-    messagingSenderId: '686144051056',
-    projectId: 'events-app-446c5',
-    authDomain: 'events-app-446c5.firebaseapp.com',
-    storageBucket: 'events-app-446c5.appspot.com',
-    measurementId: 'G-RJPCPRWQDV',
+    apiKey: 'AIzaSyDaXb0iwcvhmhITB-FjBGz4gbICijyXKQI',
+    appId: '1:888019477779:web:3249bf41cb56a1b835e6e6',
+    messagingSenderId: '888019477779',
+    projectId: 'event-app-4609e',
+    authDomain: 'event-app-4609e.firebaseapp.com',
+    storageBucket: 'event-app-4609e.appspot.com',
+    measurementId: 'G-PCGX3JHGFC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA3WcvyNBVqCAfm0cvC4sSCWwC2fmoU_9U',
-    appId: '1:686144051056:android:68cd23888541cd6cfba1b5',
-    messagingSenderId: '686144051056',
-    projectId: 'events-app-446c5',
-    storageBucket: 'events-app-446c5.appspot.com',
+    apiKey: 'AIzaSyBRze1iO5KXg1axhvwT9RK4llviOaTMhxw',
+    appId: '1:888019477779:android:edcada4ad911b2e035e6e6',
+    messagingSenderId: '888019477779',
+    projectId: 'event-app-4609e',
+    storageBucket: 'event-app-4609e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDXuZGah9COesMg3rdENb3xXON94FALMr0',
-    appId: '1:686144051056:ios:657bf2f4b5f3d718fba1b5',
-    messagingSenderId: '686144051056',
-    projectId: 'events-app-446c5',
-    storageBucket: 'events-app-446c5.appspot.com',
-    iosClientId: '686144051056-d1f3jcemkvr8udmsdnrjbcrknn6ark65.apps.googleusercontent.com',
+    apiKey: 'AIzaSyA79XpeRn_vCM37U0jBxhSWgsx3_VXbFC8',
+    appId: '1:888019477779:ios:ceee00cc81b86d2f35e6e6',
+    messagingSenderId: '888019477779',
+    projectId: 'event-app-4609e',
+    storageBucket: 'event-app-4609e.appspot.com',
+    iosClientId: '888019477779-o5foh8rq3sca2gqqa3l7qabkktn8suv1.apps.googleusercontent.com',
     iosBundleId: 'com.example.elmotataweraEvents',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDXuZGah9COesMg3rdENb3xXON94FALMr0',
-    appId: '1:686144051056:ios:657bf2f4b5f3d718fba1b5',
-    messagingSenderId: '686144051056',
-    projectId: 'events-app-446c5',
-    storageBucket: 'events-app-446c5.appspot.com',
-    iosClientId: '686144051056-d1f3jcemkvr8udmsdnrjbcrknn6ark65.apps.googleusercontent.com',
+    apiKey: 'AIzaSyA79XpeRn_vCM37U0jBxhSWgsx3_VXbFC8',
+    appId: '1:888019477779:ios:ceee00cc81b86d2f35e6e6',
+    messagingSenderId: '888019477779',
+    projectId: 'event-app-4609e',
+    storageBucket: 'event-app-4609e.appspot.com',
+    iosClientId: '888019477779-o5foh8rq3sca2gqqa3l7qabkktn8suv1.apps.googleusercontent.com',
     iosBundleId: 'com.example.elmotataweraEvents',
   );
 }

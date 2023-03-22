@@ -4,16 +4,15 @@ import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
-import 'package:elmotatawera_events/presentation/wigets/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
-class MasterDrawer extends StatelessWidget {
+class GuestDrawer extends StatelessWidget {
   void Function()? onPressed;
 
-  MasterDrawer({Key? key, required this.onPressed}) : super(key: key);
+  GuestDrawer({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,8 @@ class MasterDrawer extends StatelessWidget {
                     myCubit.getUserData!.userData.firstName +
                         " " +
                         BlocProvider.of<AppCubit>(context)
-                            .getUserData!.userData
+                            .getUserData!
+                            .userData
                             .lastName,
                     fontSize: SizeManager.size14,
                   ),
@@ -66,13 +66,6 @@ class MasterDrawer extends StatelessWidget {
                     myCubit.getUserData!.userData.email,
                     fontSize: SizeManager.size10,
                   ),
-                   CustomButton(
-                          color: myCubit.cbt,
-                          text: "_",
-                          onTap: () async {
-                            await myCubit.ux();
-                          },
-                   ),
                   TextDeepBlue(
                     "The Founder",
                     fontSize: SizeManager.size18,
@@ -81,14 +74,15 @@ class MasterDrawer extends StatelessWidget {
                   TextOffWhite(
                     "Hassan Ashraf",
                     fontSize: SizeManager.size12,
-                  ),TextOffWhite(
+                  ),
+                  TextOffWhite(
                     "01114898895",
                     fontSize: SizeManager.size12,
                   ),
                   InkWell(
                     onTap: () async {
                       SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
+                          await SharedPreferences.getInstance();
                       prefs.clear();
                       myCubit.openDrawer();
                       Navigator.pushNamedAndRemoveUntil(context,
