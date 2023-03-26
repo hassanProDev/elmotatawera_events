@@ -342,11 +342,13 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
   getData() {
      appCollection.doc(appSettingKey).snapshots().listen((value) {
         appSetting=value.data()! ;
+        checkAppState();
         if(appSetting["firstGenerate"]){
           firstGenerate();
           appCollection.doc(appSettingKey).update({"firstGenerate":false});
           updateChatState(true);
           updateSignUpState(true);
+          updateSetting(true);
         }
       emit(AppSetting());
     });
@@ -359,10 +361,6 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     appCollection.doc(appSettingKey).update({kCanSignUp: signUpStat});
   }
 
-  firstGen()async{
-    print( appSetting["firstGenerate"]);
-
-  }
   List<EventModel> allUnActiveEvent = [];
 
   getAllUnActiveEvents() async {
@@ -467,6 +465,18 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       emit(AddAttendanceFailer(errorMessage: e.toString()));
     }
   }
+  checkAppState() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        updateFirstGenerate(true);
+      }
+    }
+  }
 
   List<AttendanceModel> allAttendance = [];
 
@@ -557,6 +567,9 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     emit(GuestCounter());
   }
 
+  updateSetting(bool setting){
+    appCollection.doc(appSettingKey).update({"hasSetting": setting});
+  }
   List<GuestModel> getMyGuestsData = [];
 
   getMyGuests(String docId, String uid) async {
@@ -574,6 +587,11 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       emit(GetMyGuestsFailer(errorMessage: e.toString()));
     }
   }
+
+  updateFirstGenerate(bool firstGenerate) {
+    appCollection.doc(appSettingKey).update({"firstGenerate": firstGenerate});
+  }
+
 
   List<GuestModel> getMyInvitationData = [];
 
