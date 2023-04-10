@@ -181,6 +181,7 @@ class GetAllMessagesFailer extends AppState {
 class GuestLoading extends AppState {}
 
 class GuestAddedSuccess extends AppState {}
+class ChangePasswordSuccess extends AppState {}
 
 class GuestAddedFailer extends AppState {
   String errorMessage;

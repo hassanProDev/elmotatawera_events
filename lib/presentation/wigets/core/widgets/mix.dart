@@ -35,6 +35,7 @@ mixin FirstGenerate {
     try {
       await doc.set(UserModel(
           uid: credential.user!.uid,
+          isBanded: false,
           userData: UserData(
               firstName: firstName,
               lastName: lastName,

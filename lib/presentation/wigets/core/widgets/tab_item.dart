@@ -9,7 +9,11 @@ class CustomTabItem extends StatelessWidget {
   bool? isSelected;
   String? text;
 
-  CustomTabItem({Key? key, this.isSelected, this.text}) : super(key: key);
+  CustomTabItem({
+    Key? key,
+    this.isSelected,
+    this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +22,15 @@ class CustomTabItem extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(SizeManager.size12),
           color: isSelected! ? ColorManager.blueColor : Colors.white),
-      child: isSelected! ? TextOffWhite(text!,fontWeight: FontWeight.bold,) : TextBlue(text!,fontWeight: FontWeight.bold,),
+      child: isSelected!
+          ? TextOffWhite(
+              text!,
+              fontWeight: FontWeight.bold,
+            )
+          : TextBlue(
+              text!,
+              fontWeight: FontWeight.bold,
+            ),
     );
   }
 }

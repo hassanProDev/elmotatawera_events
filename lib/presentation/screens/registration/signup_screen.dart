@@ -118,6 +118,7 @@ class SignUpScreen extends StatelessWidget {
                         if (myCubit.signUpFormKey.currentState!.validate()) {
                           await myCubit.userSignUp(myCubit.signUpEmail.text,
                               myCubit.signUpPassword.text,UserModel(
+                              isBanded: false,
                                 userData: UserData(
                                     firstName: myCubit.signUpFirstName.text,
                                     lastName: myCubit.signUpLastName.text,
@@ -125,7 +126,7 @@ class SignUpScreen extends StatelessWidget {
                                     userType: userType ??
                                         RouteNameManager.homeGuestScreen,
                                     email: myCubit.signUpEmail.text),
-                              ))
+                              ),)
                               .then((value) {
                             myCubit.clearSignUpController();
                           });

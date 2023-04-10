@@ -4,13 +4,16 @@ class UserModel {
   static const String keyUid = "uid";
   static const String keyUserData = "userData";
   static const String keyRegistrationDate = "registrationDate";
-
+  static const String keyisBanded="isbanded";
   String uid;
   final UserData userData;
+  bool isBanded;
   final String? registrationDate;
+  
 
    UserModel({
     this.uid='',
+    required this.isBanded,
     this.registrationDate,
     required this.userData,
   });
@@ -18,6 +21,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       uid: json[keyUid],
+      isBanded: json[keyisBanded],
       userData: UserData.fromJson(jsonDecode(json[keyUserData])),
     );
   }
@@ -25,6 +29,7 @@ class UserModel {
   Map<String, dynamic> toJson() {
     return {
       keyUid: uid,
+      keyisBanded:isBanded,
       keyRegistrationDate: DateTime.now(),
       keyUserData: jsonEncode(userData.toJson()),
     };

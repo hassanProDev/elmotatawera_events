@@ -33,7 +33,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
 
   var loginEmail = TextEditingController();
   var loginPassword = TextEditingController();
-  var loginFormKey = GlobalKey<FormState>();
+  var loginFormKey = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #login ');
 
   var signUpEmail = TextEditingController();
   var signUpPassword = TextEditingController();
@@ -41,7 +41,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
   var signUpFirstName = TextEditingController();
   var signUpLastName = TextEditingController();
   var signUpPhone = TextEditingController();
-  var signUpFormKey = GlobalKey<FormState>();
+  var signUpFormKey = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #sginUp ');
 
   IconData signUpPasswordIcon = Icons.visibility;
   bool signUpPasswordVisibilty = true;
@@ -189,13 +189,26 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     }
   }
 
-  List<UserModel>? getAllUsersList;
+  List<UserModel> getAllActiveUsersList=[];
 
-  getAllUsers() {
+  getAllActiveUsers() {
     emit(UserLoading());
     try {
-      user.snapshots().listen((event) {
-        getAllUsersList = event.docs.map((e) => e.data()).toList() ?? [];
+      user.where(UserModel.keyisBanded,isEqualTo: false).snapshots().listen((event) {
+        getAllActiveUsersList = event.docs.map((e) => e.data()).toList();
+      });
+      emit(GetAllUsersSuccess());
+    } on Exception catch (e) {
+      emit(GetUserFailer(errorMessage: e.toString()));
+    }
+  }
+  List<UserModel> getAllBandedUsersList=[];
+
+  getAllBandedUsers() {
+    emit(UserLoading());
+    try {
+      user.where(UserModel.keyisBanded,isEqualTo: true).snapshots().listen((event) {
+        getAllBandedUsersList = event.docs.map((e) => e.data()).toList();
       });
       emit(GetAllUsersSuccess());
     } on Exception catch (e) {
@@ -225,11 +238,17 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
       String userType=userModel.userData.userType;
       userModel.userData.userType=userModel.userData.email;
       userModel.userData.email=userType;
+      userModel.isBanded= !userModel.isBanded;
       await user.doc(userModel.userData.id).update(userModel.toJson());
       emit(UpdateUserDataSuccess());
     } on Exception catch (e) {
       emit(UpdateUserDataFailer(errorMessage: e.toString()));
     }
+  }
+  UserModel? selectedUaer;
+  getSelectedUser(UserModel userModel){
+    selectedUaer=userModel;
+    emit(AppInitial());
   }
 
   int guestTabIndex = 0;
@@ -253,7 +272,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     emit(GetSelectedDate());
   }
 
-  var eventFormKey = GlobalKey<FormState>();
+  var eventFormKey = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #event ');
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   var locationController = TextEditingController();
@@ -396,6 +415,28 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     } on Exception catch (e) {
       emit(UpdateEventDataFailer(errorMessage: e.toString()));
     }
+  }
+
+  var oldPassword=TextEditingController();
+  var newPassword=TextEditingController();
+  var confirmNewPassword=TextEditingController();
+  var changePasswordFormKey = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #changePassword ');
+
+
+  resetChangePasswordField(){
+    oldPassword.clear();
+    newPassword.clear();
+    confirmNewPassword.clear();
+    emit(ClearController());
+  }
+
+  changePassword(String email,String oldPassword,String newPassword)async{
+    var cred=EmailAuthProvider.credential(email: email, password: oldPassword);
+    await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(cred).then((value) {
+      FirebaseAuth.instance.currentUser!.updatePassword(newPassword);
+    }).catchError((onError){
+      print(onError.toString());
+    });
   }
 
   getUpdateEventData() {
@@ -542,7 +583,7 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
         toFirestore: (guest, _) => guest.toJson(),
       );
 
-  var guestKeyForm = GlobalKey<FormState>();
+  var guestKeyForm = GlobalKey<FormState>(debugLabel: 'GlobalFormKey #guest ');
 
   Future<void> addGuest(GuestModel guestModel) async {
     try {
@@ -745,6 +786,12 @@ class AppCubit extends Cubit<AppState> with FirstGenerate {
     } catch (e) {
       emit(GetAllMessagesFailer(errorMessage: e.toString()));
     }
+  }
+
+  int usersTabIndex=0;
+  changeUsersTabIndex(int index){
+    usersTabIndex=index;
+    emit(AppInitial());
   }
 
   init() async {

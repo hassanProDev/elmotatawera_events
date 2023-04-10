@@ -7,10 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class ActivityItem extends StatelessWidget {
-  // final String? img;
-  // final String? title;
-  // final String? location;
-  // final String? price;
+
   final VoidCallback? onTap;
   final EventModel? eventModel;
 

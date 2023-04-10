@@ -24,17 +24,25 @@ class _SplashScreenState extends State<SplashScreen> {
     setState(() {});
     Timer.periodic(Duration(seconds: 2), (timer) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getString('email') != null) {
-        await BlocProvider.of<AppCubit>(context)
-            .userLogin(prefs.getString("email")!, prefs.getString("password")!);
-        Navigator.pushNamedAndRemoveUntil(
-            context,
-            BlocProvider.of<AppCubit>(context).getUserData!.userData.userType,
-            (route) => false);
-      } else {
-        Navigator.pushNamedAndRemoveUntil(
-            context, RouteNameManager.loginScreen, (route) => false);
+      try {
+        if (prefs.getString('email') != null&&prefs.getString("password")!=null) {
+          await BlocProvider.of<AppCubit>(context)
+              .userLogin(prefs.getString("email")!, prefs.getString("password")!);
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              BlocProvider.of<AppCubit>(context).getUserData!.userData.userType,
+              (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, RouteNameManager.loginScreen, (route) => false);
+        }
+      } on Exception catch (e) {
+         await prefs.setString("email","");
+         await prefs.setString("password","");
+         prefs.clear();
       }
+      // Navigator.pushNamedAndRemoveUntil(
+      //     context, RouteNameManager.loginScreen, (route) => false);
       timer.cancel();
     });
   }

@@ -4,8 +4,11 @@ import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
 import 'package:elmotatawera_events/data/constant/size_manager.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_deep_blue.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/app_text/text_off_white.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,7 +30,10 @@ class SecurityDrawer extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  IconButton(onPressed: onPressed, icon: Icon(Icons.clear)),
+                  IconButton(
+                    onPressed: onPressed,
+                    icon: Icon(Icons.clear),
+                  ),
                   TextOffWhite(
                     "User",
                     fontSize: SizeManager.size12,
@@ -78,15 +84,36 @@ class SecurityDrawer extends StatelessWidget {
                   TextOffWhite(
                     "01114898895",
                     fontSize: SizeManager.size12,
+                  ),                  InkWell(
+                    onTap: () async {
+                      Navigator.pushNamed(context, RouteNameManager.changePasswordScreen);
+                      myCubit.openDrawer();
+                    },
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.password,
+                          color: ColorManager.redColor,
+                        ),
+                        SizedBox(
+                          width: 2.sp,
+                        ),
+                        TextOffWhite("Change Password"),
+                      ],
+                    ),
                   ),
                   InkWell(
                     onTap: () async {
                       SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.clear();
-                      myCubit.openDrawer();
-                      Navigator.pushNamedAndRemoveUntil(context,
-                          RouteNameManager.loginScreen, (route) => false);
+                      await SharedPreferences.getInstance();
+                      await DefaultCacheManager().emptyCache();
+                      await FirebaseAuth.instance.signOut().then((value) {
+                        prefs.clear();
+                        myCubit.openDrawer();
+                        Restart.restartApp();
+                        // Navigator.pushNamedAndRemoveUntil(context,
+                        //     RouteNameManager.loginScreen, (route) => false);
+                      });
                     },
                     child: Row(
                       children: [

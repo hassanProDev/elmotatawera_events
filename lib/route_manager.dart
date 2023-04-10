@@ -1,4 +1,5 @@
 import 'package:elmotatawera_events/data/constant/route_name_manager.dart';
+import 'package:elmotatawera_events/presentation/screens/admin/baned_user/users_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/add_event_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/admin_event_screen.dart';
 import 'package:elmotatawera_events/presentation/screens/admin/event/update_event_screen.dart';
@@ -18,6 +19,8 @@ import 'package:elmotatawera_events/presentation/screens/security/home_security_
 import 'package:elmotatawera_events/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:elmotatawera_events/presentation/wigets/core/widgets/master_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'presentation/screens/change_user_password/change_password_screen.dart';
 
 class RoutesManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -80,6 +83,12 @@ class RoutesManager {
       case RouteNameManager.homeMasterScreen:
         return MaterialPageRoute(
             builder: (_) => SafeArea(child: MasterScreen()));
+      case RouteNameManager.changePasswordScreen:
+        return MaterialPageRoute(
+            builder: (_) => SafeArea(child: ChangePasswordScreen()));
+      case RouteNameManager.usersScreen:
+        return MaterialPageRoute(
+            builder: (_) => SafeArea(child: UsersScreen()));
       default:
         return MaterialPageRoute(
             builder: (_) => const Scaffold(
